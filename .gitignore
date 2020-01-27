@@ -1,0 +1,11 @@
+/.vagrant
+
+/book-store-frontend/node_modules
+
+/database
+
+npm-debug.log
+
+ubuntu-xenial-16.04-cloudimg-console.log
+
+/.idea

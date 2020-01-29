@@ -17,8 +17,8 @@ function App() {
               <div className="col-7 d-flex align-items-center">
                   <GenreFilter/>
               </div>
-              <BooksCatalog/>
           </div>
+          <BooksCatalog/>
       </div>
     </div>
   );

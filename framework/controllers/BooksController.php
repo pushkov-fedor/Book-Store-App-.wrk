@@ -15,4 +15,10 @@ class BooksController
         header('Access-Control-Allow-Origin: *');
         echo json_encode($books);
     }
+
+    public function getAllBooksByPage($page){
+        $books = $this->booksRepository->getAllBooksByPage($page);
+        header('Access-Control-Allow-Origin: *');
+        echo json_encode($books);
+    }
 }

@@ -7,6 +7,8 @@ $router->get("/view/{num}", "ViewController::showView");
 
 $router->get("/books/all", "BooksController::getAllBooks");
 
+$router->get("/books/all/{page}", "BooksController::getAllBooksByPage");
+
 $request = new Request($_SERVER);
 
 $router->resolve($request);

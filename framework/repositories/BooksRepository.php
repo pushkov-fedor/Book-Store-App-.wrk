@@ -14,7 +14,14 @@ class BooksRepository
         return $books;
     }
 
-    public function test(){
-        return 0;
+    public function getAllBooksByPage($page){
+        $books = array();
+        for($i = 0; $i < 16; $i++){
+            $books[$i] = array('title' => 'Stop Missing Your Life: How to be Deeply Present in an Un-Present World',
+                'author' => 'Cory Muscara',
+                'price' => 18.39,
+                'cover' => 'https://media.ebook.de/shop/coverscans/370/37023255_9780738285313_xl.jpg');
+        }
+        return $books;
     }
 }

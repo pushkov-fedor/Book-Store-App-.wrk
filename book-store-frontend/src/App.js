@@ -1,26 +1,27 @@
 import React from 'react';
 import Header from "./components/header/Header";
-import Searchbar from "./components/searchbar/Searchbar";
-import GenreFilter from "./components/genrefilter/GenreFilter";
+import SearchAndGenreFilter from "./components/search-and-genrefilter/SearchAndGenreFilter";
 import BooksCatalog from "./components/books-catalog/BooksCatalog";
+import ShoppingCart from "./components/shopping-cart/ShoppingCart";
+
+import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 
 function App() {
   return (
-    <div className="App">
+    <Router>
       <Header/>
       <div className="container">
-          <div className="row mt-4">
-              <div className="col-4">
-                  <Searchbar/>
-              </div>
-              <div className="col-1"></div>
-              <div className="col-7 d-flex align-items-center">
-                  <GenreFilter/>
-              </div>
-          </div>
-          <BooksCatalog/>
+          <Switch>
+              <Route exact path="/">
+                  <SearchAndGenreFilter/>
+                  <BooksCatalog/>
+              </Route>
+              <Route path="/shopping-cart">
+                  <ShoppingCart/>
+              </Route>
+          </Switch>
       </div>
-    </div>
+    </Router>
   );
 }
 

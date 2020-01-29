@@ -2,26 +2,24 @@ import React, {useEffect, useState} from 'react';
 import BookView from "../book-view/BookView";
 import Pagination from "../pagination/Pagination";
 
-function BooksCatalog(props) {
+function BooksCatalog() {
     const [books, setBooks] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [booksPerPage, setBooksPerPage] = useState(16);
 
     useEffect(() => {
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://test.com/books/all');
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', `http://test.com/books/all/${currentPage}`);
         xhr.send();
         xhr.onreadystatechange = () => {
-            if(xhr.readyState === XMLHttpRequest.DONE &&  xhr.status == 200){
+            if(xhr.readyState === XMLHttpRequest.DONE &&  xhr.status === 200){
                 setBooks(JSON.parse(xhr.responseText));
             }
         }
-    }, [])
+    }, [currentPage]);
 
-    var bookElements = books
-        .filter((book, index) => ((currentPage - 1) * booksPerPage <= index && index < currentPage * booksPerPage))
+    let bookElements = books
         .map((book, index) =>
-            <div className="col-xl-3 col-lg-3 col-md-5 col-sm-6 col-xs-12" key={index}>
+            <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-12" key={index}>
                 <BookView cover={book.cover} title={book.title} author={book.author} price={book.price}/>
             </div>
         );
@@ -31,7 +29,7 @@ function BooksCatalog(props) {
             <div className="row d-flex justify-content-wrap flex-wrap">
                 {bookElements}
             </div>
-            <Pagination current={currentPage} setCurrentPage={setCurrentPage} booksPerPage={booksPerPage} booksNumber={books.length}/>
+            <Pagination current={currentPage} setCurrentPage={setCurrentPage}/>
         </div>
     );
 }

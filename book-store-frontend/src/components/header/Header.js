@@ -1,28 +1,30 @@
 import React from 'react';
+import {Link} from "react-router-dom";
+import {withRouter} from "react-router-dom";
 import "./Header.css";
 
 function Header(props) {
 
-    var navbarStyle = {
+    const navbarStyle = {
         boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
         backgroundColor: "#191919"
-    }
+    };
 
-    var navbarBrandStyle = {
+    const navbarBrandStyle = {
         fontSize: "2rem",
         fontWeight: "500"
-    }
+    };
 
     return (
         <nav className="navbar navbar-expand-sm position-sticky fixed-top" style={navbarStyle}>
             <div className="container">
-                <a className="navbar-brand text-white" href="#" style={navbarStyle}>My Book Store</a>
+                <Link className="navbar-brand text-white" style={navbarBrandStyle} to="/">My Book Store</Link>
                 <ul className="nav justify-content-end">
-                    <li className="nav-item nav-item-hover" >
-                        <a className="nav-link text-white" href="#">Shopping Cart</a>
+                    <li className={props.location.pathname === "/shopping-cart" ? "nav-item nav-item-hover nav-item-current" : "nav-item nav-item-hover"} >
+                        <Link className="nav-link text-white" to="/shopping-cart">Shopping Cart</Link>
                     </li>
-                    <li className="nav-item nav-item-hover" >
-                        <a className="nav-link text-white" href="#">Login</a>
+                    <li className={props.location.pathname === "/login" ? "nav-item nav-item-hover nav-item-current" : "nav-item nav-item-hover"} >
+                        <Link className="nav-link text-white" to="/login">Login</Link>
                     </li>
                 </ul>
             </div>
@@ -30,4 +32,4 @@ function Header(props) {
     );
 }
 
-export default Header;
+export default withRouter(Header);

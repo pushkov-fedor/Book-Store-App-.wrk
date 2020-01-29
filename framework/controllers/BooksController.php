@@ -21,4 +21,16 @@ class BooksController
         header('Access-Control-Allow-Origin: *');
         echo json_encode($books);
     }
+
+    public function getAllBooksCount(){
+        $booksCount = $this->booksRepository->getAllBooksCount();
+        header('Access-Control-Allow-Origin: *');
+        echo json_encode($booksCount);
+    }
+
+    public function getBookGenres(){
+        $genres = $this->booksRepository->getBookGenres();
+        header('Access-Control-Allow-Origin: *');
+        echo json_encode($genres);
+    }
 }

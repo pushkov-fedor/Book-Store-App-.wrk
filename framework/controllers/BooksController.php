@@ -12,6 +12,7 @@ class BooksController
 
     public function getAllBooks(){
         $books = $this->booksRepository->getAllBooks();
+        header('Access-Control-Allow-Origin: *');
         echo json_encode($books);
     }
 }

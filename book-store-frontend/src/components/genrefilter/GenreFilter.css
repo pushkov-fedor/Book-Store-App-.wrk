@@ -1,0 +1,9 @@
+.genrefilter-container .nav-item .nav-link {
+    color: #4B5EE8;
+}
+
+.genrefilter-container .nav-item .selected, .genrefilter-container .nav-item .selected:hover {
+    background-color: #4B5EE8;
+    border-radius: 25px !important;
+    color: #fff;
+}

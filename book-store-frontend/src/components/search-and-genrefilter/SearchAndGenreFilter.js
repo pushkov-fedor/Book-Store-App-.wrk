@@ -4,12 +4,12 @@ import GenreFilter from "../genrefilter/GenreFilter";
 
 function SearchAndGenreFilter(props) {
     return (
-        <div className="row mt-4">
-            <div className="col-4">
+        <div className="row px-4 px-sm-0 w-100 mt-4 mx-0">
+            <div className="col-12 col-md-5">
                 <Searchbar/>
             </div>
-            <div className="col-1"></div>
-            <div className="col-7 d-flex align-items-center">
+            <div className="col-12 col-md-1 mt-3 mt-md-0"></div>
+            <div className="col-12 col-md-6 d-flex align-items-center">
                 <GenreFilter/>
             </div>
         </div>

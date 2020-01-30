@@ -24,7 +24,7 @@ function GenreFilter() {
         </li>)
 
     return (
-        <ScrollContainer vertical={false} horizontal={true} hideScrollbars={true}>
+        <ScrollContainer vertical={false} horizontal={true} hideScrollbars={true} style={{cursor: "move", borderBottom: '2px solid #4B5EE8'}}>
             <ul className="nav nav-pills genrefilter-container" style={{whiteSpace: "nowrap", flexWrap: "nowrap"}}>
                 {genreElements}
             </ul>

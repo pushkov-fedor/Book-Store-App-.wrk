@@ -1,6 +1,5 @@
 <?php
 include_once $_SERVER['DOCUMENT_ROOT'].'/framework/router/Request.php';
-include_once $_SERVER['DOCUMENT_ROOT'].'/framework/controllers/ViewController.php';
 include_once $_SERVER['DOCUMENT_ROOT'].'/framework/controllers/BooksController.php';
 
 class Router

@@ -1,5 +1,4 @@
 import React from 'react';
-import BookView from "../book-view/BookView";
 
 function ShoppingCart(props) {
 
@@ -8,6 +7,7 @@ function ShoppingCart(props) {
 
     var savedBooks = books.map((book, index) => <div key={index}>
                 <img src={book.cover} alt="..." style={bookCoverStyle}/>
+                <h2 style={bookTitleStyle}>{book.id}</h2>
                 <h2 style={bookTitleStyle}>{book.title}</h2>
                 <h3 style={bookAuthorAndPriceStyle}>by <span style={boldStyle}>{book.author}</span></h3>
                 <h3 style={bookAuthorAndPriceStyle}>Price: <span style={boldStyle}>{book.price}$</span></h3>

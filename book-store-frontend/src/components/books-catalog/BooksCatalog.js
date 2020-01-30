@@ -32,8 +32,8 @@ function BooksCatalog() {
         );
 
     return (
-        <div>
-            <div className="row d-flex justify-content-center justify-content-sm-start flex-wrap">
+        <div style={{height: '90%', display: 'flex', flexDirection: 'column'}}>
+            <div className="row d-flex justify-content-center justify-content-sm-start flex-wrap" style={{flex: '1 0 auto'}}>
                 {bookElements}
             </div>
             <Pagination current={currentPage} setCurrentPage={setCurrentPage}/>

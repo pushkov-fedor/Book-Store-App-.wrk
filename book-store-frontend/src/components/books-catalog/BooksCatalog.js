@@ -4,7 +4,14 @@ import Pagination from "../pagination/Pagination";
 
 function BooksCatalog() {
     const [books, setBooks] = useState([]);
+    const [savedBooks, setSavedBooks] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
+
+    useEffect(() => {
+        console.log('get info from localStorage');
+        var books = JSON.parse(localStorage.getItem('books'));
+        if (books == null) setSavedBooks([]); else setSavedBooks(books);
+    }, [])
 
     useEffect(() => {
         const xhr = new XMLHttpRequest();
@@ -20,7 +27,8 @@ function BooksCatalog() {
     let bookElements = books
         .map((book, index) =>
             <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-12" key={index}>
-                <BookView cover={book.cover} title={book.title} author={book.author} price={book.price}/>
+                <BookView cover={book.cover} title={book.title} author={book.author} price={book.price}
+                          savedBooks={savedBooks} setSavedBooks={setSavedBooks}/>
             </div>
         );
 

@@ -8,7 +8,7 @@ function Header(props) {
     return (
         <nav className="navbar navbar-expand-sm position-sticky fixed-top" style={navbarStyle}>
             <div className="container flex-column flex-sm-row">
-                <Link className="navbar-brand text-white mr-0 justify-content-center justify-content-xs-start" style={navbarBrandStyle} to="/">My Book Store</Link>
+                <Link className="navbar-brand text-white mr-0 justify-content-center justify-content-xs-start" style={navbarBrandStyle} to="/frontend">My Book Store</Link>
                 <ul className="nav justify-content-center justify-content-xs-end">
                     <li className={props.location.pathname === "/shopping-cart" ? "nav-item nav-item-hover nav-item-current" : "nav-item nav-item-hover"} >
                         <Link className="nav-link text-white" to="/shopping-cart">Shopping Cart</Link>

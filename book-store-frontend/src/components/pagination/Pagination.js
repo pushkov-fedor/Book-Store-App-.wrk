@@ -31,7 +31,7 @@ function Pagination(props) {
     }
 
     return (
-        <nav style={{flexShrink: '0'}}>
+        <nav className="mb-4" style={{flexShrink: '0'}}>
             <ul className="pagination justify-content-center">
                 <li className={props.current === 1 ? "page-item disabled" : "page-item"}
                     onClick={() => {props.setCurrentPage(props.current - 1); window.scrollTo(0,0)}}

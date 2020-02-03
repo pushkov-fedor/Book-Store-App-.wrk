@@ -7,3 +7,7 @@
     border-radius: 25px !important;
     color: #fff;
 }
+
+.genrefilter {
+    transition: opacity 1s linear;
+}

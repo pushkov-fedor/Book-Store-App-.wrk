@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import ScrollContainer from 'react-indiana-drag-scroll';
 import "./GenreFilter.css";
 
 function GenreFilter() {
-
     const [genres, setGenres] = useState([]);
+    const [isHover, setIsHover] = useState(false);
 
     useEffect(() => {
         const xhr = new XMLHttpRequest();
@@ -21,15 +20,25 @@ function GenreFilter() {
     var genreElements = genres.map((genre, index) =>
         <li className="nav-item" key={index}>
             <div className="nav-link">{genre}</div>
-        </li>)
+        </li>);
+    var genreElementsHover = genres.map((genre, index) =>
+        <li className="p-0" key={index}>
+            <div className="py-1 nav-link text-white" style={{backgroundColor: index===1 ? "#4B5EE8" : ""}}>{genre}</div>
+        </li>);
+
+    var genreFilterStyle = {visibility: !isHover ? "" : "hidden", whiteSpace: "nowrap", flexWrap: "nowrap", overflow: "hidden"};
+    var genreFilterHoverStyle = {visibility: isHover ? "" : "hidden", top: "0", backgroundColor: "rgba(0,0,0,.55)",listStyleType: "none", zIndex: "100", boxShadow: "16px 0 0 #fff"}
+
 
     return (
-        <ScrollContainer vertical={false} horizontal={true} hideScrollbars={true} style={{cursor: "move", borderBottom: '2px solid #4B5EE8'}}>
-            <ul className="nav nav-pills genrefilter-container" style={{whiteSpace: "nowrap", flexWrap: "nowrap"}}>
+        <div className="w-100 position-relative genrefilter" onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
+            <ul className="nav nav-pills genrefilter-container" style={genreFilterStyle}>
                 {genreElements}
             </ul>
-        </ScrollContainer>
+            <ul className="px-0 py-2 position-absolute rounded w-100" style={genreFilterHoverStyle}>
+                {genreElementsHover}
+            </ul>
+        </div>
     );
 }
-
 export default GenreFilter;

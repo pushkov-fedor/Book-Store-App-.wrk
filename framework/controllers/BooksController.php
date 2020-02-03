@@ -5,7 +5,7 @@ class BooksController
 {
     private BooksRepository $booksRepository;
 
-    function __construct()
+    public function __construct()
     {
         $this->booksRepository = new BooksRepository();
     }

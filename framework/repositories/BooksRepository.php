@@ -31,12 +31,11 @@ class BooksRepository
     }
 
     public function getAllBooksCount(){
-        $booksCount = array('booksCount' => 50);
-        return $booksCount;
+        return array('booksCount' => 50);
     }
 
     public function getBookGenres(){
-        $genres = array('genres' =>
+        return array('genres' =>
             array('Action and Adventure',
             'Anthology',
             'Classic',
@@ -60,6 +59,5 @@ class BooksRepository
             'Science Fiction (Sci-Fi)',
             'Short Story',
             'Suspense/Thriller'));
-        return $genres;
     }
 }

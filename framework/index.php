@@ -13,6 +13,6 @@ $router->get("/books/all/count", "BooksController::getAllBooksCount");
 
 $router->get("/books/genres", "BooksController::getBookGenres");
 
-$request = new Request($_SERVER);
+$request = new Request();
 
 $router->resolve($request);

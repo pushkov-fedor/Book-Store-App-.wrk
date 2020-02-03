@@ -15,17 +15,17 @@ function BooksCatalog() {
             if(xhr.readyState === XMLHttpRequest.DONE &&  xhr.status === 200){
                 setBooks(JSON.parse(xhr.responseText));
             }
-        }
+        };
         console.log('getting books effect')
     }, [currentPage]);
 
     useEffect(() => {
         var books = JSON.parse(localStorage.getItem('books'));
         if (books == null) setSavedBooks([]); else setSavedBooks(books);
-    }, [])
+    }, []);
 
     let bookElements = books
-        .map((book, index) =>
+        .map(book =>
             <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-10" key={book.id}>
                 <BookView id={book.id} cover={book.cover} title={book.title} author={book.author} price={book.price}
                           savedBooks={savedBooks} setSavedBooks={setSavedBooks}/>

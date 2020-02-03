@@ -27,7 +27,7 @@ function GenreFilter() {
         </li>);
 
     var genreFilterStyle = {visibility: !isHover ? "" : "hidden", whiteSpace: "nowrap", flexWrap: "nowrap", overflow: "hidden"};
-    var genreFilterHoverStyle = {visibility: isHover ? "" : "hidden", top: "0", backgroundColor: "rgba(0,0,0,.55)",listStyleType: "none", zIndex: "100", boxShadow: "16px 0 0 #fff"}
+    var genreFilterHoverStyle = {visibility: isHover ? "" : "hidden", top: "0", backgroundColor: "rgba(0,0,0,.55)",listStyleType: "none", zIndex: "100", boxShadow: "16px 0 0 #fff"};
 
 
     return (

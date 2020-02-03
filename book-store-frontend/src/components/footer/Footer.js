@@ -24,17 +24,17 @@ const footerNavigationHeaderStyle = {
     color: '#fff',
     fontSize: '1.4rem',
     fontWeight: '500'
-}
+};
 
 const footerLinkStyle = {
     color: 'rgba(255,255,255,0.6)',
     textDecoration: 'none'
-}
+};
 
 const footerCopyrightsStyle = {
     color: 'rgba(255,255,255,0.4)',
     fontSize: '1rem',
     fontWeight: 100
-}
+};
 
 export default Footer;

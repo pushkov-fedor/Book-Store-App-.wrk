@@ -45,6 +45,7 @@ function ShoppingCartItem(props) {
                     <div className="col-4 h-25 d-flex justify-content-center align-items-center" style={{border: "1px solid rgba(0,0,0,0.6)", borderLeft: "none", borderTopRightRadius: "20px", borderBottomRightRadius: "20px", fontWeight: "400"}}
                         onClick={addToCart}>
                         <i className="fas fa-plus text-dark"></i>
+
                     </div>
                 </div>
             </div>

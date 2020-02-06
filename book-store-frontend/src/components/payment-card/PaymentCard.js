@@ -26,6 +26,11 @@ function PaymentCard(props) {
         setCVV(event.target.value);
     }
 
+    function handleSubmit(event){
+        event.preventDefault();
+        props.submitPayment();
+    }
+
 
     const years = [];
     for(let i = 2020; i <= 2030; i++){
@@ -46,7 +51,7 @@ function PaymentCard(props) {
                     <img className="position-absolute h-100" style={{bottom: "0", right: "0"}} src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Mastercard_2019_logo.svg/1200px-Mastercard_2019_logo.svg.png"/>
                 </div>
             </div>
-            <form className="mt-4">
+            <form className="mt-4" onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label htmlFor="nameOnCard" className="text-white">Name On Card</label>
                     <input className="form-control text-white border-0" id="nameOnCard" placeholder="John Doe" style={{backgroundColor: "#1D2029"}} value={nameOnCard} onChange={handleNameOnCardChange}></input>

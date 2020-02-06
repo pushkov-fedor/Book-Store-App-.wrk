@@ -17,7 +17,7 @@ function ShoppingCart(props) {
     return (
         <div>
             <div className="row my-5">
-                <div className="col-8">
+                <div className="col-12 col-xl-8">
                     <h2 style={{fontWeight: "500", fontSize: "1.5rem"}}>Shopping Cart</h2>
                     {savedBooksElement}
                     <div className="d-flex justify-content-between">
@@ -25,8 +25,8 @@ function ShoppingCart(props) {
                         <h2 className="mt-4" style={{fontWeight: "500", fontSize: "1.3rem"}}>{summaryPrice}$</h2>
                     </div>
                 </div>
-                <div className="col-4">
-                    <div className="h-100" style={{width: "110%"}}>
+                <div className="col-12 col-xl-4 w-sm-100 w-75 row d-flex justify-content-center px-lg-0">
+                    <div className="col-sm-9 col-md-7 col-lg-5 col-xl-12">
                         <PaymentCard/>
                     </div>
                 </div>
@@ -34,33 +34,5 @@ function ShoppingCart(props) {
         </div>
     );
 }
-
-const bookCoverStyle = {
-    height: "20rem",
-    width: "14rem",
-    objectFit: "cover",
-    boxShadow: "0 4px 4px rgba(0,0,0,0.25"
-};
-
-const bookTitleStyle = {
-    textOverflow: "ellipsis",
-    overflow: "hidden",
-    whiteSpace: "nowrap",
-    fontSize: "1.3rem",
-    fontWeight: "500",
-    marginTop: "1rem"
-};
-
-const bookAuthorAndPriceStyle = {
-    textOverflow: "ellipsis",
-    overflow: "hidden",
-    whiteSpace: "nowrap",
-    fontSize: "1.2rem",
-    fontWeight: "300"
-};
-
-const boldStyle = {
-    fontWeight: "400"
-};
 
 export default ShoppingCart;

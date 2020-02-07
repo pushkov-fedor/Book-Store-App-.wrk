@@ -1,9 +1,16 @@
-import React from 'react';
+import {Link} from "react-router-dom";
+import React, {useState} from 'react';
 
 function LeaveEmailBeforePayingPopup(props) {
 
+    const [customerEmail, setCustomerEmail] = useState("");
+
     function handleClickOnBg(event){
         if(event.target.id=="popup-bg") props.setShowPopup(false);
+    }
+
+    function handleChange(event){
+        setCustomerEmail(event.target.value);
     }
 
     return (
@@ -23,9 +30,10 @@ function LeaveEmailBeforePayingPopup(props) {
                             <div className="input-group-text">@</div>
                         </div>
                         <input type="email" className="form-control" id="inlineFormInputGroup"
-                               placeholder="Email"/>
+                               placeholder="Email" value={customerEmail} onChange={handleChange}/>
                     </div>
-                    <button type="submit" className="btn btn-primary w-100 col-12 col-sm-3 mx-3">Submit</button>
+                    <Link to={{pathname: "/after-paying", state: {customerEmail}}} style={{pointerEvents: customerEmail=="" ? "none" : "auto"}}
+                          className={`btn ${customerEmail=="" ? "btn-secondary" : "btn-primary"} w-100 col-12 col-sm-3 mx-3`}>Submit</Link>
                 </form>
             </div>
         </div>

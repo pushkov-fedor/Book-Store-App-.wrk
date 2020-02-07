@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from 'react';
+import {withRouter} from "react-router-dom";
 import BookView from "../book-view/BookView";
 import Pagination from "../pagination/Pagination";
+import AfterPaying from "../after-paying/AfterPaying";
 
-function BooksCatalog() {
+function BooksCatalog(props) {
     const [books, setBooks] = useState([]);
     const [savedBooks, setSavedBooks] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -43,4 +45,4 @@ function BooksCatalog() {
     );
 }
 
-export default BooksCatalog;
+export default withRouter(BooksCatalog);

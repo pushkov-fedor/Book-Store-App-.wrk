@@ -6,6 +6,7 @@ import ShoppingCart from "./components/shopping-cart/ShoppingCart";
 import Footer from "./components/footer/Footer";
 
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import AfterPaying from "./components/after-paying/AfterPaying";
 
 function App() {
   return (
@@ -19,6 +20,9 @@ function App() {
               </Route>
               <Route path="/shopping-cart">
                   <ShoppingCart/>
+              </Route>
+              <Route path="/after-paying">
+                  <AfterPaying/>
               </Route>
           </Switch>
       </div>

@@ -1,13 +1,27 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import InputMask from 'react-input-mask';
 
 function PaymentCard(props) {
 
     const [nameOnCard, setNameOnCard] = useState("John Doe");
-    const [cardNumber, setCardNumber] = useState("");
+    const [cardNumber, setCardNumber] = useState("XXXX    XXXX    XXXX    XXXX");
     const [expirationMonth, setExpirationMonth] = useState("01");
     const [expirationYear, setExpirationYear] = useState("2024");
-    const [cvv, setCVV] = useState();
+    const [cvv, setCVV] = useState("XXX");
+
+    const [isPaymentInfoValid, setIsPaymentInfoValid] = useState(false);
+    useEffect(() => {
+       let isValid = true;
+       if(nameOnCard.length == 0) {
+           isValid = false;
+       }
+
+       const splittedCardNumber = cardNumber.split("    ");
+       const reduced = splittedCardNumber.reduce((accumulator, current) =>  accumulator += Number(current), 0)
+       if(isNaN(reduced)) isValid = false;
+       if(isNaN(Number(cvv))) isValid = false;
+       setIsPaymentInfoValid(isValid);
+    }, [nameOnCard, cardNumber, cvv]);
 
 
     function handleNameOnCardChange(event) {
@@ -88,7 +102,7 @@ function PaymentCard(props) {
                         <InputMask id="cvv" className="form-control text-center text-white border-0 px-1" value={cvv} onChange={handleCVVChange} mask="999" maskChar="X" alwaysShowMask style={{backgroundColor: "#1D2029"}}/>
                     </div>
                 </div>
-                <button type="submit" className="btn btn-success w-100 mb-3 shadow">Pay</button>
+                <button type="submit" className="btn btn-success w-100 mb-3 shadow" disabled={!isPaymentInfoValid}>Pay</button>
             </form>
         </div>
     );

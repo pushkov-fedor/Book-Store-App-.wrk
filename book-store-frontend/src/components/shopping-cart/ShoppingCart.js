@@ -26,11 +26,12 @@ function ShoppingCart(props) {
                     <h2 style={{fontWeight: "500", fontSize: "1.5rem"}}>Shopping Cart</h2>
                     {savedBooksElement}
                     <div className="d-flex justify-content-between">
-                        <h2 className="mt-4" style={{fontWeight: "500", fontSize: "1.3rem"}}>Total cost:</h2>
-                        <h2 className="mt-4" style={{fontWeight: "500", fontSize: "1.3rem"}}>{summaryPrice}$</h2>
+                            <h2 className={`${savedBooksElement.length == 0 ? "d-none" : ""} mt-4`} style={{fontWeight: "500", fontSize: "1.3rem"}}>Total cost:</h2>
+                            <h2 className={`${savedBooksElement.length == 0 ? "d-none" : ""} mt-4`} style={{fontWeight: "500", fontSize: "1.3rem"}}>{summaryPrice}$</h2>
+                            <h2 className={`${savedBooksElement.length == 0 ? "" : "d-none"} mt-4`} style={{fontWeight: "500", fontSize: "1.3rem"}}>There's nothing in the shopping cart right now :(</h2>
                     </div>
                 </div>
-                <div className="col-12 col-xl-4 row d-flex justify-content-center mx-0 px-lg-0">
+                <div className={`col-12 col-xl-4 row ${savedBooksElement.length == 0 ? "d-none" : "d-flex"} justify-content-center mx-0 px-lg-0`}>
                     <div className="col-sm-9 col-md-7 col-lg-5 col-xl-12">
                         <PaymentCard submitPayment={submitPayment}/>
                     </div>

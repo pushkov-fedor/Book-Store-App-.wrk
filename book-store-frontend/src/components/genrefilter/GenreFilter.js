@@ -7,7 +7,7 @@ function GenreFilter() {
 
     useEffect(() => {
         const xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://ec2-3-133-82-119.us-east-2.compute.amazonaws.com/books/genres');
+        xhr.open('GET', 'http://ec2-3-133-82-119.us-east-2.compute.amazonaws.com/api/books/genres');
         xhr.send();
         xhr.onreadystatechange = () => {
             if(xhr.readyState === XMLHttpRequest.DONE &&  xhr.status === 200){

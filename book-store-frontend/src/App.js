@@ -14,7 +14,7 @@ function App() {
       <Header/>
       <div className="container" style={{flex: '1 0 auto'}}>
           <Switch>
-              <Route exact path="/home">
+              <Route exact path="/">
                   <SearchAndGenreFilter/>
                   <BooksCatalog/>
               </Route>

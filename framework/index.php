@@ -7,7 +7,7 @@ $router->get("api/view/{num}", "ViewController::showView");
 
 $router->get("api/books/all", "BooksController::getAllBooks");
 
-$router->get("api/books/{page}", "BooksController::getAllBooksByPage");
+$router->get("api/books/page/{page}", "BooksController::getAllBooksByPage");
 
 $router->get("api/books/all/count", "BooksController::getAllBooksCount");
 

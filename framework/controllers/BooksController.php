@@ -13,26 +13,20 @@ class BooksController
         $this->booksRepository = new BooksRepository();
     }
 
-    public function getAllBooks(){
-        $books = $this->booksRepository->getAllBooks();
+    public function getAll($page = 0){
+        $books = $this->booksRepository->getAll($page);
         header('Access-Control-Allow-Origin: *');
         echo json_encode($books);
     }
 
-    public function getAllBooksByPage($page){
-        $books = $this->booksRepository->getAllBooksByPage($page);
-        header('Access-Control-Allow-Origin: *');
-        echo json_encode($books);
-    }
-
-    public function getAllBooksCount(){
-        $booksCount = $this->booksRepository->getAllBooksCount();
+    public function getAllCount(){
+        $booksCount = $this->booksRepository->getAllCount();
         header('Access-Control-Allow-Origin: *');
         echo json_encode($booksCount);
     }
 
-    public function getBookGenres(){
-        $genres = $this->booksRepository->getBookGenres();
+    public function getGenres(){
+        $genres = $this->booksRepository->getGenres();
         header('Access-Control-Allow-Origin: *');
         echo json_encode($genres);
     }

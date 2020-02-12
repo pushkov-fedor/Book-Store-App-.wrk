@@ -8,9 +8,11 @@ class Router
 {
     private array $get_resolvers;
     private array $post_resolvers;
+    private Request $request;
 
     public function __construct()
     {
+        $this->request = new Request();
         $this->get_resolvers = array();
         $this->post_resolvers = array();
     }
@@ -25,10 +27,10 @@ class Router
         $this->post_resolvers[$path] = $resolver;
     }
 
-    public function resolve(Request $request)
+    public function resolve()
     {
-        $method = $request->getMethod();
-        $path = $request->getPath();
+        $method = $this->request->getMethod();
+        $path = $this->request->getPath();
 
         switch ($method) {
             case "GET":

@@ -4,11 +4,9 @@ spl_autoload_register(function($class){
     require_once $file . '.php';
 });
 
-use router\Router, router\Request;
+use router\Router;
 
 $router = new Router();
 include_once "config/routerConfig.php";
 
-$request = new Request();
-
-$router->resolve($request);
+$router->resolve();

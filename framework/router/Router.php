@@ -1,6 +1,7 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT'].'/framework/router/Request.php';
-include_once $_SERVER['DOCUMENT_ROOT'].'/framework/controllers/BooksController.php';
+
+namespace router;
+use controllers\BooksController;
 
 class Router
 {
@@ -85,7 +86,15 @@ class Router
             $args = $result[$matchedRoute][1];
             $resolver = $resolvers[$matchedRoute];
             $classAndMethod = explode("::", $resolver);
-            call_user_func(array(new $classAndMethod[0](), $classAndMethod[1]), ...$args);
+            call_user_func(array($this->createClassByName($classAndMethod[0]), $classAndMethod[1]), ...$args);
+        }
+    }
+
+    private function createClassByName($className){
+        switch ($className){
+            case "BooksController":
+                return new BooksController();
+                break;
         }
     }
 

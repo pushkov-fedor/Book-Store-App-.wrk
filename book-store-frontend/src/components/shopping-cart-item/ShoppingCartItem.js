@@ -1,30 +1,32 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 
 function ShoppingCartItem(props) {
 
     function removeFromCart(){
-        var booksInCartUpdate = props.booksInCart.map(bookInCart => {
-            if (bookInCart.id != props.id) {
-                return bookInCart;
+        const booksInCartUpdate = props.booksInCart.map(bookInCart => {
+            if (bookInCart.id !== props.id) {
+                return bookInCart
             } else {
-                const copy = Object.assign({}, bookInCart);
-                copy.isStillInCart = false;
-                return copy;
+                const copy = Object.assign({}, bookInCart)
+                copy.isStillInCart = false
+                return copy
             }
-        });
+        })
+        props.removeBookFromLocalStorage(props.id);
         props.setBooksInCart(booksInCartUpdate);
     }
 
     function addToCart(){
-        var booksInCartUpdate = props.booksInCart.map(bookInCart => {
-            if (bookInCart.id != props.id) {
-                return bookInCart;
+        const booksInCartUpdate = props.booksInCart.map(bookInCart => {
+            if (bookInCart.id !== props.id) {
+                return bookInCart
             } else {
-                const copy = Object.assign({}, bookInCart);
-                copy.isStillInCart = true;
-                return copy;
+                const copy = Object.assign({}, bookInCart)
+                copy.isStillInCart = true
+                return copy
             }
-        });
+        })
+        props.addBookToLocalStorage(props.id, props.cover, props.title, props.author, props.price);
         props.setBooksInCart(booksInCartUpdate);
     }
 
@@ -40,12 +42,12 @@ function ShoppingCartItem(props) {
                     <div className="row">
                         <div className="col-4 d-flex justify-content-center align-items-center" style={{border: "1px solid rgba(0,0,0,0.6)", borderRight: "none", borderTopLeftRadius: "15px", borderBottomLeftRadius: "15px", fontWeight: "400"}}
                             onClick={removeFromCart}>
-                            <i className="fas fa-minus text-dark"></i>
+                            <i className="fas fa-minus text-dark"/>
                         </div>
                         <div className="col-4 d-flex justify-content-center align-items-center text-dark" style={{border: "1px solid rgba(0,0,0,0.6)", borderLeft: "none", borderRight: "none", fontSize: "1.5rem"}}>{Number(props.isStillInCart)}</div>
                         <div className="col-4 d-flex justify-content-center align-items-center" style={{border: "1px solid rgba(0,0,0,0.6)", borderLeft: "none", borderTopRightRadius: "15px", borderBottomRightRadius: "15px", fontWeight: "400"}}
                             onClick={addToCart}>
-                            <i className="fas fa-plus text-dark"></i>
+                            <i className="fas fa-plus text-dark"/>
 
                         </div>
                     </div>

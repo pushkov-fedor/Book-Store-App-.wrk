@@ -6,7 +6,7 @@ function LeaveEmailBeforePayingPopup(props) {
     const [customerEmail, setCustomerEmail] = useState("");
 
     function handleClickOnBg(event){
-        if(event.target.id=="popup-bg") props.setShowPopup(false);
+        if(event.target.id==="popup-bg") props.setShowPopup(false);
     }
 
     function handleChange(event){
@@ -32,8 +32,8 @@ function LeaveEmailBeforePayingPopup(props) {
                         <input type="email" className="form-control" id="inlineFormInputGroup"
                                placeholder="Email" value={customerEmail} onChange={handleChange}/>
                     </div>
-                    <Link to={{pathname: "/after-paying", state: {customerEmail}}} style={{pointerEvents: customerEmail=="" ? "none" : "auto"}}
-                          className={`btn ${customerEmail=="" ? "btn-secondary" : "btn-primary"} w-100 col-12 col-sm-3 mx-3`}>Submit</Link>
+                    <Link to={{pathname: "/after-paying", state: {customerEmail}}} style={{pointerEvents: customerEmail==="" ? "none" : "auto"}}
+                          className={`btn ${customerEmail==="" ? "btn-secondary" : "btn-primary"} w-100 col-12 col-sm-3 mx-3`}>Submit</Link>
                 </div>
             </div>
         </div>

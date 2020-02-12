@@ -12,12 +12,12 @@ function PaymentCard(props) {
     const [isPaymentInfoValid, setIsPaymentInfoValid] = useState(false);
     useEffect(() => {
        let isValid = true;
-       if(nameOnCard.length == 0) {
+       if(nameOnCard.length === 0) {
            isValid = false;
        }
 
        const splittedCardNumber = cardNumber.split("    ");
-       const reduced = splittedCardNumber.reduce((accumulator, current) =>  accumulator += Number(current), 0)
+       const reduced = splittedCardNumber.reduce((accumulator, current) =>  accumulator+= Number(current), 0)
        if(isNaN(reduced)) isValid = false;
        if(isNaN(Number(cvv))) isValid = false;
        setIsPaymentInfoValid(isValid);
@@ -56,19 +56,19 @@ function PaymentCard(props) {
             <h2 className="text-white" style={{fontSize: "1.4rem", fontWeight: "400"}}>Card Details</h2>
             <div className="ml-4 mt-4 shadow text-white p-4 d-none d-sm-block" style={{width: "115%", backgroundColor: "#1D2029", borderRadius: "10px"}}>
                 <h3>Bank Card</h3>
-                <h4 className="mt-4 mb-4">{cardNumber=="" ? "XXXX XXXX XXXX XXXX" : cardNumber}</h4>
+                <h4 className="mt-4 mb-4">{cardNumber==="" ? "XXXX XXXX XXXX XXXX" : cardNumber}</h4>
                 <div className="position-relative">
                     <div>
                         <h5 style={{opacity: "0.8"}}>{`${expirationMonth}/${expirationYear}`}</h5>
-                        <h5 style={{opacity: "0.8", visibility: nameOnCard=="" ? "hidden" : "visible"}}>{nameOnCard == "" ? "John Doe" : nameOnCard}</h5>
+                        <h5 style={{opacity: "0.8", visibility: nameOnCard==="" ? "hidden" : "visible"}}>{nameOnCard === "" ? "John Doe" : nameOnCard}</h5>
                     </div>
-                    <img className="position-absolute h-100" style={{bottom: "0", right: "0"}} src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Mastercard_2019_logo.svg/1200px-Mastercard_2019_logo.svg.png"/>
+                    <img className="position-absolute h-100" style={{bottom: "0", right: "0"}} src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Mastercard_2019_logo.svg/1200px-Mastercard_2019_logo.svg.png" alt="mastercard logo"/>
                 </div>
             </div>
             <form className="mt-4" onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label htmlFor="nameOnCard" className="text-white">Name On Card</label>
-                    <input className="form-control text-white border-0" id="nameOnCard" placeholder="John Doe" style={{backgroundColor: "#1D2029"}} value={nameOnCard} onChange={handleNameOnCardChange}></input>
+                    <input className="form-control text-white border-0" id="nameOnCard" placeholder="John Doe" style={{backgroundColor: "#1D2029"}} value={nameOnCard} onChange={handleNameOnCardChange}/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="cardNumber" className="text-white">Card Number</label>

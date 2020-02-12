@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 
-function Footer(props) {
+function Footer() {
     return (
         <div className="container-fluid d-flex flex-column align-items-center" style={footerStyle}>
             <nav className="w-75 d-flex flex-column mt-4 mb-2">

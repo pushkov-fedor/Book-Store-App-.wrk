@@ -1,5 +1,8 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT'].'/framework/repositories/BooksRepository.php';
+
+namespace controllers;
+
+use repositories\BooksRepository;
 
 class BooksController
 {

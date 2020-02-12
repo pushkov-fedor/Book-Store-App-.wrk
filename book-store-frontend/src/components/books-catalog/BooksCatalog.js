@@ -2,9 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {withRouter} from "react-router-dom";
 import BookView from "../book-view/BookView";
 import Pagination from "../pagination/Pagination";
-import AfterPaying from "../after-paying/AfterPaying";
 
-function BooksCatalog(props) {
+function BooksCatalog() {
     const [books, setBooks] = useState([]);
     const [savedBooks, setSavedBooks] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -22,7 +21,7 @@ function BooksCatalog(props) {
     }, [currentPage]);
 
     useEffect(() => {
-        var books = JSON.parse(localStorage.getItem('books'));
+        const books = JSON.parse(localStorage.getItem('books'))
         if (books == null) setSavedBooks([]); else setSavedBooks(books);
     }, []);
 
@@ -33,7 +32,6 @@ function BooksCatalog(props) {
                           savedBooks={savedBooks} setSavedBooks={setSavedBooks}/>
             </div>
         );
-    console.log(bookElements);
 
     return (
         <div style={{height: '90%', display: 'flex', flexDirection: 'column'}}>

@@ -1,4 +1,7 @@
 <?php
+
+namespace router;
+
 class Request
 {
     private $method;

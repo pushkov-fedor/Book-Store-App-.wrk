@@ -2,15 +2,15 @@ import React, {useEffect, useState} from 'react';
 
 function BookView(props) {
 
-    var [isBookInShoppingCart, setIsBookInShoppingCart] = useState(false);
+    const [isBookInShoppingCart, setIsBookInShoppingCart] = useState(false)
 
     useEffect(() => {
-        var isBookInShoppingCart = props.savedBooks.find(book => book.id === props.id);
+        const isBookInShoppingCart = props.savedBooks.find(book => book.id === props.id)
         setIsBookInShoppingCart(Boolean(isBookInShoppingCart));
     }, [props.savedBooks.length]);
 
     function addToShoppingCart(id, cover, title, author, price){
-        var booksCopy = props.savedBooks.slice();
+        const booksCopy = props.savedBooks.slice()
         booksCopy.push({id, cover, title, author, price});
         localStorage.setItem('books', JSON.stringify(booksCopy));
         props.setSavedBooks(booksCopy);
@@ -18,17 +18,17 @@ function BookView(props) {
     }
 
     function removeFromShoppingCart(id){
-        var books = props.savedBooks.filter(book => book.id !== id);
+        const books = props.savedBooks.filter(book => book.id !== id)
         localStorage.setItem('books', JSON.stringify(books));
         props.setSavedBooks(books);
         setIsBookInShoppingCart(false);
     }
 
-    var button = (isBookInShoppingCart === false) ?
-        (<button type="button" className="btn btn-success btn-block py-2 shadow"
-                 onClick={() => addToShoppingCart(props.id, props.cover, props.title, props.author, props.price)}>Add</button>) :
-        (<button type="button" className="btn btn-primary btn-block py-2 shadow"
-                onClick={() => removeFromShoppingCart(props.id)}>Remove</button>);
+    const button = (isBookInShoppingCart === false) ?
+      (<button type="button" className="btn btn-success btn-block py-2 shadow"
+               onClick={() => addToShoppingCart(props.id, props.cover, props.title, props.author, props.price)}>Add</button>) :
+      (<button type="button" className="btn btn-primary btn-block py-2 shadow"
+               onClick={() => removeFromShoppingCart(props.id)}>Remove</button>)
 
     return (
         <div className="my-5 mx-xl-3" style={bookFontColorStyle}>

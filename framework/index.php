@@ -1,9 +1,14 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT'].'/framework/router/Router.php';
+//include_once $_SERVER['DOCUMENT_ROOT'].'/framework/router/Router.php';
+
+spl_autoload_register(function($class){
+    $file = str_replace('\\', DIRECTORY_SEPARATOR, $class);
+    require_once $file . '.php';
+});
+
+use router\Router, router\Request;
 
 $router = new Router();
-
-$router->get("api/view/{num}", "ViewController::showView");
 
 $router->get("api/books/all", "BooksController::getAllBooks");
 

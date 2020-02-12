@@ -4,10 +4,10 @@ import {withRouter} from "react-router-dom";
 function AfterPaying(props) {
 
     useEffect(() => {
-        if(props.location.state != undefined && props.location.state.customerEmail != undefined){
+        if(props.location.state !== undefined && props.location.state.customerEmail !== undefined){
             localStorage.clear();
         }
-    })
+    });
 
     return (
         <div className="m-3 p-5 bg-white text-center" style={{borderRadius: "20px"}}>
@@ -17,7 +17,7 @@ function AfterPaying(props) {
                     <span style={{color: "#000"}}> {props.location.state.customerEmail}</span>
                 </h4>
             </div>
-            <img className="w-50" src="https://cdn.dribbble.com/users/77552/screenshots/3898134/hurray.png"/>
+            <img className="w-50" src="https://cdn.dribbble.com/users/77552/screenshots/3898134/hurray.png" alt="Happy man"/>
         </div>
     );
 }

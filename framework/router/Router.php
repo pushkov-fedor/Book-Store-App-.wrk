@@ -2,6 +2,7 @@
 
 namespace router;
 use controllers\BooksController;
+use views\ViewApplicationJson;
 
 class Router
 {
@@ -79,21 +80,35 @@ class Router
             }
             $result[$route] = array($matches, $args);
         }
+
         $matchedRoute = $this->getMaxMatchedRoute($result);
         if ($matchedRoute == null) {
             header("HTTP/1.0 404 Not Found");
         } else {
             $args = $result[$matchedRoute][1];
+
             $resolver = $resolvers[$matchedRoute];
             $classAndMethod = explode("::", $resolver);
-            call_user_func(array($this->createClassByName($classAndMethod[0]), $classAndMethod[1]), ...$args);
+
+            $view = $this->getView();
+
+            call_user_func(array($this->createClassByName($classAndMethod[0], $view), $classAndMethod[1]), ...$args);
         }
     }
 
-    private function createClassByName($className){
+    private function getView(){
+        switch ($_SERVER['CONTENT_TYPE']){
+            case "application/json":
+            case "":
+                return new ViewApplicationJson();
+                break;
+        }
+    }
+
+    private function createClassByName($className, $arg1){
         switch ($className){
             case "BooksController":
-                return new BooksController();
+                return new BooksController($arg1);
                 break;
         }
     }

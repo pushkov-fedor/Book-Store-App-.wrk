@@ -3,31 +3,34 @@
 namespace controllers;
 
 use repositories\BooksRepository;
+use views\View;
 
 class BooksController
 {
     private BooksRepository $booksRepository;
+    private View $view;
 
-    public function __construct()
+    public function __construct($view)
     {
+        $this->view = $view;
         $this->booksRepository = new BooksRepository();
     }
 
     public function getAll($page = 0){
         $books = $this->booksRepository->getAll($page);
-        header('Access-Control-Allow-Origin: *');
-        echo json_encode($books);
+        $this->view->putData($books);
+        $this->view->send();
     }
 
     public function getAllCount(){
         $booksCount = $this->booksRepository->getAllCount();
-        header('Access-Control-Allow-Origin: *');
-        echo json_encode($booksCount);
+        $this->view->putData($booksCount);
+        $this->view->send();
     }
 
     public function getGenres(){
         $genres = $this->booksRepository->getGenres();
-        header('Access-Control-Allow-Origin: *');
-        echo json_encode($genres);
+        $this->view->putData($genres);
+        $this->view->send();
     }
 }

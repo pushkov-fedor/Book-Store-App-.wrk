@@ -5,3 +5,18 @@
 .search-button:focus {
     outline: 0;
 }
+
+
+.searchbar-container {
+    background-color: rgba(0,0,0,.9);
+}
+
+.searchbar-input {
+    color: rgba(255,255,255,0.85);
+}
+
+.searchbar-icon {
+    color: #4B5EE8;
+    background-color: #fff;
+
+}

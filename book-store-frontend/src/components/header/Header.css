@@ -14,3 +14,14 @@
     border-radius: 25px;
     box-shadow: inset 0 3px 4px rgba(0,0,0,0.2);
 }
+
+
+.navbar-container {
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    background-color: #191919;
+}
+
+.navbar-brand-custom {
+    font-size: 2rem;
+    font-weight: 500;
+}

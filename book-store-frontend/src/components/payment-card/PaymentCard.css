@@ -1,0 +1,28 @@
+.payment-card-container {
+    background-color: rgba(0,0,0,0.65);
+    border-radius: 10px;
+}
+
+.payment-card-card-details-header {
+    font-size: 1.4rem;
+    font-weight: 400;
+}
+
+.payment-card-view-container {
+    width: 115%;
+    background-color: #1D2029;
+    border-radius: 10px;
+}
+
+.payment-card-view-expiration {
+    opacity: 0.8;
+}
+
+.payment-card-view-mastercard-logo {
+    bottom: 0;
+    right: 0;
+}
+
+.payment-card-input {
+    background-color: #1D2029;
+}

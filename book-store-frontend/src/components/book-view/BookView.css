@@ -1,0 +1,31 @@
+.book-view-container {
+    color: rgba(0,0,0,0.8);
+}
+
+.book-view-cover {
+    height: 20rem;
+    width: 14rem;
+    object-fit: cover;
+    box-shadow: 0 4px 4px rgba(0,0,0,0.25);
+}
+
+.book-view-title {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 1.3rem;
+    font-weight: 500;
+    margin-top: 1rem;
+}
+
+.book-view-author-and-price {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 1.2rem;
+    font-weight: 300;
+}
+
+.book-view-author-and-price-bold {
+    font-weight: 400;
+}

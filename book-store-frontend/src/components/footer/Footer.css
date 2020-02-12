@@ -1,0 +1,21 @@
+.footer-container {
+    background-color: #191919;
+    flex-shrink: 0;
+}
+
+.footer-navigation-header {
+    color: #fff;
+    font-size: 1.4rem;
+    font-weight: 500;
+}
+
+.footer-link {
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+}
+
+.footer-copyrights {
+    color: rgba(255,255,255,0.4);
+    font-size: 1rem;
+    font-weight: 100;
+}

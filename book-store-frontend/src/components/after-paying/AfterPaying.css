@@ -1,0 +1,13 @@
+.after-paying-container {
+    border-radius: 20px;
+}
+
+.after-paying-thank-you-header {
+    color: #4B5EE8;
+    font-size: 3rem;
+}
+
+.after-paying-email-subheader {
+    color: rgba(0,0,0,0.6);
+    font-style: italic;
+}

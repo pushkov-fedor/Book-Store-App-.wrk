@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {withRouter} from "react-router-dom";
 import BookView from "../book-view/BookView";
 import Pagination from "../pagination/Pagination";
+import "./BooksCatalog.css";
 
 function BooksCatalog() {
     const [books, setBooks] = useState([]);
@@ -34,8 +35,8 @@ function BooksCatalog() {
         );
 
     return (
-        <div style={{height: '90%', display: 'flex', flexDirection: 'column'}}>
-            <div className="row d-flex justify-content-center justify-content-sm-start flex-wrap" style={{flex: '1 0 auto'}}>
+        <div className="books-catalog-container">
+            <div className="row d-flex justify-content-center justify-content-sm-start flex-wrap books-catalog-elements-container">
                 {bookElements}
             </div>
             <Pagination current={currentPage} setCurrentPage={setCurrentPage}/>

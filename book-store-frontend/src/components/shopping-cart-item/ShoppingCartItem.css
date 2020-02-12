@@ -1,0 +1,51 @@
+.shopping-cart-item-container {
+    box-sizing: content-box;
+    border-bottom: 1px solid rgba(0,0,0,0.8);
+}
+
+.shopping-cart-item-title {
+    font-size: 1.2rem;
+    font-weight: 500;
+    text-overflow: ellipsis;
+    white-space: pre-wrap;
+    overflow: hidden;
+    opacity: 0.8;
+}
+
+.shopping-cart-item-author {
+    font-size: 1rem;
+    font-weight: 400;
+    text-overflow: ellipsis;
+    white-space: pre-wrap;
+    overflow: hidden;
+    opacity: 0.6;
+}
+
+.shopping-cart-item-price {
+    font-size: 1.5rem;
+    font-weight: 400;
+    opacity: 0.7;
+}
+
+.shopping-cart-item-remove-button {
+    border: 1px solid rgba(0,0,0,0.6);
+    border-right: none;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    font-weight: 400;
+}
+
+.shopping-cart-item-count {
+    border: 1px solid rgba(0,0,0,0.6);
+    border-left: none;
+    border-right: none;
+    font-size: 1.5rem;
+}
+
+.shopping-cart-item-add-button {
+    border: 1px solid rgba(0,0,0,0.6);
+    border-left: none;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    font-weight: 400;
+}

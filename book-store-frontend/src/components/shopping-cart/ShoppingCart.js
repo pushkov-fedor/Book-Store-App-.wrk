@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import ShoppingCartItem from "../shopping-cart-item/ShoppingCartItem";
 import PaymentCard from "../payment-card/PaymentCard";
 import LeaveEmailBeforePayingPopup from "../leave-email-before-paying-popup/LeaveEmailBeforePayingPopup";
+import "./ShoppingCart.css";
 
 function ShoppingCart() {
 
@@ -40,11 +41,11 @@ function ShoppingCart() {
     return (
             <div className="row my-5 position-relative">
                 <div className="col-12 col-xl-8">
-                    <h2 style={{fontWeight: "500", fontSize: "1.5rem"}}>Shopping Cart</h2>
+                    <h2 className="shopping-cart-header">Shopping Cart</h2>
                     {savedBooksElement}
                     <div className="d-flex justify-content-between">
-                            <h2 className={`${savedBooksElement.length === 0 ? "d-none" : ""} mt-4`} style={{fontWeight: "500", fontSize: "1.3rem"}}>Total cost:</h2>
-                            <h2 className={`${savedBooksElement.length === 0 ? "d-none" : ""} mt-4`} style={{fontWeight: "500", fontSize: "1.3rem"}}>{summaryPrice}$</h2>
+                            <h2 className={`${savedBooksElement.length === 0 ? "d-none" : ""} mt-4 shopping-cart-cost`}>Total cost:</h2>
+                            <h2 className={`${savedBooksElement.length === 0 ? "d-none" : ""} mt-4 shopping-cart-cost`}>{summaryPrice}$</h2>
                     </div>
                 </div>
                 <div className={`col-12 col-xl-4 row ${savedBooksElement.length === 0 ? "d-none" : "d-flex"} justify-content-center mx-0 px-lg-0`}>

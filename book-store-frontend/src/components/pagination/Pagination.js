@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import { inject, observer } from 'mobx-react'
 
-const Pagination = inject("bookStore")(observer(props => {
+const Pagination = inject("rootStore")(observer(props => {
 
-    const current = props.bookStore.currentPage;
-    const setCurrentPage = props.bookStore.setCurrentPage;
-    const booksCount = props.bookStore.booksCount;
-    const booksPerPage = props.bookStore.booksPerPage;
+    const current = props.rootStore.bookStore.currentPage;
+    const setCurrentPage = props.rootStore.bookStore.setCurrentPage;
+    const booksCount = props.rootStore.bookStore.booksCount;
+    const booksPerPage = props.rootStore.bookStore.booksPerPage;
 
 
     const pages = (booksCount % booksPerPage === 0) ?

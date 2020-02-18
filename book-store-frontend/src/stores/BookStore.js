@@ -7,14 +7,6 @@ import { action, autorun, observable, when } from 'mobx'
   const booksCount = observable.box(0);
   const booksPerPage = observable.box(16);
 
-  const nameOnCard = observable.box("John Doe");
-  const cardNumber = observable.box("XXXX    XXXX    XXXX    XXXX");
-  const expirationMonth = observable.box("01");
-  const expirationYear = observable.box("2024");
-  const cvv = observable.box("XXX");
-  const isPaymentInfoValid = observable.box(false);
-  const customerEmail = observable.box("")
-
   const setBooks = action(updatedBooks => {
     while (books.length > 0) books.pop();
     updatedBooks.forEach(book => books.push(book));
@@ -33,14 +25,6 @@ import { action, autorun, observable, when } from 'mobx'
   const setCurrentPage = action(page => currentPage.set(page));
   const setBooksCount = action(count => booksCount.set(count));
   const setBooksPerPage = action(perPage => booksPerPage.set(perPage));
-
-  const setNameOnCard = action(name => nameOnCard.set(name));
-  const setCardNumber = action(number => cardNumber.set(number));
-  const setExpirationMonth = action(month => expirationMonth.set(month));
-  const setExpirationYear = action(year => expirationYear.set(year));
-  const setCVV = action(userCVV => cvv.set(userCVV));
-
-  const setCustomerEmail = action(email => customerEmail.set(email));
 
   const removeBookFromLocalStorage = action(id => {
     let filteredBooks = savedBooks.filter(book => book.id !== id);
@@ -100,20 +84,6 @@ import { action, autorun, observable, when } from 'mobx'
     };
   })
 
-  autorun(() => {
-      let isValid = true;
-      if(nameOnCard.length === 0) {
-        isValid = false;
-      }
-
-      const splittedCardNumber = cardNumber.split("    ");
-      const reduced = splittedCardNumber.reduce((accumulator, current) =>  accumulator+= Number(current), 0)
-      if(isNaN(reduced)) isValid = false;
-      if(isNaN(Number(cvv))) isValid = false;
-      isPaymentInfoValid.set(isValid);
-    }
-  )
-
   export const bookStore = {
     books,
     genres,
@@ -128,18 +98,5 @@ import { action, autorun, observable, when } from 'mobx'
     setBooksPerPage,
     setGenres,
     removeBookFromLocalStorage,
-    addBookToLocalStorage,
-    nameOnCard,
-    cardNumber,
-    expirationMonth,
-    expirationYear,
-    cvv,
-    isPaymentInfoValid,
-    customerEmail,
-    setNameOnCard,
-    setCardNumber,
-    setExpirationMonth,
-    setExpirationYear,
-    setCVV,
-    setCustomerEmail
+    addBookToLocalStorage
   }

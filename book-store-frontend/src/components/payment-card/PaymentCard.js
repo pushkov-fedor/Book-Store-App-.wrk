@@ -3,18 +3,18 @@ import InputMask from 'react-input-mask';
 import "./PaymentCard.css";
 import { inject, observer } from 'mobx-react'
 
-const PaymentCard = inject("bookStore")(observer((props) => {
-    const nameOnCard = props.bookStore.nameOnCard;
-    const setNameOnCard = props.bookStore.setNameOnCard;
-    const cardNumber = props.bookStore.cardNumber;
-    const setCardNumber = props.bookStore.setCardNumber;
-    const expirationMonth = props.bookStore.expirationMonth;
-    const setExpirationMonth = props.bookStore.setExpirationMonth;
-    const expirationYear = props.bookStore.expirationYear;
-    const setExpirationYear = props.bookStore.setExpirationYear;
-    const cvv = props.bookStore.cvv;
-    const setCVV = props.bookStore.setCVV;
-    const isPaymentInfoValid = props.bookStore.isPaymentInfoValid;
+const PaymentCard = inject("rootStore")(observer((props) => {
+    const nameOnCard = props.rootStore.paymentStore.nameOnCard;
+    const setNameOnCard = props.rootStore.paymentStore.setNameOnCard;
+    const cardNumber = props.rootStore.paymentStore.cardNumber;
+    const setCardNumber = props.rootStore.paymentStore.setCardNumber;
+    const expirationMonth = props.rootStore.paymentStore.expirationMonth;
+    const setExpirationMonth = props.rootStore.paymentStore.setExpirationMonth;
+    const expirationYear = props.rootStore.paymentStore.expirationYear;
+    const setExpirationYear = props.rootStore.paymentStore.setExpirationYear;
+    const cvv = props.rootStore.paymentStore.cvv;
+    const setCVV = props.rootStore.paymentStore.setCVV;
+    const isPaymentInfoValid = props.rootStore.paymentStore.isPaymentInfoValid;
 
 
     function handleNameOnCardChange(event) {

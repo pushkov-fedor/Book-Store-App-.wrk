@@ -2,11 +2,12 @@ import {Link} from "react-router-dom";
 import React, {useState} from 'react';
 import "./LeaveEmailBeforePayingPopup.css";
 import { inject, observer } from 'mobx-react'
+import { paymentStore } from '../../stores/PaymentStore'
 
-const LeaveEmailBeforePayingPopup = inject("bookStore")(observer(props => {
+const LeaveEmailBeforePayingPopup = inject("rootStore")(observer(props => {
 
-    const customerEmail = props.bookStore.customerEmail;
-    const setCustomerEmail = props.bookStore.setCustomerEmail;
+    const customerEmail = props.rootStore.paymentStore.customerEmail;
+    const setCustomerEmail = props.rootStore.paymentStore.setCustomerEmail;
 
     function handleClickOnBg(event){
         if(event.target.id==="popup-bg") props.setShowPopup(false);

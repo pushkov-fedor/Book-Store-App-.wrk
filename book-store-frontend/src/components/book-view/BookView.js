@@ -2,10 +2,10 @@ import React, {useEffect, useState} from 'react';
 import "./BookView.css";
 import { inject, observer } from 'mobx-react'
 
-const BookView = inject("bookStore")( observer(props => {
+const BookView = inject("rootStore")( observer(props => {
 
-    const savedBooks = props.bookStore.savedBooks;
-    const setSavedBooks = props.bookStore.setSavedBooks;
+    const savedBooks = props.rootStore.bookStore.savedBooks;
+    const setSavedBooks = props.rootStore.bookStore.setSavedBooks;
 
     const [isBookInShoppingCart, setIsBookInShoppingCart] = useState(false)
     useEffect(() => {

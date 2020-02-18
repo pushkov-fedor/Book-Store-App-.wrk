@@ -2,9 +2,9 @@ import React, {useEffect, useState} from 'react';
 import "./GenreFilter.css";
 import { inject, observer } from 'mobx-react'
 
-const GenreFilter = inject("bookStore")(observer((props) => {
+const GenreFilter = inject("rootStore")(observer((props) => {
 
-  const genres = props.bookStore.genres;
+  const genres = props.rootStore.bookStore.genres;
   const [isHover, setIsHover] = useState(false);
 
   const genreElements = genres.map((genre, index) =>

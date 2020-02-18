@@ -6,8 +6,8 @@ import "./BooksCatalog.css";
 import { inject, observer } from 'mobx-react'
 import { toJS } from 'mobx'
 
-const BooksCatalog = inject("bookStore")(observer(props => {
-    const books = toJS(props.bookStore.books);
+const BooksCatalog = inject("rootStore")(observer(props => {
+    const books = toJS(props.rootStore.bookStore.books);
 
     let bookElements = books
       .map(book =>

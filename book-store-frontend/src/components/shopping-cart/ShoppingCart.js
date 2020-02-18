@@ -5,11 +5,11 @@ import LeaveEmailBeforePayingPopup from "../leave-email-before-paying-popup/Leav
 import "./ShoppingCart.css";
 import { inject, observer } from 'mobx-react'
 
-const ShoppingCart = inject("bookStore")(observer((props) => {
+const ShoppingCart = inject("rootStore")(observer((props) => {
 
-    const books = props.bookStore.savedBooks;
-    const removeBookFromLocalStorage = props.bookStore.removeBookFromLocalStorage;
-    const addBookToLocalStorage = props.bookStore.addBookToLocalStorage;
+    const books = props.rootStore.bookStore.savedBooks;
+    const removeBookFromLocalStorage = props.rootStore.bookStore.removeBookFromLocalStorage;
+    const addBookToLocalStorage = props.rootStore.bookStore.addBookToLocalStorage;
 
     const [booksInCart, setBooksInCart] = useState(books.map(book => Object.assign({}, book, {isStillInCart: true})));
     const [showPopup, setShowPopup] = useState(false);

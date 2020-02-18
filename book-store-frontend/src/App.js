@@ -9,7 +9,7 @@ import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import AfterPaying from "./components/after-paying/AfterPaying";
 import { inject, observer } from 'mobx-react'
 
-const App = inject("bookStore")(observer(props => {
+const App = inject("rootStore")(observer(props => {
   return (
     <Router>
       <Header/>

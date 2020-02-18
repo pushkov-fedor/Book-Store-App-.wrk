@@ -1,10 +1,12 @@
 import {Link} from "react-router-dom";
 import React, {useState} from 'react';
 import "./LeaveEmailBeforePayingPopup.css";
+import { inject, observer } from 'mobx-react'
 
-function LeaveEmailBeforePayingPopup(props) {
+const LeaveEmailBeforePayingPopup = inject("bookStore")(observer(props => {
 
-    const [customerEmail, setCustomerEmail] = useState("");
+    const customerEmail = props.bookStore.customerEmail;
+    const setCustomerEmail = props.bookStore.setCustomerEmail;
 
     function handleClickOnBg(event){
         if(event.target.id==="popup-bg") props.setShowPopup(false);
@@ -26,14 +28,15 @@ function LeaveEmailBeforePayingPopup(props) {
                             <div className="input-group-text">@</div>
                         </div>
                         <input type="email" className="form-control" id="inlineFormInputGroup"
-                               placeholder="Email" value={customerEmail} onChange={handleChange}/>
+                               placeholder="Email" value={customerEmail.get()} onChange={handleChange}/>
                     </div>
-                    <Link to={{pathname: "/after-paying", state: {customerEmail}}} style={{pointerEvents: customerEmail==="" ? "none" : "auto"}}
-                          className={`btn ${customerEmail==="" ? "btn-secondary" : "btn-primary"} w-100 col-12 col-sm-3 mx-3`}>Submit</Link>
+                    <Link to={{pathname: "/after-paying", state: {customerEmail: customerEmail.get()}}}
+                          style={{pointerEvents: customerEmail.get() === "" ? "none" : "auto"}}
+                          className={`btn ${customerEmail.get() === "" ? "btn-secondary" : "btn-primary"} w-100 col-12 col-sm-3 mx-3`}>Submit</Link>
                 </div>
             </div>
         </div>
     );
-}
+}))
 
 export default LeaveEmailBeforePayingPopup;

@@ -3,45 +3,27 @@ import {withRouter} from "react-router-dom";
 import BookView from "../book-view/BookView";
 import Pagination from "../pagination/Pagination";
 import "./BooksCatalog.css";
+import { inject, observer } from 'mobx-react'
+import { toJS } from 'mobx'
 
-function BooksCatalog() {
-    const [books, setBooks] = useState([]);
-    const [savedBooks, setSavedBooks] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
-
-    useEffect(() => {
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', `http://ec2-3-133-82-119.us-east-2.compute.amazonaws.com/api/books/page/${currentPage}`);
-        xhr.send();
-        xhr.onreadystatechange = () => {
-            if(xhr.readyState === XMLHttpRequest.DONE &&  xhr.status === 200){
-                setBooks(JSON.parse(xhr.responseText));
-            }
-        };
-        console.log('getting books effect')
-    }, [currentPage]);
-
-    useEffect(() => {
-        const books = JSON.parse(localStorage.getItem('books'))
-        if (books == null) setSavedBooks([]); else setSavedBooks(books);
-    }, []);
+const BooksCatalog = inject("bookStore")(observer(props => {
+    const books = toJS(props.bookStore.books);
 
     let bookElements = books
-        .map(book =>
-            <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-10" key={book.id}>
-                <BookView id={book.id} cover={book.cover} title={book.title} author={book.author} price={book.price}
-                          savedBooks={savedBooks} setSavedBooks={setSavedBooks}/>
-            </div>
-        );
+      .map(book =>
+        <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-10" key={book.id}>
+            <BookView id={book.id} cover={book.cover} title={book.title} author={book.author} price={book.price}/>
+        </div>
+      );
 
     return (
-        <div className="books-catalog-container">
-            <div className="row d-flex justify-content-center justify-content-sm-start flex-wrap books-catalog-elements-container">
-                {bookElements}
-            </div>
-            <Pagination current={currentPage} setCurrentPage={setCurrentPage}/>
-        </div>
+      <div className="books-catalog-container">
+          <div className="row d-flex justify-content-center justify-content-sm-start flex-wrap books-catalog-elements-container">
+              {bookElements}
+          </div>
+          <Pagination/>
+      </div>
     );
-}
+}));
 
 export default withRouter(BooksCatalog);

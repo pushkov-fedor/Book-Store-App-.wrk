@@ -1,27 +1,30 @@
 import React, {useEffect, useState} from 'react';
 import "./BookView.css";
+import { inject, observer } from 'mobx-react'
 
-function BookView(props) {
+const BookView = inject("bookStore")( observer(props => {
+
+    const savedBooks = props.bookStore.savedBooks;
+    const setSavedBooks = props.bookStore.setSavedBooks;
 
     const [isBookInShoppingCart, setIsBookInShoppingCart] = useState(false)
-
     useEffect(() => {
-        const isBookInShoppingCart = props.savedBooks.find(book => book.id === props.id)
+        const isBookInShoppingCart = savedBooks.find(book => book.id === props.id)
         setIsBookInShoppingCart(Boolean(isBookInShoppingCart));
-    }, [props.savedBooks.length]);
+    }, [savedBooks.length]);
 
     function addToShoppingCart(id, cover, title, author, price){
-        const booksCopy = props.savedBooks.slice()
+        const booksCopy = savedBooks.slice()
         booksCopy.push({id, cover, title, author, price});
         localStorage.setItem('books', JSON.stringify(booksCopy));
-        props.setSavedBooks(booksCopy);
+        setSavedBooks(booksCopy);
         setIsBookInShoppingCart(true);
     }
 
     function removeFromShoppingCart(id){
-        const books = props.savedBooks.filter(book => book.id !== id)
+        const books = savedBooks.filter(book => book.id !== id)
         localStorage.setItem('books', JSON.stringify(books));
-        props.setSavedBooks(books);
+        setSavedBooks(books);
         setIsBookInShoppingCart(false);
     }
 
@@ -40,6 +43,6 @@ function BookView(props) {
             {button}
         </div>
     );
-}
+}));
 
 export default BookView;

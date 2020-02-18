@@ -11,3 +11,7 @@
 .genrefilter {
     transition: opacity 1s linear;
 }
+
+.genre-item:hover {
+    background-color: #4B5EE8;
+}

@@ -3,28 +3,16 @@ import ShoppingCartItem from "../shopping-cart-item/ShoppingCartItem";
 import PaymentCard from "../payment-card/PaymentCard";
 import LeaveEmailBeforePayingPopup from "../leave-email-before-paying-popup/LeaveEmailBeforePayingPopup";
 import "./ShoppingCart.css";
+import { inject, observer } from 'mobx-react'
 
-function ShoppingCart() {
+const ShoppingCart = inject("bookStore")(observer((props) => {
 
-    let books = JSON.parse(localStorage.getItem('books'));
-    if (books == null) books = [];
+    const books = props.bookStore.savedBooks;
+    const removeBookFromLocalStorage = props.bookStore.removeBookFromLocalStorage;
+    const addBookToLocalStorage = props.bookStore.addBookToLocalStorage;
 
     const [booksInCart, setBooksInCart] = useState(books.map(book => Object.assign({}, book, {isStillInCart: true})));
     const [showPopup, setShowPopup] = useState(false);
-
-    function removeBookFromLocalStorage(id){
-        let filteredBooks = books.filter(book => book.id !== id);
-        books = filteredBooks;
-        localStorage.setItem('books', JSON.stringify(filteredBooks));
-    }
-
-    function addBookToLocalStorage(id, cover, title, author, price){
-        let filteredBooks = books.filter(book => book.id === id);
-        if(filteredBooks.length === 0) {
-            books.push({id, cover, title, author, price});
-            localStorage.setItem('books', JSON.stringify(books));
-        }
-    }
 
   const savedBooksElement = booksInCart.map(book=>
     <ShoppingCartItem key={book.id} cover={book.cover} id={book.id} title={book.title} author={book.author}
@@ -60,6 +48,6 @@ function ShoppingCart() {
                 {showPopup ? <LeaveEmailBeforePayingPopup setShowPopup={setShowPopup}/> : ""}
             </div>
     );
-}
+}));
 
 export default ShoppingCart;

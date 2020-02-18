@@ -1,21 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import "./GenreFilter.css";
+import { inject, observer } from 'mobx-react'
 
-function GenreFilter() {
-    const [genres, setGenres] = useState([]);
-    const [isHover, setIsHover] = useState(false);
+const GenreFilter = inject("bookStore")(observer((props) => {
 
-    useEffect(() => {
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://ec2-3-133-82-119.us-east-2.compute.amazonaws.com/api/books/genres');
-        xhr.send();
-        xhr.onreadystatechange = () => {
-            if(xhr.readyState === XMLHttpRequest.DONE &&  xhr.status === 200){
-              const response = JSON.parse(xhr.responseText)
-              setGenres(response.genres);
-            }
-        }
-    }, []);
+  const genres = props.bookStore.genres;
+  const [isHover, setIsHover] = useState(false);
 
   const genreElements = genres.map((genre, index) =>
     <li className="nav-item" key={index}>
@@ -23,7 +13,7 @@ function GenreFilter() {
     </li>)
   const genreElementsHover = genres.map((genre, index) =>
     <li className="p-0" key={index}>
-      <div className="py-1 nav-link text-white" style={{ backgroundColor: index === 1 ? '#4B5EE8' : '' }}>{genre}</div>
+      <div className="py-1 nav-link text-white genre-item">{genre}</div>
     </li>)
 
   const genreFilterStyle = {
@@ -51,5 +41,5 @@ function GenreFilter() {
             </ul>
         </div>
     );
-}
+}))
 export default GenreFilter;

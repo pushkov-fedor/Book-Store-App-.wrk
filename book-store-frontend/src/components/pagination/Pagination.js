@@ -1,21 +1,12 @@
 import React, {useEffect, useState} from 'react';
+import { inject, observer } from 'mobx-react'
 
-function Pagination(props) {
+const Pagination = inject("bookStore")(observer(props => {
 
-    const [booksCount, setBooksCount] = useState(0);
-    const [booksPerPage] = useState(16);
-
-    useEffect(() => {
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://ec2-3-133-82-119.us-east-2.compute.amazonaws.com/api/books/all/count');
-        xhr.send();
-        xhr.onreadystatechange = () => {
-            if(xhr.readyState === XMLHttpRequest.DONE &&  xhr.status === 200){
-                const response = JSON.parse(xhr.responseText);
-                setBooksCount(response.booksCount);
-            }
-        }
-    }, [booksCount]);
+    const current = props.bookStore.currentPage;
+    const setCurrentPage = props.bookStore.setCurrentPage;
+    const booksCount = props.bookStore.booksCount;
+    const booksPerPage = props.bookStore.booksPerPage;
 
 
     const pages = (booksCount % booksPerPage === 0) ?
@@ -24,8 +15,8 @@ function Pagination(props) {
 
     for(let i = 1; i <= pages; i++) {
         pageButtons.push(
-            <li className={i === props.current ? "page-item active" : "page-item"} key={i}
-                onClick={() => {props.setCurrentPage(i); window.scrollTo(0,0)}}>
+            <li className={i === current.get() ? "page-item active" : "page-item"} key={i}
+                onClick={() => {setCurrentPage(i); window.scrollTo(0,0)}}>
                 <div className="page-link">{i}</div>
             </li>);
     }
@@ -33,20 +24,20 @@ function Pagination(props) {
     return (
         <nav className="mb-4" style={{flexShrink: '0'}}>
             <ul className="pagination justify-content-center">
-                <li className={props.current === 1 ? "page-item disabled" : "page-item"}
-                    onClick={() => {props.setCurrentPage(props.current - 1); window.scrollTo(0,0)}}
-                    style={{pointerEvents: props.current === 1 ? "none" : "inherit"}}>
+                <li className={current.get() === 1 ? "page-item disabled" : "page-item"}
+                    onClick={() => {setCurrentPage(current.get() - 1); window.scrollTo(0,0)}}
+                    style={{pointerEvents: current.get() === 1 ? "none" : "inherit"}}>
                     <div className="page-link" tabIndex="-1">Previous</div>
                 </li>
                 {pageButtons}
-                <li className={props.current === pages ? "page-item disabled" : "page-item"}
-                    onClick={() => {props.setCurrentPage(props.current + 1); window.scrollTo(0,0)}}
-                    style={{pointerEvents: props.current === pages ? "none" : "inherit"}}>
+                <li className={current.get() === pages ? "page-item disabled" : "page-item"}
+                    onClick={() => {setCurrentPage(current.get() + 1); window.scrollTo(0,0)}}
+                    style={{pointerEvents: current.get() === pages ? "none" : "inherit"}}>
                     <div className="page-link">Next</div>
                 </li>
             </ul>
         </nav>
     );
-}
+}));
 
 export default Pagination;

@@ -7,8 +7,9 @@ import Footer from "./components/footer/Footer";
 
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import AfterPaying from "./components/after-paying/AfterPaying";
+import { inject, observer } from 'mobx-react'
 
-function App() {
+const App = inject("bookStore")(observer(props => {
   return (
     <Router>
       <Header/>
@@ -29,6 +30,6 @@ function App() {
         <Footer/>
     </Router>
   );
-}
+}));
 
 export default App;

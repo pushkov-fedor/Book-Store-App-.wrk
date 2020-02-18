@@ -26,3 +26,7 @@
 .payment-card-input {
     background-color: #1D2029;
 }
+
+.payment-card-input:focus {
+    background-color: #1D2029;
+}

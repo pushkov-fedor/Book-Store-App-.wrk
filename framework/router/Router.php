@@ -2,6 +2,7 @@
 
 namespace router;
 use controllers\BooksController;
+use controllers\PaymentController;
 use views\ViewApplicationJson;
 
 class Router
@@ -47,7 +48,10 @@ class Router
         foreach ($resolvers as $route => $resolver) {
             if ($route == $requestPath) {
                 $classAndMethod = explode("::", $resolver);
-                call_user_func(array(new $classAndMethod[0](), $classAndMethod[1]));
+                $view = $this->getView();
+                $data = $this->request->getJsonData();
+
+                call_user_func(array($this->createClassByName($classAndMethod[0], $view, $data), $classAndMethod[1]));
                 return;
             }
 
@@ -93,8 +97,9 @@ class Router
             $classAndMethod = explode("::", $resolver);
 
             $view = $this->getView();
+            $data = $this->request->getJsonData();
 
-            call_user_func(array($this->createClassByName($classAndMethod[0], $view), $classAndMethod[1]), ...$args);
+            call_user_func(array($this->createClassByName($classAndMethod[0], $view, $data), $classAndMethod[1]), ...$args);
         }
     }
 
@@ -102,15 +107,19 @@ class Router
         switch ($_SERVER['CONTENT_TYPE']){
             case "application/json":
             case "":
+            default:
                 return new ViewApplicationJson();
                 break;
         }
     }
 
-    private function createClassByName($className, $arg1){
+    private function createClassByName($className, $arg1, $arg2){
         switch ($className){
             case "BooksController":
                 return new BooksController($arg1);
+                break;
+            case "PaymentController":
+                return new PaymentController($arg1, $arg2);
                 break;
         }
     }

@@ -11,7 +11,7 @@ class Request
     public function __construct()
     {
         $this->method = $_SERVER['REQUEST_METHOD'];
-        $this->path = $_SERVER['REQUEST_URI'];
+        $this->path = trim($_SERVER['REQUEST_URI'], '/');
 
         $body = file_get_contents('php://input');
         $this->json_data = json_decode($body, true);

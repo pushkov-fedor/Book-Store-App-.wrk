@@ -42,6 +42,7 @@ import { action, autorun, observable, when } from 'mobx'
 
   when(() => savedBooks.length === 0,
     () => {
+      console.log("when savedBooks.length === 0")
       const books = JSON.parse(localStorage.getItem('books'))
       if (books !== null) setSavedBooks(books);
   })

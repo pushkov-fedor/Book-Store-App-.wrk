@@ -1,12 +1,16 @@
 import React, {useEffect} from 'react';
 import {withRouter} from "react-router-dom";
 import "./AfterPaying.css";
+import { inject, observer } from 'mobx-react'
 
-function AfterPaying(props) {
+const AfterPaying = inject("rootStore")(observer((props) => {
+
+    const setSavedBooks = props.rootStore.bookStore.setSavedBooks;
 
     useEffect(() => {
         if(props.location.state !== undefined && props.location.state.customerEmail !== undefined){
             localStorage.clear();
+            setSavedBooks([]);
         }
     });
 
@@ -21,6 +25,6 @@ function AfterPaying(props) {
             <img className="w-50" src="https://cdn.dribbble.com/users/77552/screenshots/3898134/hurray.png" alt="Happy man"/>
         </div>
     );
-}
+}))
 
 export default withRouter(AfterPaying);

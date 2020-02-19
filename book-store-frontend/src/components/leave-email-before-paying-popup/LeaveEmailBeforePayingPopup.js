@@ -2,7 +2,7 @@ import {Link} from "react-router-dom";
 import React, {useState} from 'react';
 import "./LeaveEmailBeforePayingPopup.css";
 import { inject, observer } from 'mobx-react'
-import { paymentStore } from '../../stores/PaymentStore'
+import { toJS } from 'mobx'
 
 const LeaveEmailBeforePayingPopup = inject("rootStore")(observer(props => {
 
@@ -15,6 +15,17 @@ const LeaveEmailBeforePayingPopup = inject("rootStore")(observer(props => {
 
     function handleChange(event){
         setCustomerEmail(event.target.value);
+    }
+
+    const sendEmail = function(){
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', "http://test.com/api/payment/after");
+        xhr.send(JSON.stringify({customerEmail: customerEmail.get(), books: toJS(props.rootStore.bookStore.savedBooks)}));
+        xhr.onreadystatechange = () => {
+            if(xhr.readyState === XMLHttpRequest.DONE &&  xhr.status === 200){
+
+            }
+        };
     }
 
     return (
@@ -31,7 +42,7 @@ const LeaveEmailBeforePayingPopup = inject("rootStore")(observer(props => {
                         <input type="email" className="form-control" id="inlineFormInputGroup"
                                placeholder="Email" value={customerEmail.get()} onChange={handleChange}/>
                     </div>
-                    <Link to={{pathname: "/after-paying", state: {customerEmail: customerEmail.get()}}}
+                    <Link to={{pathname: "/after-paying", state: {customerEmail: customerEmail.get()}}} onClick={() => sendEmail()}
                           style={{pointerEvents: customerEmail.get() === "" ? "none" : "auto"}}
                           className={`btn ${customerEmail.get() === "" ? "btn-secondary" : "btn-primary"} w-100 col-12 col-sm-3 mx-3`}>Submit</Link>
                 </div>

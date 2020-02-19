@@ -2,6 +2,7 @@
 
 namespace router;
 use controllers\BooksController;
+use controllers\MyBooksController;
 use controllers\PaymentController;
 use views\ViewApplicationJson;
 
@@ -120,6 +121,9 @@ class Router
                 break;
             case "PaymentController":
                 return new PaymentController($arg1, $arg2);
+                break;
+            case "MyBooksController":
+                return new MyBooksController($arg1);
                 break;
         }
     }

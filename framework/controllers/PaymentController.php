@@ -5,18 +5,18 @@ namespace controllers;
 
 
 use phpmailer\Mailer;
-use repositories\PaymentRepository;
+use repositories\MyBooksRepository;
 use views\View;
 
 class PaymentController
 {
-    private PaymentRepository $paymentRepository;
+    private MyBooksRepository $paymentRepository;
     private View $view;
     private $data;
 
     public function __construct($view, $data)
     {
-        $this->paymentRepository = new PaymentRepository();
+        $this->paymentRepository = new MyBooksRepository();
         $this->view = $view;
         $this->data = $data;
     }
@@ -29,6 +29,6 @@ class PaymentController
         $customerBooksUrl = "http://192.168.33.10:3000/myBooks?email=$customerEmail";
         Mailer::send($customerEmail, "Thank you for using our service! You books are bellow",
                      "Follow the link to get your books\n$customerBooksUrl");
-        $this->paymentRepository->saveCustomerPurchases($customerEmail, $customerBooks);
+        $this->paymentRepository->save($customerEmail, $customerBooks);
     }
 }

@@ -8,6 +8,7 @@ import Footer from "./components/footer/Footer";
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import AfterPaying from "./components/after-paying/AfterPaying";
 import { inject, observer } from 'mobx-react'
+import MyBooks from './components/my-books/MyBooks'
 
 const App = inject("rootStore")(observer(props => {
   return (
@@ -24,6 +25,9 @@ const App = inject("rootStore")(observer(props => {
               </Route>
               <Route path="/after-paying">
                   <AfterPaying/>
+              </Route>
+              <Route path="/myBooks">
+                  <MyBooks/>
               </Route>
           </Switch>
       </div>

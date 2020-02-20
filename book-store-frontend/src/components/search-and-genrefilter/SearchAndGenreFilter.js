@@ -4,7 +4,7 @@ import GenreFilter from "../genrefilter/GenreFilter";
 
 function SearchAndGenreFilter() {
     return (
-        <div className="row px-4 px-sm-0 w-100 mt-4 mx-0">
+        <div className="row px-4 px-sm-0 w-100 mt-4 mx-0 d-none">
             <div className="col-12 col-md-5">
                 <Searchbar/>
             </div>

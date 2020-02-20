@@ -13,7 +13,7 @@ function Header(props) {
                     <li className={props.location.pathname === "/shopping-cart" ? "nav-item nav-item-hover nav-item-current" : "nav-item nav-item-hover"} >
                         <Link className="nav-link text-white" to="/shopping-cart">Shopping Cart</Link>
                     </li>
-                    <li className={props.location.pathname === "/login" ? "nav-item nav-item-hover nav-item-current" : "nav-item nav-item-hover"} >
+                    <li className={props.location.pathname === "/login" ? "d-none nav-item nav-item-hover nav-item-current" : "d-none nav-item nav-item-hover"} >
                         <Link className="nav-link text-white" to="/login">Login</Link>
                     </li>
                 </ul>

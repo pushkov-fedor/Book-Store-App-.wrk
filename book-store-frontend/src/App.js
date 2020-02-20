@@ -26,7 +26,7 @@ const App = inject("rootStore")(observer(props => {
               <Route path="/after-paying">
                   <AfterPaying/>
               </Route>
-              <Route path="/myBooks">
+              <Route path="/my-books">
                   <MyBooks/>
               </Route>
           </Switch>

@@ -40,7 +40,7 @@ function ShoppingCartItem(props) {
                 </div>
                 <div className="col-12 col-sm-2 col-md-2 d-flex justify-content-sm-center align-items-center"><h3 className="mb-0 shopping-cart-item-price">{props.price}$</h3></div>
                 <div className="col-12 col-sm-12 col-md-3 py-3 px-sm-0 px-4 d-flex align-items-center justify-content-center">
-                    <div className="row">
+                    <div className="row shopping-cart-items-buttons">
                         <div className="col-4 d-flex justify-content-center align-items-center shopping-cart-item-remove-button" onClick={removeFromCart}>
                             <i className="fas fa-minus text-dark"/>
                         </div>

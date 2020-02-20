@@ -1,0 +1,3 @@
+John Doe	johndoe@gentoo.org	portage
+Chris White	chriswhite@gentoo.org	documentation
+Sam Smith	samsmith@gentoo.org	amd64

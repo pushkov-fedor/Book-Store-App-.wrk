@@ -1,8 +1,22 @@
 import React from 'react'
+import {saveAs} from 'file-saver';
 import "../book-view/BookView.css";
 
 function MyBookView (props) {
 
+
+  const downloadFile = (extension) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", "http://test.com/api/myBooks/get/lala");
+    xhr.responseType = "blob";
+    xhr.onreadystatechange = () => {
+      if(xhr.readyState === XMLHttpRequest.DONE &&  xhr.status === 200){
+        const blob = xhr.response;
+        saveAs(blob, `${props.title}.${extension}`);
+      }
+    }
+    xhr.send();
+  }
 
   const dropdown = <div className="btn-group w-100">
     <button type="button" className="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
@@ -10,9 +24,7 @@ function MyBookView (props) {
       Download
     </button>
     <div className="dropdown-menu w-100">
-      <a className="dropdown-item" href="#">Action</a>
-      <a className="dropdown-item" href="#">Another action</a>
-      <a className="dropdown-item" href="#">Something else here</a>
+      <div className="dropdown-item" onClick={() => downloadFile("pdf")}>As PDF <i className="fas fa-file-pdf"></i></div>
     </div>
   </div>;
 

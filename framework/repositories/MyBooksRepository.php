@@ -12,7 +12,7 @@ class MyBooksRepository
         */
     }
 
-    public function get($email){
+    public function getPurchased($email){
         $books = array();
         for($i = 0; $i <5; $i++){
             $books[$i] = array( 'id' => "$i + $email",
@@ -24,5 +24,10 @@ class MyBooksRepository
                     'https://about.canva.com/wp-content/uploads/sites/3/2015/01/art_bookcover.png');
         }
         return $books;
+    }
+
+    public function getFile($fileId){
+        $file = $_SERVER["DOCUMENT_ROOT"] . "/database/books/the-old-man-and-the-sea.pdf";
+        return $file;
     }
 }

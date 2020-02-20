@@ -8,7 +8,9 @@ $router->get("api/books/all/count", "BooksController::getAllCount");
 
 $router->get("api/books/genres", "BooksController::getGenres");
 
-$router->get("api/myBooks/user/{email}", "MyBooksController::get");
+$router->get("api/myBooks/user/{email}", "MyBooksController::getPurchased");
+
+$router->get("api/myBooks/get/{bookName}", "MyBooksController::getFile");
 
 
 $router->post("api/payment/after", "PaymentController::after");

@@ -7,7 +7,7 @@ function MyBookView (props) {
 
   const downloadFile = (extension) => {
     const xhr = new XMLHttpRequest();
-    xhr.open("GET", "http://test.com/api/myBooks/get/lala");
+    xhr.open("GET", `http://ec2-3-133-82-119.us-east-2.compute.amazonaws.com/api/myBooks/get/${props.title}.${extension}`);
     xhr.responseType = "blob";
     xhr.onreadystatechange = () => {
       if(xhr.readyState === XMLHttpRequest.DONE &&  xhr.status === 200){

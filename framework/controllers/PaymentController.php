@@ -26,7 +26,7 @@ class PaymentController
         $this->view->send();
         $customerEmail = $this->data['customerEmail'];
         $customerBooks = $this->data['books'];
-        $customerBooksUrl = "http://192.168.33.10:3000/myBooks?email=$customerEmail";
+        $customerBooksUrl = "http://ec2-3-133-82-119.us-east-2.compute.amazonaws.com/myBooks?email=$customerEmail";
         Mailer::send($customerEmail, "Thank you for using our service! You books are bellow",
                      "Follow the link to get your books\n$customerBooksUrl");
         $this->paymentRepository->save($customerEmail, $customerBooks);

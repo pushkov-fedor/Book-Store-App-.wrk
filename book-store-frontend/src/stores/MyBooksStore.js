@@ -18,7 +18,7 @@ import { action, observable, when } from 'mobx'
   when(() => customerEmail.get() !== "",
     () => {
       const xhr = new XMLHttpRequest();
-      xhr.open('GET', `http://test.com/api/myBooks/user/${customerEmail}`);
+      xhr.open('GET', `http://ec2-3-133-82-119.us-east-2.compute.amazonaws.com/api/myBooks/user/${customerEmail}`);
       xhr.send();
       xhr.onreadystatechange = () => {
         if(xhr.readyState === XMLHttpRequest.DONE &&  xhr.status === 200){

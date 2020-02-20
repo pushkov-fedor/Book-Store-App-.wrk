@@ -19,7 +19,7 @@ const LeaveEmailBeforePayingPopup = inject("rootStore")(observer(props => {
 
     const sendEmail = function(){
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', "http://test.com/api/payment/after");
+        xhr.open('POST', "http://ec2-3-133-82-119.us-east-2.compute.amazonaws.com/api/payment/after");
         xhr.send(JSON.stringify({customerEmail: customerEmail.get(), books: toJS(props.rootStore.bookStore.savedBooks)}));
         xhr.onreadystatechange = () => {
             if(xhr.readyState === XMLHttpRequest.DONE &&  xhr.status === 200){

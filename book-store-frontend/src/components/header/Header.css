@@ -19,8 +19,6 @@
 .navbar-container {
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     background-color: #191919;
-    position: sticky;
-    position: -webkit-sticky;
 }
 
 .navbar-brand-custom {

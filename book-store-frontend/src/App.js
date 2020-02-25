@@ -9,8 +9,11 @@ import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import AfterPaying from "./components/after-paying/AfterPaying";
 import { inject, observer } from 'mobx-react'
 import MyBooks from './components/my-books/MyBooks'
+import Authentication from './components/authentication/Authentication'
 
 const App = inject("rootStore")(observer(props => {
+    const showAuthPopup = props.rootStore.authStore.showAuthPopup;
+    const auth = showAuthPopup.get() ? <Authentication/> : "";
   return (
     <Router>
       <Header/>
@@ -19,15 +22,19 @@ const App = inject("rootStore")(observer(props => {
               <Route exact path="/">
                   <SearchAndGenreFilter/>
                   <BooksCatalog/>
+                  {auth}
               </Route>
               <Route path="/shopping-cart">
                   <ShoppingCart/>
+                  {auth}
               </Route>
               <Route path="/after-paying">
                   <AfterPaying/>
+                  {auth}
               </Route>
               <Route path="/my-books">
                   <MyBooks/>
+                  {auth}
               </Route>
           </Switch>
       </div>

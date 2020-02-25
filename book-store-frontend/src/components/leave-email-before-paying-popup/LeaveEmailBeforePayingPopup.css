@@ -3,10 +3,18 @@
     left: 0;
     height: 100vh;
     width: 100vw;
-    background-color: rgba(0,0,0,0.35);
+    background-color: #000;
+    opacity: .35;
 }
 
 .leave-email-before-paying-popup-subcontainer {
+    position: fixed;
+    bottom: 40%;
+    left: 0;
+    right: 0;
+}
+
+.leave-email-before-paying-popup-subsubcontainer {
     border-radius: 20px;
 }
 

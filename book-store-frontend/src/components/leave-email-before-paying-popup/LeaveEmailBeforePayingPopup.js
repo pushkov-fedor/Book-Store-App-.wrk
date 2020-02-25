@@ -33,7 +33,7 @@ const LeaveEmailBeforePayingPopup = inject("rootStore")(observer(props => {
         <div className="position-fixed d-flex justify-content-center align-items-center leave-email-before-paying-popup-container"
              id="popup-bg" onClick={handleClickOnBg}>
         </div>
-          <div className="m-5 leave-email-before-paying-popup-subcontainer m-sm-5">
+          <div className="m-5 bg-white leave-email-before-paying-popup-subcontainer m-sm-5">
                   <h3 className="leave-email-before-paying-popup-last-moment-header">One last moment...</h3>
                   <h5 className="leave-email-before-paying-popup-email-header">Before paying leave your email so that we could send you your books</h5>
                   <div className="row mt-3 d-flex justify-content-between align-items-center mx-0">
@@ -48,7 +48,7 @@ const LeaveEmailBeforePayingPopup = inject("rootStore")(observer(props => {
                             style={{pointerEvents: customerEmail.get() === "" ? "none" : "auto"}}
                             className={`btn ${customerEmail.get() === "" ? "btn-secondary" : "btn-primary"} w-100 col-12 col-md-4 col-xl-3 mx-1 mx-xl-3`}>Submit</Link>
                   </div>
-                        </div>
+          </div>
       </div>
     );
 }))

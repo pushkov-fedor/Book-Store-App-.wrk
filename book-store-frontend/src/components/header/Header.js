@@ -17,7 +17,7 @@ const Header = inject("rootStore")(observer((props) => {
                     <li className={props.location.pathname === "/shopping-cart" ? "nav-item nav-item-hover nav-item-current" : "nav-item nav-item-hover"} >
                         <Link className="nav-link text-white" to="/shopping-cart">Shopping Cart</Link>
                     </li>
-                    <li className={showAuthPopup.get() ? "nav-item nav-item-hover nav-item-current" : "nav-item nav-item-hover"}
+                    <li className={showAuthPopup.get() ? "nav-item nav-item-hover nav-item-current" : "nav-item nav-item-hover login-btn"}
                         onClick={() => toggleShowAuthPopup()}>
                         <div className="nav-link text-white">Login</div>
                     </li>

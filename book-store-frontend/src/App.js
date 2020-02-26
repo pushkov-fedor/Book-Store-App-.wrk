@@ -10,6 +10,7 @@ import AfterPaying from "./components/after-paying/AfterPaying";
 import { inject, observer } from 'mobx-react'
 import MyBooks from './components/my-books/MyBooks'
 import Authentication from './components/authentication/Authentication'
+import AdminPanel from './components/admin-panel/AdminPanel'
 
 const App = inject("rootStore")(observer(props => {
     const showAuthPopup = props.rootStore.authStore.showAuthPopup;
@@ -35,6 +36,9 @@ const App = inject("rootStore")(observer(props => {
               <Route path="/my-books">
                   <MyBooks/>
                   {auth}
+              </Route>
+              <Route path="/admin">
+                  <AdminPanel/>
               </Route>
           </Switch>
       </div>

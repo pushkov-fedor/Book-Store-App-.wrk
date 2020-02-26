@@ -19,11 +19,15 @@
 .navbar-container {
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     background-color: #191919;
-    flex: 1 0 auto;
+    flex: 0 0 auto;
     max-height: 158px;
 }
 
 .navbar-brand-custom {
     font-size: 2rem;
     font-weight: 500;
+}
+
+.login-btn {
+    cursor: pointer;
 }

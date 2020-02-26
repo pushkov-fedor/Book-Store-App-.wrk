@@ -1,6 +1,7 @@
 <?php
 
 namespace router;
+use controllers\AdminController;
 use controllers\BooksController;
 use controllers\MyBooksController;
 use controllers\PaymentController;
@@ -118,6 +119,9 @@ class Router
         switch ($className){
             case "BooksController":
                 return new BooksController($arg1);
+                break;
+            case "AdminController":
+                return new AdminController($arg1, $arg2);
                 break;
             case "PaymentController":
                 return new PaymentController($arg1, $arg2);

@@ -18,18 +18,33 @@ class BooksRepository
         }
     }
 
-    public function getAll($page = 0){
+    public function getAll($page = 0, $admin = false){
         $books = array();
         $i = 0;
-        foreach ($this->db->query("SELECT * FROM books") as $row) {
-            $books[$i] = array(
-                'id' => $row["id"],
-                'title' => $row["title"],
-                'author' => $row["author"],
-                'price' => $row["price"],
-                'cover_path' => $row["cover_path"]
-            );
-            $i++;
+        if($admin){
+            foreach ($this->db->query("SELECT * FROM books") as $row) {
+                $books[$i] = array(
+                    'id' => $row["id"],
+                    'title' => $row["title"],
+                    'author' => $row["author"],
+                    'price' => $row["price"],
+                    'cover_path' => $row["cover_path"],
+                    'book_pdf_path' => $row["book_pdf_path"],
+                    'status' => $row["status"]
+                );
+                $i++;
+            }
+        } else {
+            foreach ($this->db->query("SELECT * FROM books") as $row) {
+                $books[$i] = array(
+                    'id' => $row["id"],
+                    'title' => $row["title"],
+                    'author' => $row["author"],
+                    'price' => $row["price"],
+                    'cover_path' => $row["cover_path"]
+                );
+                $i++;
+            }
         }
         return $books;
     }

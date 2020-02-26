@@ -12,7 +12,7 @@ const BooksCatalog = inject("rootStore")(observer(props => {
     let bookElements = books
       .map(book =>
         <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-10" key={book.id}>
-            <BookView id={book.id} cover={book.cover} title={book.title} author={book.author} price={book.price}/>
+            <BookView id={book.id} cover={book.cover_path} title={book.title} author={book.author} price={book.price}/>
         </div>
       );
 

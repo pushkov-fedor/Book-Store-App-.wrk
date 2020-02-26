@@ -36,7 +36,9 @@ const BookView = inject("rootStore")( observer(props => {
 
     return (
         <div className="my-5 mx-xl-3 book-view-container">
-            <img className="mw-100 book-view-cover" src={props.cover} alt="Book cover"/>
+            <img className="mw-100 book-view-cover"
+                 src={`http://ec2-3-133-82-119.us-east-2.compute.amazonaws.com/static/${props.cover}`}
+                 alt="Book cover"/>
             <h2 className="book-view-title">{props.title}</h2>
             <h3 className="book-view-author-and-price">by <span className="book-view-author-and-price-bold">{props.author}</span></h3>
             <h3 className="book-view-author-and-price">Price: <span className="book-view-author-and-price-bold">{props.price}$</span></h3>

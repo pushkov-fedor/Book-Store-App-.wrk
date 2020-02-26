@@ -1,38 +1,43 @@
 <?php
 
 namespace repositories;
+use PDO, PDOException;
 
 class BooksRepository
 {
+
+    private PDO $db;
+
+    public function __construct()
+    {
+        try {
+            $this->db = new PDO('mysql:host=localhost;dbname=test', "root", "admin");
+        } catch (PDOException $e){
+            print "Error!: " . $e->getMessage() . "<br/>";
+            die();
+        }
+    }
+
     public function getAll($page = 0){
         $books = array();
-        if($page == 0) {
-            for ($i = 0; $i < 50; $i++) {
-                $books[$i] = array(
-                    'id' => uniqid(),
-                    'title' => 'Stop Missing Your Life: How to be Deeply Present in an Un-Present World',
-                    'author' => 'Cory Muscara',
-                    'price' => 18.39,
-                    'cover' => 'https://media.ebook.de/shop/coverscans/370/37023255_9780738285313_xl.jpg'
-                );
-            }
-        } else {
-            $booksNumber = $page == 4 ? 2 : 16;
-            for($i = 0; $i < $booksNumber; $i++){
-                $books[$i] = array( 'id' => "$i + $page",
-                    'title' => 'Stop Missing Your Life: How to be Deeply Present in an Un-Present World',
-                    'author' => 'Cory Muscara',
-                    'price' => 18.39,
-                    'cover' => $i % 2 == 0 ?
-                        'https://media.ebook.de/shop/coverscans/370/37023255_9780738285313_xl.jpg' :
-                        'https://about.canva.com/wp-content/uploads/sites/3/2015/01/art_bookcover.png');
-            }
+        $i = 0;
+        foreach ($this->db->query("SELECT * FROM books") as $row) {
+            $books[$i] = array(
+                'id' => $row["id"],
+                'title' => $row["title"],
+                'author' => $row["author"],
+                'price' => $row["price"],
+                'cover_path' => $row["cover_path"]
+            );
+            $i++;
         }
         return $books;
     }
 
     public function getAllCount(){
-        return array('booksCount' => 50);
+        foreach ($this->db->query("SELECT COUNT(*) FROM books") as $row){
+            return array('booksCount' => $row[0]);
+        }
     }
 
     public function getGenres(){

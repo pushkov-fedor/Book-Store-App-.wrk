@@ -1,7 +1,7 @@
 import React from 'react'
 import {saveAs} from 'file-saver';
 import "../book-view/BookView.css";
-import {URL} from '../constants/Constants'
+import {URL} from '../../constants/Constants'
 
 function MyBookView (props) {
 

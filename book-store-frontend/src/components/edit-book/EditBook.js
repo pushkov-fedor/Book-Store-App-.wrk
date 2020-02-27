@@ -2,7 +2,7 @@ import React from 'react'
 import { inject, observer } from 'mobx-react'
 import "./EditBook.css";
 import { action, toJS } from 'mobx'
-import {URL} from '../constants/Constants'
+import {URL} from '../../constants/Constants'
 
 const EditBook = inject("rootStore")(observer((props) => {
   const editedBook = props.rootStore.adminStore.editedBook;

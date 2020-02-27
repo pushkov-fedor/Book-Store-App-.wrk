@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import "./BookView.css";
 import { inject, observer } from 'mobx-react'
-import {URL} from '../constants/Constants'
+import {URL} from '../../constants/Constants'
 
 const BookView = inject("rootStore")( observer(props => {
 

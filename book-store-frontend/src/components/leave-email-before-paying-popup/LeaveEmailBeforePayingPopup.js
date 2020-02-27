@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import "./LeaveEmailBeforePayingPopup.css";
 import { inject, observer } from 'mobx-react'
 import { toJS } from 'mobx'
-import {URL} from '../constants/Constants'
+import {URL} from '../../constants/Constants'
 
 const LeaveEmailBeforePayingPopup = inject("rootStore")(observer(props => {
 

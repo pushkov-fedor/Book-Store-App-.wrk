@@ -27,12 +27,13 @@ class AdminController
     }
 
     public function updateBook(){
-        $uploaddir = './';
-        $uploadfile = $uploaddir . basename($_FILES['file']['name']);
-        if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile)) {
-            echo "Файл корректен и был успешно загружен.\n";
-        } else {
-            echo "Возможная атака с помощью файловой загрузки!\n";
+        $cover = $this->data["files"]["cover"];
+        $pdf = $this->data["files"]["pdf"];
+        if($cover !== null){
+            $uploadedCover = "/vagrant_data/wrk_intern2/static/" . $this->data["json"]->cover_path;
+            move_uploaded_file($this->data["files"]["cover"]['tmp_name'], $uploadedCover);
         }
+        $this->booksRepository->updateBook($this->data["json"]);
+        $this->view->send();
     }
 }

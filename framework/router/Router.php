@@ -6,6 +6,7 @@ use controllers\BooksController;
 use controllers\MyBooksController;
 use controllers\PaymentController;
 use views\ViewApplicationJson;
+use views\ViewMultipartFormData;
 
 class Router
 {
@@ -51,7 +52,7 @@ class Router
             if ($route == $requestPath) {
                 $classAndMethod = explode("::", $resolver);
                 $view = $this->getView();
-                $data = $this->request->getJsonData();
+                $data = $this->request->getData($view->getType());
 
                 call_user_func(array($this->createClassByName($classAndMethod[0], $view, $data), $classAndMethod[1]));
                 return;
@@ -99,20 +100,25 @@ class Router
             $classAndMethod = explode("::", $resolver);
 
             $view = $this->getView();
-            $data = $this->request->getJsonData();
+            $data = $this->request->getData($view->getType());
 
             call_user_func(array($this->createClassByName($classAndMethod[0], $view, $data), $classAndMethod[1]), ...$args);
         }
     }
 
     private function getView(){
+        if(strpos($_SERVER['CONTENT_TYPE'], "multipart/form-data") !== false){
+            return new ViewMultipartFormData("multipart/form-data");
+        }
+
         switch ($_SERVER['CONTENT_TYPE']){
             case "application/json":
             case "":
             default:
-                return new ViewApplicationJson();
+                return new ViewApplicationJson($_SERVER['CONTENT_TYPE']);
                 break;
         }
+
     }
 
     private function createClassByName($className, $arg1, $arg2){

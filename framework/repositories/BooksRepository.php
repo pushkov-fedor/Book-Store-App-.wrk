@@ -49,6 +49,12 @@ class BooksRepository
         return $books;
     }
 
+    public function updateBook($book){
+        $sql = "UPDATE books 
+                SET author=?, title=?, price=? WHERE id=?";
+        $this->db->prepare($sql)->execute([$book->author, $book->title, $book->price, $book->id]);
+    }
+
     public function getAllCount(){
         foreach ($this->db->query("SELECT COUNT(*) FROM books") as $row){
             return array('booksCount' => $row[0]);

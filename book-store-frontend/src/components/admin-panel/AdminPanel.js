@@ -10,8 +10,6 @@ const AdminPanel = inject("rootStore")(observer((props) => {
   const editedBook = props.rootStore.adminStore.editedBook;
   const setEditedBook = props.rootStore.adminStore.setEditedBook;
 
-  console.log(toJS(books));
-
   const rows = toJS(books).map(book => {
     return (
     <tr key={book.id}>

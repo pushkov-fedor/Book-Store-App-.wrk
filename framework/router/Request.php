@@ -6,23 +6,23 @@ class Request
 {
     private $method;
     private $path;
-    private $json_data;
 
     public function __construct()
     {
         $this->method = $_SERVER['REQUEST_METHOD'];
         $this->path = trim($_SERVER['REQUEST_URI'], '/');
-
-        $body = file_get_contents('php://input');
-        $this->json_data = json_decode($body, true);
     }
 
     /**
      * @return mixed
      */
-    public function getJsonData()
+    public function getData($type)
     {
-        return $this->json_data;
+        if($type == "multipart/form-data"){
+            return array("files" => $_FILES, "json" => json_decode($_POST["json"]));
+        } else {
+            return json_decode(file_get_contents('php://input'), true);
+        }
     }
 
     /**

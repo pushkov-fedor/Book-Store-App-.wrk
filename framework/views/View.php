@@ -8,4 +8,5 @@ interface View
 {
     public function send();
     public function putData($data);
+    public function getType();
 }

@@ -12,11 +12,6 @@ const setCurrentPage = action(page => currentPage.set(page));
 const editedBook = observable.box(null);
 const setEditedBook = action(book => editedBook.set(book));
 
-const toggleShowEditBookPopup = action((event) => {
-  if(event === undefined || event.target.id === "edit-book-bg"){
-    editedBook.set(null);
-  }
-})
 
 autorun(() => {
   const xhr = new XMLHttpRequest();
@@ -35,6 +30,5 @@ export const adminStore = {
   currentPage,
   setCurrentPage,
   editedBook,
-  setEditedBook,
-  toggleShowEditBookPopup
+  setEditedBook
 }

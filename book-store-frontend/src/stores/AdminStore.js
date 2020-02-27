@@ -16,7 +16,7 @@ const setEditedBook = action(book => editedBook.set(book));
 
 autorun(() => {
   const xhr = new XMLHttpRequest();
-  xhr.open('GET', `${URL}${currentPage}`);
+  xhr.open('GET', `${URL}api/admin/books/page/${currentPage}`);
   xhr.send();
   xhr.onreadystatechange = () => {
     if(xhr.readyState === XMLHttpRequest.DONE &&  xhr.status === 200){

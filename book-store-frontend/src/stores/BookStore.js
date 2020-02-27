@@ -1,4 +1,5 @@
 import { action, autorun, observable, when } from 'mobx'
+import {URL} from '../constants/Constants'
 
   const books = observable([]);
   const genres = observable([]);
@@ -50,7 +51,7 @@ import { action, autorun, observable, when } from 'mobx'
   when(() => genres.length === 0,
     () => {
       const xhr = new XMLHttpRequest();
-      xhr.open('GET', 'http://ec2-3-133-82-119.us-east-2.compute.amazonaws.com/api/books/genres');
+      xhr.open('GET', `${URL}api/books/genres`);
       xhr.send();
       xhr.onreadystatechange = () => {
         if(xhr.readyState === XMLHttpRequest.DONE &&  xhr.status === 200){
@@ -63,7 +64,7 @@ import { action, autorun, observable, when } from 'mobx'
   when(() => booksCount.get() === 0,
     () => {
       const xhr = new XMLHttpRequest();
-      xhr.open('GET', 'http://ec2-3-133-82-119.us-east-2.compute.amazonaws.com/api/books/all/count');
+      xhr.open('GET', `${URL}api/books/all/count`);
       xhr.send();
       xhr.onreadystatechange = () => {
         if(xhr.readyState === XMLHttpRequest.DONE &&  xhr.status === 200){
@@ -76,7 +77,7 @@ import { action, autorun, observable, when } from 'mobx'
   autorun(() => {
     console.log('getting books');
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', `http://ec2-3-133-82-119.us-east-2.compute.amazonaws.com/api/books/page/${currentPage}`);
+    xhr.open('GET', `${URL}api/books/page/${currentPage}`);
     xhr.send();
     xhr.onreadystatechange = () => {
       if(xhr.readyState === XMLHttpRequest.DONE &&  xhr.status === 200){

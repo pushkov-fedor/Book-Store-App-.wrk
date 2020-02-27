@@ -1,13 +1,14 @@
 import React from 'react'
 import {saveAs} from 'file-saver';
 import "../book-view/BookView.css";
+import {URL} from '../constants/Constants'
 
 function MyBookView (props) {
 
 
   const downloadFile = (extension) => {
     const xhr = new XMLHttpRequest();
-    xhr.open("GET", `http://ec2-3-133-82-119.us-east-2.compute.amazonaws.com/api/myBooks/get/${props.title}.${extension}`);
+    xhr.open("GET", `${URL}api/myBooks/get/${props.title}.${extension}`);
     xhr.responseType = "blob";
     xhr.onreadystatechange = () => {
       if(xhr.readyState === XMLHttpRequest.DONE &&  xhr.status === 200){

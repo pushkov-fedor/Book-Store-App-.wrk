@@ -2,6 +2,7 @@ import React from 'react'
 import { inject, observer } from 'mobx-react'
 import "./EditBook.css";
 import { action, toJS } from 'mobx'
+import {URL} from '../constants/Constants'
 
 const EditBook = inject("rootStore")(observer((props) => {
   const editedBook = props.rootStore.adminStore.editedBook;
@@ -47,7 +48,7 @@ const EditBook = inject("rootStore")(observer((props) => {
     data.append('cover', cover);
     data.append('json', JSON.stringify(json));
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", 'http://ec2-3-133-82-119.us-east-2.compute.amazonaws.com/api/admin/books/update');
+    xhr.open("POST", `${URL}api/admin/books/update`);
     xhr.onreadystatechange = () => {
       if(xhr.readyState === XMLHttpRequest.DONE &&  xhr.status === 200){
         console.log('success');
@@ -82,7 +83,7 @@ const EditBook = inject("rootStore")(observer((props) => {
           </div>
           <div className="col-sm-6 col-12 d-flex flex-column align-items-center">
             <img className="edit-book-cover"
-              src={`http://ec2-3-133-82-119.us-east-2.compute.amazonaws.com/static/${editedBook.get().cover_path}`}></img>
+              src={`${URL}static/${editedBook.get().cover_path}`}></img>
             <label type="button" className="btn btn-primary mt-3" for="cover">
               Change cover   <i className="fas fa-upload ml-2"></i>
             </label>

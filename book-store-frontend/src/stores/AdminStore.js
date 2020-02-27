@@ -1,4 +1,5 @@
 import { action, autorun, observable, when } from 'mobx'
+import {URL} from '../constants/Constants'
 
 const books = observable([]);
 const setBooks = action((updatedBooks) => {
@@ -15,7 +16,7 @@ const setEditedBook = action(book => editedBook.set(book));
 
 autorun(() => {
   const xhr = new XMLHttpRequest();
-  xhr.open('GET', `http://test.com/api/admin/books/page/${currentPage}`);
+  xhr.open('GET', `${URL}${currentPage}`);
   xhr.send();
   xhr.onreadystatechange = () => {
     if(xhr.readyState === XMLHttpRequest.DONE &&  xhr.status === 200){

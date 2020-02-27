@@ -47,7 +47,7 @@ const EditBook = inject("rootStore")(observer((props) => {
     data.append('cover', cover);
     data.append('json', JSON.stringify(json));
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", 'http://test.com/api/admin/books/update');
+    xhr.open("POST", 'http://ec2-3-133-82-119.us-east-2.compute.amazonaws.com/api/admin/books/update');
     xhr.onreadystatechange = () => {
       if(xhr.readyState === XMLHttpRequest.DONE &&  xhr.status === 200){
         console.log('success');

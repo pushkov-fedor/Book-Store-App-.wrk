@@ -30,7 +30,7 @@ class AdminController
         $cover = $this->data["files"]["cover"];
         $pdf = $this->data["files"]["pdf"];
         if($cover !== null){
-            $uploadedCover = "/vagrant_data/wrk_intern2/static/" . $this->data["json"]->cover_path;
+            $uploadedCover = "/book-store-app-wrk/Book-Store-App-.wrk/static/" . $this->data["json"]->cover_path;
             if(!move_uploaded_file($this->data["files"]["cover"]['tmp_name'], $uploadedCover)){
                 header('Access-Control-Allow-Origin: *');
                 http_response_code(500);

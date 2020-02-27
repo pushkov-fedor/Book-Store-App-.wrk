@@ -1,5 +1,6 @@
 import React from 'react';
 import "./ShoppingCartItem.css";
+import {URL} from '../../constants/Constants'
 
 function ShoppingCartItem(props) {
 
@@ -33,7 +34,7 @@ function ShoppingCartItem(props) {
 
     return (
             <div className="w-100 row py-3 mx-0 position-relative shopping-cart-item-container">
-                <div className="col-12 col-sm-4 col-md-3 text-center"><img className="w-75 b shopping-cart-item-book-cover" src={props.cover} alt="..."/></div>
+                <div className="col-12 col-sm-4 col-md-3 text-center"><img className="w-75 b shopping-cart-item-book-cover" src={`${URL}${props.cover}`} alt="..."/></div>
                 <div className="col-12 col-sm-6 col-md-4 overflow-hidden d-flex flex-column justify-content-center mt-3 mt-sm-0">
                     <h2 className="shopping-cart-item-title">{props.title}</h2>
                     <h3 className="shopping-cart-item-author">by <span>{props.author}</span></h3>

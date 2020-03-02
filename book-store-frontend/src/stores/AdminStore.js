@@ -10,8 +10,8 @@ const setBooks = action((updatedBooks) => {
 const currentPage = observable.box(1);
 const setCurrentPage = action(page => currentPage.set(page));
 
-const editedBook = observable.box(null);
-const setEditedBook = action(book => editedBook.set(book));
+const book = observable.box(null);
+const setBook = action(book => book.set(book));
 
 const cover = observable.box(null);
 const setCover = action(newCover => cover.set(newCover));
@@ -22,19 +22,11 @@ const setUploadedCoverAsDataUrlSrc = action(url => uploadedCoverAsDataUrlSrc.set
 const bookPdf = observable.box(null);
 const setBookPdf = action(pdf => bookPdf.set(pdf));
 
-const addBook = observable.box(null);
-const setAddBook = action(book => addBook.set(book));
-
-const isShowAddBookPopup = computed(() => addBook.get() == null ? false : true);
-const showAddBookPopup = action(() => {
-  setAddBook({
-    title: "",
-    author: "",
-    price: 0,
-    cover_path: "/covers/placeholder.png"
-  });
-})
-
+const CURRENT_OPERATION = observable.box("NONE")
+const setCurrentOperation = action((operation) => CURRENT_OPERATION.set(operation));
+const setCurrentOperationAdd = action(() => setCurrentOperation("ADD"));
+const setCurrentOperationEdit = action(() => setCurrentOperation("EDIT"));
+const setCurrentOperationNone = action(() => setCurrentOperation("NONE"));
 
 const uploadFile = action((event) => {
   switch (event.target.id) {
@@ -49,9 +41,9 @@ const uploadFile = action((event) => {
   reader.readAsDataURL(cover.get());
 })
 
-const sendFile = () => {
+const sendFile = action(() => {
   const data = new FormData();
-  const json = toJS(editedBook.get());
+  const json = toJS(book.get());
   json.price = Number(Number(json.price).toFixed(2));
   data.append('cover', cover.get());
   data.append('json', JSON.stringify(json));
@@ -59,24 +51,18 @@ const sendFile = () => {
   xhr.open("POST", `${URL}api/admin/books/update`);
   xhr.onreadystatechange = () => {
     if(xhr.readyState === XMLHttpRequest.DONE &&  xhr.status === 200){
-      setEditedBook(null);
+      setBook(null);
     }
   };
   xhr.send(data);
-}
-
-const toggleShowEditBookPopup = action((event) => {
-  if(event === undefined || event.target.id === "edit-book-bg"){
-    setEditedBook(null);
-  }
 })
 
-const dismissShowAddBookPopup = action((event) => {
-  if(event === undefined || event.target.id === "add-book-bg"){
-    setAddBook(null);
+const dismissPopup = action((event) => {
+  if(event === undefined || event.target.id === "edit-book-bg" || event.target.id == "add-book-bg"){
+    setCurrentOperationNone();
+    setBook(null);
   }
 })
-
 
 autorun(() => {
   const xhr = new XMLHttpRequest();
@@ -94,8 +80,8 @@ export const adminStore = {
   setBooks,
   currentPage,
   setCurrentPage,
-  editedBook,
-  setEditedBook,
+  book,
+  setBook,
   cover,
   setCover,
   uploadedCoverAsDataUrlSrc,
@@ -104,10 +90,9 @@ export const adminStore = {
   setBookPdf,
   uploadFile,
   sendFile,
-  toggleShowEditBookPopup,
-  isShowAddBookPopup,
-  showAddBookPopup,
-  dismissShowAddBookPopup,
-  addBook,
-  setAddBook
+  dismissPopup,
+  CURRENT_OPERATION,
+  setCurrentOperationAdd,
+  setCurrentOperationEdit,
+  setCurrentOperationNone
 }

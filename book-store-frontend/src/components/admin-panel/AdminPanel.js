@@ -8,11 +8,8 @@ import AddBook from '../add-book/AddBook'
 const AdminPanel = inject("rootStore")(observer((props) => {
 
   const books = props.rootStore.adminStore.books;
-  const editedBook = props.rootStore.adminStore.editedBook;
-  const setEditedBook = props.rootStore.adminStore.setEditedBook;
-
-  const showAddBookPopup = props.rootStore.adminStore.showAddBookPopup;
-  const isShowAddBookPopup = props.rootStore.adminStore.isShowAddBookPopup.get();
+  const CURRENT_OPERATION = props.rootStore.adminStore.CURRENT_OPERATION.get();
+  const setBook = props.rootStore.adminStore.setBook;
 
   const rows = toJS(books).map(book => {
     return (
@@ -21,7 +18,7 @@ const AdminPanel = inject("rootStore")(observer((props) => {
       <td className="d-flex justify-content-center"><img src={`http://ec2-3-133-82-119.us-east-2.compute.amazonaws.com/static/${book.cover_path}?${new Date().getTime()}`} className="admin-panel-img-thumbnail"></img></td>
       <td>{book.title}</td>
       <td>{book.author}</td>
-      <td><i className="fas fa-edit fa-2x text-warning" onClick={() => setEditedBook(book)}></i></td>
+      <td><i className="fas fa-edit fa-2x text-warning" onClick={() => setBook(book)}></i></td>
       <td>
         <div className="dropdown">
           <button className="btn btn-primary dropdown-toggle" type="button" id="admin-panel-books-state"
@@ -43,14 +40,23 @@ const AdminPanel = inject("rootStore")(observer((props) => {
     </tr>);
   });
 
-  const editBookPopup = editedBook.get() == null ? "" : <EditBook/>;
-  const addBookPopup = isShowAddBookPopup ? <AddBook/> : "";
-
-  console.log(isShowAddBookPopup);
+  let popup;
+  switch(CURRENT_OPERATION){
+    case "EDIT":
+      popup = <EditBook/>
+      break;
+    case "ADD":
+      popup = <AddBook/>
+      break;
+    case "NONE":
+    default:
+      popup = "";
+      break;
+  }
 
   return (
     <div className="my-5 h-100">
-      <button type="button" className="btn btn-success" onClick={showAddBookPopup}>Add a book</button>
+      <button type="button" className="btn btn-success">Add a book</button>
       <div className="table-responsive h-100">
         <table className="table table-bordered table-hover w-auto my-3">
           <thead>
@@ -68,8 +74,7 @@ const AdminPanel = inject("rootStore")(observer((props) => {
           </tbody>
         </table>
       </div>
-      {editBookPopup}
-      {addBookPopup}
+      {popup}
     </div>
   )
 }))

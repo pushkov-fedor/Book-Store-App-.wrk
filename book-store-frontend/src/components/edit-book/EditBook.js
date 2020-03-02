@@ -5,55 +5,55 @@ import { action, toJS } from 'mobx'
 import {URL} from '../../constants/Constants'
 
 const EditBook = inject("rootStore")(observer((props) => {
-  const editedBook = props.rootStore.adminStore.editedBook;
-  const setEditedBook = props.rootStore.adminStore.setEditedBook;
+  const book = props.rootStore.adminStore.book;
+  const setBook = props.rootStore.adminStore.setBook;
   const uploadedCoverAsDataUrlSrc = props.rootStore.adminStore.uploadedCoverAsDataUrlSrc.get();
   const uploadFile = props.rootStore.adminStore.uploadFile;
   const sendFile = props.rootStore.adminStore.sendFile;
-  const toggleShowEditBookPopup = props.rootStore.adminStore.toggleShowEditBookPopup;
+  const dismissPopup = props.rootStore.adminStore.dismissPopup;
 
-  let id = editedBook.get().id;
-  let title = editedBook.get().title;
-  let author = editedBook.get().author;
-  let price = editedBook.get().price;
-  let cover_path = editedBook.get().cover_path;
-  let book_pdf_path = editedBook.get().book_pdf_path;
-  let status = editedBook.get().status;
+  let id = book.get().id;
+  let title = book.get().title;
+  let author = book.get().author;
+  let price = book.get().price;
+  let cover_path = book.get().cover_path;
+  let book_pdf_path = book.get().book_pdf_path;
+  let status = book.get().status;
 
 
   const onChange = (event) => {
       console.log(event.target.id);
-      let newBook = Object.assign({}, toJS(editedBook.get()));
+      let newBook = Object.assign({}, toJS(book.get()));
       newBook[event.target.id] = event.target.value;
-      setEditedBook(newBook);
+    setBook(newBook);
   }
 
   return (
     <div id="edit-book-bg" className="position-fixed d-flex flex-column justify-content-center align-items-center
     edit-book-bg"
-         onClick={(event) => toggleShowEditBookPopup(event)}>
+         onClick={(event) => dismissPopup(event)}>
       <div className="bg-white p-5 edit-book-container">
         <div className="row">
           <div className="col-sm-6 col-12 edit-book-left-input-group">
             <div className="form-group">
               <label htmlFor="title">Title</label>
               <input type="text" className="form-control" id="title" aria-describedby="emailHelp"
-                     value={editedBook.get().title} onChange={onChange}/>
+                     value={book.get().title} onChange={onChange}/>
             </div>
             <div className="form-group">
               <label htmlFor="author">Author</label>
               <input type="text" className="form-control" id="author"
-                     value={editedBook.get().author} onChange={onChange}/>
+                     value={book.get().author} onChange={onChange}/>
             </div>
             <div className="form-group">
               <label htmlFor="price">Author</label>
               <input type="number" className="form-control" id="price" step="0.01"
-                     value={editedBook.get().price} onChange={onChange}/>
+                     value={book.get().price} onChange={onChange}/>
             </div>
           </div>
           <div className="col-sm-6 col-12 d-flex flex-column align-items-center">
             <img className="edit-book-cover"
-              src={uploadedCoverAsDataUrlSrc === "" ? `${URL}static/${editedBook.get().cover_path}` : uploadedCoverAsDataUrlSrc}/>
+              src={uploadedCoverAsDataUrlSrc === "" ? `${URL}static/${book.get().cover_path}?${new Date().getSeconds()}` : uploadedCoverAsDataUrlSrc}/>
             <label type="button" className="btn btn-primary mt-3" for="cover">
               Change cover   <i className="fas fa-upload ml-2"></i>
             </label>

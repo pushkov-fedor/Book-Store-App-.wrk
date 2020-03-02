@@ -7,9 +7,10 @@ import {URL} from '../../constants/Constants'
 const EditBook = inject("rootStore")(observer((props) => {
   const editedBook = props.rootStore.adminStore.editedBook;
   const setEditedBook = props.rootStore.adminStore.setEditedBook;
-
-  let cover = null;
-  let bookPdf = null;
+  const uploadedCoverAsDataUrlSrc = props.rootStore.adminStore.uploadedCoverAsDataUrlSrc.get();
+  const uploadFile = props.rootStore.adminStore.uploadFile;
+  const sendFile = props.rootStore.adminStore.sendFile;
+  const toggleShowEditBookPopup = props.rootStore.adminStore.toggleShowEditBookPopup;
 
   let id = editedBook.get().id;
   let title = editedBook.get().title;
@@ -19,43 +20,12 @@ const EditBook = inject("rootStore")(observer((props) => {
   let book_pdf_path = editedBook.get().book_pdf_path;
   let status = editedBook.get().status;
 
-  const toggleShowEditBookPopup = (event) => {
-    if(event === undefined || event.target.id === "edit-book-bg"){
-      setEditedBook(null);
-    }
-  }
 
   const onChange = (event) => {
       console.log(event.target.id);
       let newBook = Object.assign({}, toJS(editedBook.get()));
       newBook[event.target.id] = event.target.value;
       setEditedBook(newBook);
-  }
-
-  const uploadFile = (event) => {
-    console.log(event.target.id);
-    switch (event.target.id) {
-      case "cover":
-        cover = event.target.files[0];
-        break;
-    }
-  }
-
-  const sendFile = () => {
-    const data = new FormData();
-    const json = toJS(editedBook.get());
-    json.price = Number(Number(json.price).toFixed(2));
-    data.append('cover', cover);
-    data.append('json', JSON.stringify(json));
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", `${URL}api/admin/books/update`);
-    xhr.onreadystatechange = () => {
-      if(xhr.readyState === XMLHttpRequest.DONE &&  xhr.status === 200){
-        console.log('success');
-      }
-    };
-    xhr.send(data);
-    console.log(cover)
   }
 
   return (
@@ -83,7 +53,7 @@ const EditBook = inject("rootStore")(observer((props) => {
           </div>
           <div className="col-sm-6 col-12 d-flex flex-column align-items-center">
             <img className="edit-book-cover"
-              src={`${URL}static/${editedBook.get().cover_path}`}></img>
+              src={uploadedCoverAsDataUrlSrc === "" ? `${URL}static/${editedBook.get().cover_path}` : uploadedCoverAsDataUrlSrc}/>
             <label type="button" className="btn btn-primary mt-3" for="cover">
               Change cover   <i className="fas fa-upload ml-2"></i>
             </label>

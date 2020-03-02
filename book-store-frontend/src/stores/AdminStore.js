@@ -1,4 +1,4 @@
-import { action, autorun, observable, when } from 'mobx'
+import { action, autorun, observable, toJS, when } from 'mobx'
 import {URL} from '../constants/Constants'
 
 const books = observable([]);
@@ -12,6 +12,51 @@ const setCurrentPage = action(page => currentPage.set(page));
 
 const editedBook = observable.box(null);
 const setEditedBook = action(book => editedBook.set(book));
+
+const cover = observable.box(null);
+const setCover = action(newCover => cover.set(newCover));
+
+const uploadedCoverAsDataUrlSrc = observable.box("");
+const setUploadedCoverAsDataUrlSrc = action(url => uploadedCoverAsDataUrlSrc.set(url));
+
+const bookPdf = observable.box(null);
+const setBookPdf = action(pdf => bookPdf.set(pdf));
+
+
+const uploadFile = action((event) => {
+  switch (event.target.id) {
+    case "cover":
+      setCover(event.target.files[0]);
+      break;
+  }
+  const reader = new FileReader();
+  reader.onloadend = () => {
+    setUploadedCoverAsDataUrlSrc(reader.result);
+  }
+  reader.readAsDataURL(cover.get());
+})
+
+const sendFile = () => {
+  const data = new FormData();
+  const json = toJS(editedBook.get());
+  json.price = Number(Number(json.price).toFixed(2));
+  data.append('cover', cover.get());
+  data.append('json', JSON.stringify(json));
+  const xhr = new XMLHttpRequest();
+  xhr.open("POST", `${URL}api/admin/books/update`);
+  xhr.onreadystatechange = () => {
+    if(xhr.readyState === XMLHttpRequest.DONE &&  xhr.status === 200){
+      setEditedBook(null);
+    }
+  };
+  xhr.send(data);
+}
+
+const toggleShowEditBookPopup = action((event) => {
+  if(event === undefined || event.target.id === "edit-book-bg"){
+    setEditedBook(null);
+  }
+})
 
 
 autorun(() => {
@@ -31,5 +76,14 @@ export const adminStore = {
   currentPage,
   setCurrentPage,
   editedBook,
-  setEditedBook
+  setEditedBook,
+  cover,
+  setCover,
+  uploadedCoverAsDataUrlSrc,
+  setUploadedCoverAsDataUrlSrc,
+  bookPdf,
+  setBookPdf,
+  uploadFile,
+  sendFile,
+  toggleShowEditBookPopup
 }

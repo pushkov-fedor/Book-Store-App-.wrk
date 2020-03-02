@@ -15,6 +15,7 @@
 
 .edit-book-cover {
     max-height: 300px;
+    max-width: 250px;
 }
 
 .edit-book-left-input-group {

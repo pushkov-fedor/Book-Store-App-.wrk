@@ -14,7 +14,7 @@ const AdminPanel = inject("rootStore")(observer((props) => {
     return (
     <tr key={book.id}>
       <th scope="row">1</th>
-      <td className="d-flex justify-content-center"><img src={`http://ec2-3-133-82-119.us-east-2.compute.amazonaws.com/static/${book.cover_path}`} className="admin-panel-img-thumbnail"></img></td>
+      <td className="d-flex justify-content-center"><img src={`http://ec2-3-133-82-119.us-east-2.compute.amazonaws.com/static/${book.cover_path}?${new Date().getTime()}`} className="admin-panel-img-thumbnail"></img></td>
       <td>{book.title}</td>
       <td>{book.author}</td>
       <td><i className="fas fa-edit fa-2x text-warning" onClick={() => setEditedBook(book)}></i></td>

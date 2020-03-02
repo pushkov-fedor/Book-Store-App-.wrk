@@ -3,12 +3,16 @@ import { inject, observer } from 'mobx-react'
 import "./AdminPanel.css"
 import { toJS } from 'mobx'
 import EditBook from '../edit-book/EditBook'
+import AddBook from '../add-book/AddBook'
 
 const AdminPanel = inject("rootStore")(observer((props) => {
 
   const books = props.rootStore.adminStore.books;
   const editedBook = props.rootStore.adminStore.editedBook;
   const setEditedBook = props.rootStore.adminStore.setEditedBook;
+
+  const showAddBookPopup = props.rootStore.adminStore.showAddBookPopup;
+  const isShowAddBookPopup = props.rootStore.adminStore.isShowAddBookPopup.get();
 
   const rows = toJS(books).map(book => {
     return (
@@ -39,13 +43,14 @@ const AdminPanel = inject("rootStore")(observer((props) => {
     </tr>);
   });
 
-  console.log(toJS(books));
-
   const editBookPopup = editedBook.get() == null ? "" : <EditBook/>;
+  const addBookPopup = isShowAddBookPopup ? <AddBook/> : "";
+
+  console.log(isShowAddBookPopup);
 
   return (
     <div className="my-5 h-100">
-      <button type="button" className="btn btn-success">Add a book</button>
+      <button type="button" className="btn btn-success" onClick={showAddBookPopup}>Add a book</button>
       <div className="table-responsive h-100">
         <table className="table table-bordered table-hover w-auto my-3">
           <thead>
@@ -64,6 +69,7 @@ const AdminPanel = inject("rootStore")(observer((props) => {
         </table>
       </div>
       {editBookPopup}
+      {addBookPopup}
     </div>
   )
 }))

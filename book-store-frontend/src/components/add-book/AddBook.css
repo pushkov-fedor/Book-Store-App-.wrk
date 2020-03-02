@@ -1,0 +1,22 @@
+.add-book-bg {
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0,0,0,.35);
+}
+
+.add-book-container {
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 65vh;
+    border-radius: 20px;
+}
+
+.add-book-cover {
+    max-height: 300px;
+    max-width: 250px;
+}
+
+.add-book-left-input-group {
+}

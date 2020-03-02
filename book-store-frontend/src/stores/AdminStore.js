@@ -1,4 +1,4 @@
-import { action, autorun, observable, toJS, when } from 'mobx'
+import { action, autorun, computed, observable, toJS, when } from 'mobx'
 import {URL} from '../constants/Constants'
 
 const books = observable([]);
@@ -21,6 +21,19 @@ const setUploadedCoverAsDataUrlSrc = action(url => uploadedCoverAsDataUrlSrc.set
 
 const bookPdf = observable.box(null);
 const setBookPdf = action(pdf => bookPdf.set(pdf));
+
+const addBook = observable.box(null);
+const setAddBook = action(book => addBook.set(book));
+
+const isShowAddBookPopup = computed(() => addBook.get() == null ? false : true);
+const showAddBookPopup = action(() => {
+  setAddBook({
+    title: "",
+    author: "",
+    price: 0,
+    cover_path: "/covers/placeholder.png"
+  });
+})
 
 
 const uploadFile = action((event) => {
@@ -58,6 +71,12 @@ const toggleShowEditBookPopup = action((event) => {
   }
 })
 
+const dismissShowAddBookPopup = action((event) => {
+  if(event === undefined || event.target.id === "add-book-bg"){
+    setAddBook(null);
+  }
+})
+
 
 autorun(() => {
   const xhr = new XMLHttpRequest();
@@ -85,5 +104,10 @@ export const adminStore = {
   setBookPdf,
   uploadFile,
   sendFile,
-  toggleShowEditBookPopup
+  toggleShowEditBookPopup,
+  isShowAddBookPopup,
+  showAddBookPopup,
+  dismissShowAddBookPopup,
+  addBook,
+  setAddBook
 }

@@ -1,4 +1,4 @@
-import { action, autorun, observable, when } from 'mobx'
+import { action, autorun, observable, when, computed } from 'mobx'
 import {URL} from '../constants/Constants'
 
   const books = observable([]);
@@ -7,6 +7,7 @@ import {URL} from '../constants/Constants'
   const currentPage = observable.box(1);
   const booksCount = observable.box(0);
   const booksPerPage = observable.box(16);
+  const showPagination = computed(() => booksCount.get() > booksPerPage.get());
 
   const setBooks = action(updatedBooks => {
     while (books.length > 0) books.pop();
@@ -100,5 +101,6 @@ import {URL} from '../constants/Constants'
     setBooksPerPage,
     setGenres,
     removeBookFromLocalStorage,
-    addBookToLocalStorage
+    addBookToLocalStorage,
+    showPagination
   }

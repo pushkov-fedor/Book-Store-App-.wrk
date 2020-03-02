@@ -9,6 +9,8 @@ import { toJS } from 'mobx'
 const BooksCatalog = inject("rootStore")(observer(props => {
     const books = toJS(props.rootStore.bookStore.books);
 
+    const showPagination = props.rootStore.bookStore.showPagination;
+
     let bookElements = books
       .map(book =>
         <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-10" key={book.id}>
@@ -16,12 +18,14 @@ const BooksCatalog = inject("rootStore")(observer(props => {
         </div>
       );
 
+    const pagination = showPagination.get() ? <Pagination/> : "";
+
     return (
       <div className="books-catalog-container">
           <div className="row d-flex justify-content-center justify-content-sm-start flex-wrap books-catalog-elements-container">
               {bookElements}
           </div>
-          <Pagination/>
+        {pagination}
       </div>
     );
 }));

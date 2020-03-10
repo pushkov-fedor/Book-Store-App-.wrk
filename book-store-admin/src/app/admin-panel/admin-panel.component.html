@@ -1,0 +1,54 @@
+<div class="my-5 h-100">
+  <button type="button" class="btn btn-success">Add a book</button>
+  <div class="table-responsive h-100 table-wrapper">
+    <table class="table table-bordered table-hover w-auto my-3">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Cover</th>
+        <th scope="col">Title</th>
+        <th scope="col">Author</th>
+        <th scope="col">Edit</th>
+        <th scope="col">State</th>
+      </tr>
+      </thead>
+      <tbody *ngIf="books">
+        <tr *ngFor="let book of books">
+          <th scope="row">1</th>
+          <td class="d-flex justify-content-center">
+            <img [src]="'http://ec2-3-133-82-119.us-east-2.compute.amazonaws.com/static/' + book.cover_path" class="admin-panel-img-thumbnail"/>
+          </td>
+          <td>{{book.title}}</td>
+          <td>{{book.author}}</td>
+          <td>
+            <i class="fas fa-edit fa-2x text-warning" (click)="setEditBook(book)"></i>
+          </td>
+          <td>
+            <div class="btn-group" dropdown>
+              <button id="button-animated" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
+                      aria-controls="dropdown-animated">
+                {{book.status}} <span class="caret"></span>
+              </button>
+              <ul id="dropdown-animated" *dropdownMenu class="dropdown-menu"
+                  role="menu" aria-labelledby="button-animated">
+                <li role="menuitem">
+                  <button [ngClass]="{'dropdown-item':true,'active':book.status === 'Published'}">Published</button>
+                </li>
+                <li role="menuitem">
+                  <button [ngClass]="{'dropdown-item':true,'active':book.status === 'Moderating'}">Moderating</button>
+                </li>
+                <li role="menuitem">
+                  <button [ngClass]="{'dropdown-item':true,'active':book.status === 'Removed from sale'}">Removed from sale</button>
+                </li>
+                <li role="menuitem">
+                  <button [ngClass]="{'dropdown-item':true,'active':book.status === 'Deleted from store'}">Deleted from store</button>
+                </li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <app-edit-book-popup *ngIf="booksService.currentOperation==='EDIT'" ></app-edit-book-popup>
+  </div>
+</div>

@@ -56,7 +56,7 @@ class BooksRepository
     }
 
     public function addBook($book){
-        $sql = "INSERT INTO books set author=?, title=?, price=?, cover_path=?, book_pdf_path=?, genre=?";
+        $sql = "INSERT INTO books (author, title, price, cover_path, book_pdf_path, genre) VALUES (?, ?, ?, ?, ?, ?)";
         $this->db->prepare($sql)->execute([$book->author, $book->title, $book->price,
                                               $book->cover_path, $book->book_pdf_path, "Classic"]);
     }

@@ -58,7 +58,7 @@ class AdminController
         }
         if(pdf !== null){
             $uploadedBookPdf = "/book-store-app-wrk/Book-Store-App-.wrk/static/" . $this->data["json"]->book_pdf_path;
-            if(!move_uploaded_file($this->data["files"]["cover"]['tmp_name'], $uploadedBookPdf)){
+            if(!move_uploaded_file($this->data["files"]["pdf"]['tmp_name'], $uploadedBookPdf)){
                 header('Access-Control-Allow-Origin: *');
                 http_response_code(500);
                 exit;

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BooksService} from "../books.service";
+import {BookImpl} from "../entity/BookImpl";
 import {Book} from "../entity/Book";
 
 @Component({
@@ -8,10 +9,10 @@ import {Book} from "../entity/Book";
   styleUrls: ['./edit-book-popup.component.css']
 })
 export class EditBookPopupComponent implements OnInit {
-  book: Book;
+  book: BookImpl;
 
   constructor(
-    private booksService: BooksService
+    public booksService: BooksService,
   ) { }
 
   ngOnInit(): void {
@@ -22,6 +23,22 @@ export class EditBookPopupComponent implements OnInit {
     if(event.target.id === "edit-book-bg"){
       this.booksService.setCurrentOperation("NONE");
     }
+  }
+
+  handleFileInput(event){
+    switch (event.target.id) {
+      case "cover":
+        this.booksService.uploadCover(event.target.files[0]);
+    }
+  }
+
+  submitForm(){
+    this.book.price = String(Number(this.book.price).toFixed(2));
+    this.booksService.saveBook("update");
+  }
+
+  getCover(){
+    return this.book.getCover();
   }
 
 }

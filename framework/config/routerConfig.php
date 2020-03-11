@@ -22,3 +22,4 @@ $router->get("api/admin/books", "AdminController::getAll");
 $router->get("api/admin/books/page/{page}", "AdminController::getAll");
 
 $router->post("api/admin/books/update", "AdminController::updateBook");
+$router->post("api/admin/books/update", "AdminController::addBook");

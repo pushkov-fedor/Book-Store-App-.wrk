@@ -1,5 +1,5 @@
 <div class="my-5 h-100">
-  <button type="button" class="btn btn-success">Add a book</button>
+  <button type="button" class="btn btn-success" (click)="setAddBook()">Add a book</button>
   <div class="table-responsive h-100 table-wrapper">
     <table class="table table-bordered table-hover w-auto my-3">
       <thead>
@@ -16,7 +16,7 @@
         <tr *ngFor="let book of books">
           <th scope="row">1</th>
           <td class="d-flex justify-content-center">
-            <img [src]="'http://ec2-3-133-82-119.us-east-2.compute.amazonaws.com/static/' + book.cover_path" class="admin-panel-img-thumbnail"/>
+            <img [src]="getCover(book)" class="admin-panel-img-thumbnail"/>
           </td>
           <td>{{book.title}}</td>
           <td>{{book.author}}</td>
@@ -50,5 +50,6 @@
       </tbody>
     </table>
     <app-edit-book-popup *ngIf="booksService.currentOperation==='EDIT'" ></app-edit-book-popup>
+    <app-add-book-popup *ngIf="booksService.currentOperation==='ADD'"></app-add-book-popup>
   </div>
 </div>

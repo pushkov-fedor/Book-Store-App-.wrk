@@ -55,6 +55,12 @@ class BooksRepository
         $this->db->prepare($sql)->execute([$book->author, $book->title, $book->price, $book->id]);
     }
 
+    public function addBook($book){
+        $sql = "INSERT INTO books set author=?, title=?, price=?, cover_path=?, book_pdf_path=?, genre=?";
+        $this->db->prepare($sql)->execute([$book->author, $book->title, $book->price,
+                                              $book->cover_path, $book->book_pdf_path, "Classic"]);
+    }
+
     public function getAllCount(){
         foreach ($this->db->query("SELECT COUNT(*) FROM books") as $row){
             return array('booksCount' => $row[0]);

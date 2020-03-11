@@ -12,11 +12,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { EditBookPopupComponent } from './edit-book-popup/edit-book-popup.component';
 import {FormsModule} from "@angular/forms";
+import { AddBookPopupComponent } from './add-book-popup/add-book-popup.component';
 @NgModule({
   declarations: [
     AppComponent,
     AdminPanelComponent,
-    EditBookPopupComponent
+    EditBookPopupComponent,
+    AddBookPopupComponent
   ],
   imports: [
     BrowserModule,

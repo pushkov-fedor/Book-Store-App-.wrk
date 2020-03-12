@@ -67,4 +67,9 @@ class AdminController
         $this->booksRepository->addBook($this->data["json"]);
         $this->view->send();
     }
+
+    public function deleteBook($id){
+        $this->booksRepository->deleteBook($id);
+        $this->view->send();
+    }
 }

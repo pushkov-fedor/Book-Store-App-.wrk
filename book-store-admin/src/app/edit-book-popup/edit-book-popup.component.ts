@@ -21,7 +21,7 @@ export class EditBookPopupComponent implements OnInit {
 
   dismiss(event){
     if(event.target.id === "edit-book-bg"){
-      this.booksService.setCurrentOperation("NONE");
+      this.booksService.flushCurrentOperation();
     }
   }
 

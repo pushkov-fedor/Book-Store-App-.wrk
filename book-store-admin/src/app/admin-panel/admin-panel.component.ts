@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {BooksService} from "../books.service";
 import {Book} from "../entity/Book";
 import {BookImpl} from "../entity/BookImpl";
-import {map} from "rxjs/operators";
+import {map, switchMap} from "rxjs/operators";
 
 @Component({
   selector: 'app-admin-panel',
@@ -12,14 +12,16 @@ import {map} from "rxjs/operators";
 export class AdminPanelComponent implements OnInit {
   currentPage: number = 1;
   books: BookImpl[];
+  currentOperation: string;
 
   constructor(
     public booksService: BooksService
   ) { }
 
   ngOnInit(): void {
-    this.booksService.getBooks(this.currentPage)
+    this.booksService.subscribeToBooksStream(this.currentPage)
       .pipe(
+        switchMap(stream$ => stream$),
         map((books: Book[]) => {
           return books.map((book: Book) => {
             const bookImpl = new BookImpl().fromJson(book);
@@ -29,7 +31,11 @@ export class AdminPanelComponent implements OnInit {
       )
       .subscribe(books => {
         this.books = books;
+        console.log("Pulling books");
+        console.log(this.books);
       });
+    this.booksService.subscribeToCurrentOperationStream()
+      .subscribe(operation => this.currentOperation = operation);
   }
 
   setEditBook(book: BookImpl){
@@ -38,6 +44,10 @@ export class AdminPanelComponent implements OnInit {
 
   setAddBook(){
     this.booksService.setAddBook();
+  }
+
+  deleteBook(book: BookImpl){
+    this.booksService.deleteBook(book.id);
   }
 
   getCover(book: BookImpl): string{

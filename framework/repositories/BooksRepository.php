@@ -61,6 +61,11 @@ class BooksRepository
                                               $book->cover_path, $book->book_pdf_path, "Classic", "Moderating"]);
     }
 
+    public function deleteBook($id){
+        $sql = "DELETE FROM books WHERE id = :id";
+        $this->db->prepare($sql)->bindValue(':id', $id)->execute();
+    }
+
     public function getAllCount(){
         foreach ($this->db->query("SELECT COUNT(*) FROM books") as $row){
             return array('booksCount' => $row[0]);

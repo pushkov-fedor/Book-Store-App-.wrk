@@ -2,20 +2,39 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Book} from "./entity/Book";
 import {BookImpl} from "./entity/BookImpl";
+import {BehaviorSubject, Observable, timer} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class BooksService {
   book: BookImpl;
-  currentOperation: string = "NONE";
+  lastPage: number;
+  booksStream$: BehaviorSubject<Observable<Book[]>>;
+  currentOperation$: BehaviorSubject<string>;
 
   constructor(
     private http: HttpClient
-  ) { }
+  ) {
+    this.currentOperation$ = new BehaviorSubject<string>("NONE");
+  }
 
-  getBooks(page: number){
+  private getBooks(page: number){
     return this.http.get<Book[]>(`http://ec2-3-133-82-119.us-east-2.compute.amazonaws.com/api/admin/books/page/${page}`);
+  }
+
+  subscribeToBooksStream(startPage: number){
+    this.lastPage = startPage;
+    this.booksStream$ = new BehaviorSubject(this.getBooks(startPage));
+    return this.booksStream$;
+  }
+
+  subscribeToCurrentOperationStream(){
+    return this.currentOperation$;
+  }
+
+  private sendBooksToSubscribers(){
+    this.booksStream$.next(this.getBooks(this.lastPage));
   }
 
   setEditBook(book: BookImpl){
@@ -37,8 +56,12 @@ export class BooksService {
     this.setCurrentOperation("ADD");
   }
 
-  setCurrentOperation(operation: string){
-    this.currentOperation = operation;
+  flushCurrentOperation(){
+    this.setCurrentOperation("NONE");
+  }
+
+  private setCurrentOperation(operation: string){
+    this.currentOperation$.next(operation);
   }
 
   uploadCover(file){
@@ -64,9 +87,18 @@ export class BooksService {
     data.append('pdf', this.book.uploadedBookPdf);
     data.append('json', JSON.stringify((<Book>this.book)));
     this.http.post(`http://ec2-3-133-82-119.us-east-2.compute.amazonaws.com/api/admin/books/${method}`, data)
-      .subscribe((obj) => console.log(obj));
+      .subscribe(null);
     this.book = undefined;
     this.setCurrentOperation("NONE");
+    timer(1000)
+      .subscribe((value => this.sendBooksToSubscribers()));
+  }
+
+  deleteBook(id: string){
+    this.http.post(`http://ec2-3-133-82-119.us-east-2.compute.amazonaws.com/api/admin/books/delete/${id}`, null)
+      .subscribe();
+    timer(1000)
+      .subscribe((value => this.sendBooksToSubscribers()));
   }
 
 }

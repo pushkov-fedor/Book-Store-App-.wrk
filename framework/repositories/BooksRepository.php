@@ -63,7 +63,7 @@ class BooksRepository
 
     public function deleteBook($id){
         $sql = "DELETE FROM books WHERE id = :id";
-        $this->db->prepare($sql)->bindValue(':id', $id)->execute();
+        $this->db->prepare($sql)->execute([":id" => $id]);
     }
 
     public function getAllCount(){

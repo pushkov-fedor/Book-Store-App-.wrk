@@ -51,40 +51,26 @@ import {URL} from '../constants/Constants'
 
   when(() => genres.length === 0,
     () => {
-      const xhr = new XMLHttpRequest();
-      xhr.open('GET', `${URL}api/books/genres`);
-      xhr.send();
-      xhr.onreadystatechange = () => {
-        if(xhr.readyState === XMLHttpRequest.DONE &&  xhr.status === 200){
-          const response = JSON.parse(xhr.responseText)
-          setGenres(response.genres);
-        }
-      }
+      fetch(`${URL}api/books/genres`)
+        .then(response => response.json())
+        .then(response => setGenres(response.genres))
+        .catch(error => console.log(error));
+
   })
 
   when(() => booksCount.get() === 0,
     () => {
-      const xhr = new XMLHttpRequest();
-      xhr.open('GET', `${URL}api/books/all/count`);
-      xhr.send();
-      xhr.onreadystatechange = () => {
-        if(xhr.readyState === XMLHttpRequest.DONE &&  xhr.status === 200){
-          const response = JSON.parse(xhr.responseText);
-          setBooksCount(response.booksCount);
-        }
-      }
+      fetch(`${URL}api/books/all/count`)
+        .then(response => response.json())
+        .then(response => setBooksCount(response.booksCount))
+        .catch(error => console.log(error));
     })
 
   autorun(() => {
-    console.log('getting books');
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', `${URL}api/books/page/${currentPage}`);
-    xhr.send();
-    xhr.onreadystatechange = () => {
-      if(xhr.readyState === XMLHttpRequest.DONE &&  xhr.status === 200){
-        setBooks(JSON.parse(xhr.responseText));
-      }
-    };
+    fetch(`${URL}api/books/page/${currentPage}`)
+      .then(response => response.json())
+      .then(response => setBooks(response))
+      .catch(error => console.log(error));
   })
 
   export const bookStore = {

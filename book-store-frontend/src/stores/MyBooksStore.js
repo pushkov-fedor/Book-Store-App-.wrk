@@ -18,15 +18,10 @@ import {URL} from '../constants/Constants'
 
   when(() => customerEmail.get() !== "",
     () => {
-      const xhr = new XMLHttpRequest();
-      xhr.open('GET', `${URL}api/myBooks/user/${customerEmail}`);
-      xhr.send();
-      xhr.onreadystatechange = () => {
-        if(xhr.readyState === XMLHttpRequest.DONE &&  xhr.status === 200){
-          const response = JSON.parse(xhr.responseText)
-          setBooks(response);
-        }
-      }
+      fetch(`${URL}api/myBooks/user/${customerEmail}`)
+        .then(response => response.json())
+        .then(response => setBooks(response))
+        .catch(error => console.log(error));
   });
 
   export const myBooksStore = {

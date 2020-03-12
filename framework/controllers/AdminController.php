@@ -20,18 +20,20 @@ class AdminController
         $this->data = $data;
     }
 
-    public function getAll($page = 0){
+    public function getAll($page = 0)
+    {
         $books = $this->booksRepository->getAll($page, true);
         $this->view->putData($books);
         $this->view->send();
     }
 
-    public function updateBook(){
+    public function updateBook()
+    {
         $cover = $this->data["files"]["cover"];
         $pdf = $this->data["files"]["pdf"];
-        if($cover !== null){
+        if ($cover !== null) {
             $uploadedCover = "/book-store-app-wrk/Book-Store-App-.wrk/static/" . $this->data["json"]->cover_path;
-            if(!move_uploaded_file($this->data["files"]["cover"]['tmp_name'], $uploadedCover)){
+            if (!move_uploaded_file($this->data["files"]["cover"]['tmp_name'], $uploadedCover)) {
                 header('Access-Control-Allow-Origin: *');
                 http_response_code(500);
                 exit;
@@ -41,24 +43,25 @@ class AdminController
         $this->view->send();
     }
 
-    public function addBook(){
+    public function addBook()
+    {
         $cover = $this->data["files"]["cover"];
         $pdf = $this->data["files"]["pdf"];
 
         $uniqueName = uniqid();
         $this->data["json"]->cover_path = "covers/$uniqueName.png";
         $this->data["json"]->book_pdf_path = "books/$uniqueName.pdf";
-        if($cover !== null){
+        if ($cover !== null) {
             $uploadedCover = "/book-store-app-wrk/Book-Store-App-.wrk/static/" . $this->data["json"]->cover_path;
-            if(!move_uploaded_file($this->data["files"]["cover"]['tmp_name'], $uploadedCover)){
+            if (!move_uploaded_file($this->data["files"]["cover"]['tmp_name'], $uploadedCover)) {
                 header('Access-Control-Allow-Origin: *');
                 http_response_code(500);
                 exit;
             }
         }
-        if($pdf !== null){
+        if ($pdf !== null) {
             $uploadedBookPdf = "/book-store-app-wrk/Book-Store-App-.wrk/static/" . $this->data["json"]->book_pdf_path;
-            if(!move_uploaded_file($this->data["files"]["pdf"]['tmp_name'], $uploadedBookPdf)){
+            if (!move_uploaded_file($this->data["files"]["pdf"]['tmp_name'], $uploadedBookPdf)) {
                 header('Access-Control-Allow-Origin: *');
                 http_response_code(500);
                 exit;
@@ -68,7 +71,8 @@ class AdminController
         $this->view->send();
     }
 
-    public function deleteBook($id){
+    public function deleteBook($id)
+    {
         $this->booksRepository->deleteBook($id);
         $this->view->send();
     }

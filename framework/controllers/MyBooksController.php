@@ -18,19 +18,21 @@ class MyBooksController
         $this->myBooksRepository = new MyBooksRepository();
     }
 
-    public function getPurchased($email){
+    public function getPurchased($email)
+    {
         $books = $this->myBooksRepository->getPurchased($email);
         $this->view->putData($books);
         $this->view->send();
     }
 
-    public function getFile($fileId){
+    public function getFile($fileId)
+    {
         $file = $this->myBooksRepository->getFile($fileId);
         if (file_exists($file)) {
             header('Access-Control-Allow-Origin: *');
             header('Content-Description: File Transfer');
             header('Content-Type: application/octet-stream');
-            header('Content-Disposition: attachment; filename="'.basename($file).'"');
+            header('Content-Disposition: attachment; filename="' . basename($file) . '"');
             header('Expires: 0');
             header('Cache-Control: must-revalidate');
             header('Pragma: public');

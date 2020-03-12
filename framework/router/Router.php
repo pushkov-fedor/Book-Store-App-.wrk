@@ -1,6 +1,7 @@
 <?php
 
 namespace router;
+
 use controllers\AdminController;
 use controllers\BooksController;
 use controllers\MyBooksController;
@@ -102,27 +103,32 @@ class Router
             $view = $this->getView();
             $data = $this->request->getData($view->getType());
 
-            call_user_func(array($this->createClassByName($classAndMethod[0], $view, $data), $classAndMethod[1]), ...$args);
+            call_user_func(
+                array($this->createClassByName($classAndMethod[0], $view, $data), $classAndMethod[1]),
+                ...
+                $args
+            );
         }
     }
 
-    private function getView(){
-        if(strpos($_SERVER['CONTENT_TYPE'], "multipart/form-data") !== false){
+    private function getView()
+    {
+        if (strpos($_SERVER['CONTENT_TYPE'], "multipart/form-data") !== false) {
             return new ViewMultipartFormData("multipart/form-data");
         }
 
-        switch ($_SERVER['CONTENT_TYPE']){
+        switch ($_SERVER['CONTENT_TYPE']) {
             case "application/json":
             case "":
             default:
                 return new ViewApplicationJson($_SERVER['CONTENT_TYPE']);
                 break;
         }
-
     }
 
-    private function createClassByName($className, $arg1, $arg2){
-        switch ($className){
+    private function createClassByName($className, $arg1, $arg2)
+    {
+        switch ($className) {
             case "BooksController":
                 return new BooksController($arg1);
                 break;

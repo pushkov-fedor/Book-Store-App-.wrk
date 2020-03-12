@@ -1,7 +1,9 @@
 <?php
 
 namespace repositories;
-use PDO, PDOException;
+
+use PDO;
+use PDOException;
 
 class BooksRepository
 {
@@ -12,16 +14,17 @@ class BooksRepository
     {
         try {
             $this->db = new PDO('mysql:host=localhost;dbname=test', "root", "admin");
-        } catch (PDOException $e){
+        } catch (PDOException $e) {
             print "Error!: " . $e->getMessage() . "<br/>";
             die();
         }
     }
 
-    public function getAll($page = 0, $admin = false){
+    public function getAll($page = 0, $admin = false)
+    {
         $books = array();
         $i = 0;
-        if($admin){
+        if ($admin) {
             foreach ($this->db->query("SELECT * FROM books") as $row) {
                 $books[$i] = array(
                     'id' => $row["id"],
@@ -49,53 +52,71 @@ class BooksRepository
         return $books;
     }
 
-    public function updateBook($book){
+    public function updateBook($book)
+    {
         $sql = "UPDATE books 
                 SET author=?, title=?, price=? WHERE id=?";
         $this->db->prepare($sql)->execute([$book->author, $book->title, $book->price, $book->id]);
     }
 
-    public function addBook($book){
+    public function addBook($book)
+    {
         $sql = "INSERT INTO books (author, title, price, cover_path, book_pdf_path, genre, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        $this->db->prepare($sql)->execute([$book->author, $book->title, $book->price,
-                                              $book->cover_path, $book->book_pdf_path, "Classic", "Moderating"]);
+        $this->db->prepare($sql)->execute(
+            [
+                $book->author,
+                $book->title,
+                $book->price,
+                $book->cover_path,
+                $book->book_pdf_path,
+                "Classic",
+                "Moderating"
+            ]
+        );
     }
 
-    public function deleteBook($id){
+    public function deleteBook($id)
+    {
         $sql = "DELETE FROM books WHERE id = :id";
         $this->db->prepare($sql)->execute([":id" => $id]);
     }
 
-    public function getAllCount(){
-        foreach ($this->db->query("SELECT COUNT(*) FROM books") as $row){
+    public function getAllCount()
+    {
+        foreach ($this->db->query("SELECT COUNT(*) FROM books") as $row) {
             return array('booksCount' => $row[0]);
         }
     }
 
-    public function getGenres(){
-        return array('genres' =>
-            array('Action and Adventure',
-            'Anthology',
-            'Classic',
-            'Comic and Graphic Novel',
-            'Crime and Detective',
-            'Drama',
-            'Fable',
-            'Fairy Tale',
-            'Fan-Fiction',
-            'Fantasy',
-            'Historical Fiction',
-            'Horror',
-            'Humor',
-            'Legend',
-            'Magical Realism',
-            'Mystery',
-            'Mythology',
-            'Realistic Fiction',
-            'Romance',
-            'Satire',
-            'Science Fiction (Sci-Fi)',
-            'Short Story',
-            'Suspense/Thriller'));
+    public function getGenres()
+    {
+        return array(
+            'genres' =>
+                array(
+                    'Action and Adventure',
+                    'Anthology',
+                    'Classic',
+                    'Comic and Graphic Novel',
+                    'Crime and Detective',
+                    'Drama',
+                    'Fable',
+                    'Fairy Tale',
+                    'Fan-Fiction',
+                    'Fantasy',
+                    'Historical Fiction',
+                    'Horror',
+                    'Humor',
+                    'Legend',
+                    'Magical Realism',
+                    'Mystery',
+                    'Mythology',
+                    'Realistic Fiction',
+                    'Romance',
+                    'Satire',
+                    'Science Fiction (Sci-Fi)',
+                    'Short Story',
+                    'Suspense/Thriller'
+                )
+        );
     }
 }

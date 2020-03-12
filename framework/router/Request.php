@@ -18,7 +18,7 @@ class Request
      */
     public function getData($type)
     {
-        if($type == "multipart/form-data"){
+        if ($type == "multipart/form-data") {
             return array("files" => $_FILES, "json" => json_decode($_POST["json"]));
         } else {
             return json_decode(file_get_contents('php://input'), true);

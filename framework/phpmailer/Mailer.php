@@ -2,12 +2,12 @@
 
 
 namespace phpmailer;
-use phpmailer\PHPMailer, phpmailer\SMTP;
 
 class Mailer
 {
 
-    public static function send($to, $subject, $body){
+    public static function send($to, $subject, $body)
+    {
         $mail = new PHPMailer();
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';
@@ -22,7 +22,7 @@ class Mailer
 
         $mail->Body = $body;
         if (!$mail->send()) {
-            echo 'Mailer Error: '. $mail->ErrorInfo;
+            echo 'Mailer Error: ' . $mail->ErrorInfo;
         } else {
             echo 'Message sent!';
         }

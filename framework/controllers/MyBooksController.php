@@ -29,15 +29,10 @@ class MyBooksController
     {
         $file = $this->myBooksRepository->getFile($fileId);
         if (file_exists($file)) {
-            header('Access-Control-Allow-Origin: *');
-            header('Content-Description: File Transfer');
-            header('Content-Type: application/octet-stream');
-            header('Content-Disposition: attachment; filename="' . basename($file) . '"');
-            header('Expires: 0');
-            header('Cache-Control: must-revalidate');
-            header('Pragma: public');
-            header('Content-Length: ' . filesize($file));
-            readfile($file);
+            $this->view->putData($file);
+            $this->view->send();
+        } else {
+            $this->view->error(500);
         }
     }
 }

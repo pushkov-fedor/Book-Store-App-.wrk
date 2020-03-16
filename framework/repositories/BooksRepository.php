@@ -2,6 +2,7 @@
 
 namespace repositories;
 
+use entity\Book;
 use PDO;
 use PDOException;
 
@@ -26,53 +27,38 @@ class BooksRepository
         $i = 0;
         if ($admin) {
             foreach ($this->db->query("SELECT * FROM books") as $row) {
-                $books[$i] = array(
-                    'id' => $row["id"],
-                    'title' => $row["title"],
-                    'author' => $row["author"],
-                    'price' => $row["price"],
-                    'cover_path' => $row["cover_path"],
-                    'book_pdf_path' => $row["book_pdf_path"],
-                    'status' => $row["status"]
+                $books[$i] = new Book(
+                    $row["id"],
+                    $row["title"],
+                    $row["author"],
+                    $row["price"],
+                    $row["cover_path"],
+                    $row["book_pdf_path"],
+                    $row["genre"],
+                    $row["status"],
                 );
                 $i++;
             }
         } else {
             foreach ($this->db->query("SELECT * FROM books") as $row) {
-                $books[$i] = array(
-                    'id' => $row["id"],
-                    'title' => $row["title"],
-                    'author' => $row["author"],
-                    'price' => $row["price"],
-                    'cover_path' => $row["cover_path"]
-                );
+                $books[$i] = new Book($row["id"], $row["title"], $row["author"], $row["price"], $row["cover_path"]);
                 $i++;
             }
         }
         return $books;
     }
 
-    public function updateBook($book)
+    public function updateBook(Book $book)
     {
         $sql = "UPDATE books 
                 SET author=?, title=?, price=? WHERE id=?";
-        $this->db->prepare($sql)->execute([$book->author, $book->title, $book->price, $book->id]);
+        $this->db->prepare($sql)->execute([$book->getAuthor(), $book->getTitle(), $book->getPrice(), $book->getId()]);
     }
 
     public function addBook($book)
     {
         $sql = "INSERT INTO books (author, title, price, cover_path, book_pdf_path, genre, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        $this->db->prepare($sql)->execute(
-            [
-                $book->author,
-                $book->title,
-                $book->price,
-                $book->cover_path,
-                $book->book_pdf_path,
-                "Classic",
-                "Moderating"
-            ]
-        );
+        $this->db->prepare($sql)->execute($book);
     }
 
     public function deleteBook($id)

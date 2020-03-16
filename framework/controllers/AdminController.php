@@ -4,6 +4,7 @@
 namespace controllers;
 
 
+use entity\Book;
 use repositories\BooksRepository;
 use views\View;
 
@@ -39,7 +40,9 @@ class AdminController
                 exit;
             }
         }
-        $this->booksRepository->updateBook($this->data["json"]);
+        $json = $this->data["json"];
+        $book = new Book($json->id, $json->author, $json->title, $json->price);
+        $this->booksRepository->updateBook($book);
         $this->view->send();
     }
 
@@ -67,7 +70,9 @@ class AdminController
                 exit;
             }
         }
-        $this->booksRepository->addBook($this->data["json"]);
+        $json = $this->data["json"];
+        $book = new Book($json->id, $json->author, $json->title, $json->price, $json->cover_path, $json->book_pdf_path, "Classic", $json->status);
+        $this->booksRepository->addBook($book);
         $this->view->send();
     }
 

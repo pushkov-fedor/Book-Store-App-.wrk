@@ -29,4 +29,9 @@ class ViewApplicationJson implements View
     {
         return $this->type;
     }
+
+    public function error($code)
+    {
+        http_response_code($code);
+    }
 }

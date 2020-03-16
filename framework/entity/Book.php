@@ -2,7 +2,7 @@
 
 namespace entity;
 
-class Book
+class Book implements \JsonSerializable
 {
     private string $id;
     private string $title;
@@ -22,8 +22,7 @@ class Book
         $book_pdf_path = "forbidden",
         $genre = "forbidden",
         $status = "forbidden"
-    )
-    {
+    ) {
         $this->id = $id;
         $this->title = $title;
         $this->author = $author;
@@ -144,5 +143,22 @@ class Book
     public function setStatus($status): void
     {
         $this->status = $status;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function jsonSerialize()
+    {
+        return array(
+            'id' => $this->id,
+            'title' => $this->title,
+            'author' => $this->author,
+            'price' => $this->price,
+            'cover_path' => $this->cover_path,
+            'book_pdf_path' => $this->book_pdf_path,
+            'genre' => $this->genre,
+            'status' => $this->status
+        );
     }
 }

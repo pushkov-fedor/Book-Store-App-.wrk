@@ -17,12 +17,12 @@ class ViewApplicationJson implements View
     public function send()
     {
         header('Access-Control-Allow-Origin: *');
-        echo json_encode($this->data);
+        echo $this->data;
     }
 
     public function putData($data)
     {
-        $this->data = $data;
+        $this->data = json_encode($data);
     }
 
     public function getType()

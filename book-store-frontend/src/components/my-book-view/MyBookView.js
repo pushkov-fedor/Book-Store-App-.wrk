@@ -18,6 +18,7 @@ function MyBookView(props) {
         <a
           className="dropdown-item"
           href={`${URL}api/myBooks/get/${props.title}.pdf`}
+          type="multipart/form-data"
           download
         >
           As PDF <i className="fas fa-file-pdf"></i>

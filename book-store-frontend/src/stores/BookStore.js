@@ -3,13 +3,15 @@ import { URL } from "../constants/Constants";
 
 const books = observable([]);
 const genres = computed(() => {
-  const gens = [];
-  books.forEach(book => {
-    if (gens.find(book.genre) === undefined) {
-      gens.push(book.genre);
-    }
-  });
-  return gens;
+  // const gens = [];
+  // toJS(books).forEach(book => {
+  //   console.log(book);
+  //   if (gens.find(book.genre) === undefined) {
+  //     gens.push(book.genre);
+  //   }
+  // });
+  // return gens;
+  return ["A", "B", "C"];
 });
 const savedBooks = observable([]);
 const savedBooksSnapshot = observable([]);
@@ -82,7 +84,7 @@ when(
   () => {
     fetch(`${URL}api/books/genres`)
       .then(response => response.json())
-      .then(response => setGenres(response.genres))
+      .then(response => console.log(response))
       .catch(error => console.log(error));
   }
 );

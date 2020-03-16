@@ -4,36 +4,15 @@ import { inject, observer } from 'mobx-react'
 import {URL} from '../../constants/Constants'
 
 const BookView = inject("rootStore")( observer(props => {
+    const isBookInShoppingCart = props.rootStore.bookStore.isBookInShoppingCart;
+    const addBookToLocalStorage = props.rootStore.bookStore.addBookToLocalStorage;
+    const removeBookFromLocalStorage = props.rootStore.bookStore.removeBookFromLocalStorage;
 
-    const savedBooks = props.rootStore.bookStore.savedBooks;
-    const setSavedBooks = props.rootStore.bookStore.setSavedBooks;
-
-    const [isBookInShoppingCart, setIsBookInShoppingCart] = useState(false)
-    useEffect(() => {
-        const isBookInShoppingCart = savedBooks.find(book => book.id === props.id)
-        setIsBookInShoppingCart(Boolean(isBookInShoppingCart));
-    }, [savedBooks.length]);
-
-    function addToShoppingCart(id, cover, title, author, price){
-        const booksCopy = savedBooks.slice()
-        booksCopy.push({id, cover, title, author, price});
-        localStorage.setItem('books', JSON.stringify(booksCopy));
-        setSavedBooks(booksCopy);
-        setIsBookInShoppingCart(true);
-    }
-
-    function removeFromShoppingCart(id){
-        const books = savedBooks.filter(book => book.id !== id)
-        localStorage.setItem('books', JSON.stringify(books));
-        setSavedBooks(books);
-        setIsBookInShoppingCart(false);
-    }
-
-    const button = (isBookInShoppingCart === false) ?
+    const button = (isBookInShoppingCart(props.id) === false) ?
       (<button type="button" className="btn btn-success btn-block py-2 shadow"
-               onClick={() => addToShoppingCart(props.id, props.cover, props.title, props.author, props.price)}>Add</button>) :
+               onClick={() => addBookToLocalStorage(props.id, props.cover, props.title, props.author, props.price)}>Add</button>) :
       (<button type="button" className="btn btn-primary btn-block py-2 shadow"
-               onClick={() => removeFromShoppingCart(props.id)}>Remove</button>)
+               onClick={() => removeBookFromLocalStorage(props.id)}>Remove</button>)
 
     return (
         <div className="my-5 mx-xl-3 book-view-container">

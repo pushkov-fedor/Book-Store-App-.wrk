@@ -1,8 +1,8 @@
-import {bookStore} from './BookStore';
-import {paymentStore} from './PaymentStore'
-import {myBooksStore} from './MyBooksStore'
-import { authStore } from './AuthStore'
-import { adminStore } from './AdminStore'
+import { bookStore } from "./BookStore";
+import { paymentStore } from "./PaymentStore";
+import { myBooksStore } from "./MyBooksStore";
+import { authStore } from "./AuthStore";
+import { adminStore } from "./AdminStore";
 
 export const rootStore = {
   bookStore,
@@ -10,4 +10,4 @@ export const rootStore = {
   myBooksStore,
   authStore,
   adminStore
-}
+};

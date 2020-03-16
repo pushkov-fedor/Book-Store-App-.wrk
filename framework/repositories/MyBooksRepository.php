@@ -32,7 +32,7 @@ class MyBooksRepository
 
     public function getFile($fileId)
     {
-        $file = $_SERVER["DOCUMENT_ROOT"] . "/database/books/the-old-man-and-the-sea.pdf";
+        $file = $_SERVER["DOCUMENT_ROOT"] . "/static/books/the-old-man-and-the-sea.pdf";
         return $file;
     }
 }

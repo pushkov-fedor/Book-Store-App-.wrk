@@ -8,7 +8,6 @@ const toggleShowAuthPopup = action((event) => {
   }
 })
 
-
 export const authStore = {
   showAuthPopup,
   toggleShowAuthPopup

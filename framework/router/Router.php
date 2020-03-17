@@ -43,7 +43,20 @@ class Router
                 break;
             case "POST":
                 $this->resolvePath($path, $this->post_resolvers);
+            case "OPTIONS":
+                header("Access-Control-Allow-Origin: *");
+                header("Access-Control-Allow-Headers: Accept, Content-Type");
+                return;
         }
+        $class = "controllers\\".$this->request->getControllerClass();
+        $method = $this->request->getControllerMethod();
+        $view = "views\\".$this->getView($this->request->getAccepted());
+
+        $this->execute($class, $method, $view, $this->request->getArgs());
+    }
+
+    private function execute(string $class, string $method, string $view, array $args){
+        (new $class(new $view()))->$method(...$args);
     }
 
     private function resolvePath($requestPath, $resolvers)
@@ -52,10 +65,9 @@ class Router
         foreach ($resolvers as $route => $resolver) {
             if ($route == $requestPath) {
                 $classAndMethod = explode("::", $resolver);
-                $view = $this->getView();
-                $data = $this->request->getData($view->getType());
-
-                call_user_func(array($this->createClassByName($classAndMethod[0], $view, $data), $classAndMethod[1]));
+                $this->request->setControllerClass($classAndMethod[0]);
+                $this->request->setControllerMethod($classAndMethod[1]);
+                $this->request->setArgs(array());
                 return;
             }
 
@@ -94,36 +106,45 @@ class Router
         $matchedRoute = $this->getMaxMatchedRoute($result);
         if ($matchedRoute == null) {
             header("HTTP/1.0 404 Not Found");
+            exit;
         } else {
             $args = $result[$matchedRoute][1];
 
             $resolver = $resolvers[$matchedRoute];
             $classAndMethod = explode("::", $resolver);
-
-            $view = $this->getView();
-            $data = $this->request->getData($view->getType());
-
-            call_user_func(
-                array($this->createClassByName($classAndMethod[0], $view, $data), $classAndMethod[1]),
-                ...
-                $args
-            );
+            $this->request->setControllerClass($classAndMethod[0]);
+            $this->request->setControllerMethod($classAndMethod[1]);
+            $this->request->setArgs($args);
         }
     }
 
-    private function getView()
+    private function getView($accepted)
     {
-        if (strpos($_SERVER['CONTENT_TYPE'], "multipart/form-data") !== false) {
-            return new ViewMultipartFormData("multipart/form-data");
+        $views = array(
+            "application/json" => "ViewApplicationJson",
+            "text/html" => "ViewApplicationJson",
+            "*/*" => "ViewApplicationJson",
+            "multipart/form-data" => "ViewMultipartFormData",
+            "error" => "ViewError"
+        );
+        foreach ($accepted as $key => $value){
+            if(array_key_exists($value, $views)) {
+                return $views[$value];
+            }
         }
+        return $views["error"];
+//        if (strpos($_SERVER['CONTENT_TYPE'], "multipart/form-data") !== false) {
+//            return new ViewMultipartFormData("multipart/form-data");
+//        }
+//
+//        switch ($_SERVER['CONTENT_TYPE']) {
+//            case "application/json":
+//            case "":
+//            default:
+//                return new ViewApplicationJson($_SERVER['CONTENT_TYPE']);
+//                break;
+//        }
 
-        switch ($_SERVER['CONTENT_TYPE']) {
-            case "application/json":
-            case "":
-            default:
-                return new ViewApplicationJson($_SERVER['CONTENT_TYPE']);
-                break;
-        }
     }
 
     private function createClassByName($className, $arg1, $arg2)

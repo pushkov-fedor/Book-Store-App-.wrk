@@ -72,16 +72,16 @@ const dismissPopup = action(event => {
   }
 });
 
-autorun(() => {
-  const xhr = new XMLHttpRequest();
-  xhr.open("GET", `${URL}api/admin/books/page/${currentPage}`);
-  xhr.send();
-  xhr.onreadystatechange = () => {
-    if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-      setBooks(JSON.parse(xhr.responseText));
-    }
-  };
-});
+// autorun(() => {
+//   const xhr = new XMLHttpRequest();
+//   xhr.open("GET", `${URL}api/admin/books/page/${currentPage}`);
+//   xhr.send();
+//   xhr.onreadystatechange = () => {
+//     if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+//       setBooks(JSON.parse(xhr.responseText));
+//     }
+//   };
+// });
 
 export const adminStore = {
   books,

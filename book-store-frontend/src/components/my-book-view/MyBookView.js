@@ -1,8 +1,21 @@
 import React from "react";
 import "../book-view/BookView.css";
+import { saveAs } from "file-saver";
 import { URL } from "../../constants/Constants";
 
 function MyBookView(props) {
+  const downloadFile = extension => {
+    fetch(`${URL}api/myBooks/get/${props.title}.${extension}`, {
+      method: "GET",
+      headers: {
+        Accept: "multipart/form-data",
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => console.log(response))
+      .catch(error => console.log(error));
+  };
+
   const dropdown = (
     <div className="btn-group w-100">
       <button
@@ -15,14 +28,9 @@ function MyBookView(props) {
         Download
       </button>
       <div className="dropdown-menu w-100">
-        <a
-          className="dropdown-item"
-          href={`${URL}api/myBooks/get/${props.title}.pdf`}
-          type="multipart/form-data"
-          download
-        >
+        <div className="dropdown-item" onClick={() => downloadFile("pdf")}>
           As PDF <i className="fas fa-file-pdf"></i>
-        </a>
+        </div>
       </div>
     </div>
   );

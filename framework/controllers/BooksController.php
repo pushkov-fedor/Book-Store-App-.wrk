@@ -16,7 +16,7 @@ class BooksController
         $this->booksRepository = new BooksRepository();
     }
 
-    public function getAll($page = 0)
+    public function get($page = 0)
     {
         $books = $this->booksRepository->getAll($page);
         $this->view->putData($books);
@@ -35,5 +35,23 @@ class BooksController
         $genres = $this->booksRepository->getGenres();
         $this->view->putData($genres);
         $this->view->send();
+    }
+
+    public function getPurchased($email)
+    {
+        $books = $this->myBooksRepository->getPurchased($email);
+        $this->view->putData($books);
+        $this->view->send();
+    }
+
+    public function getFile($fileId)
+    {
+        $file = $this->myBooksRepository->getFile($fileId);
+        if (file_exists($file)) {
+            $this->view->putData($file);
+            $this->view->send();
+        } else {
+            $this->view->error(500);
+        }
     }
 }

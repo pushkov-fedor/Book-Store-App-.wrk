@@ -82,7 +82,13 @@ when(
 when(
   () => genres.length === 0,
   () => {
-    fetch(`${URL}api/books/genres`)
+    fetch(`${URL}api/books/genres`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      }
+    })
       .then(response => response.json())
       .then(response => console.log(response))
       .catch(error => console.log(error));
@@ -92,7 +98,13 @@ when(
 when(
   () => booksCount.get() === 0,
   () => {
-    fetch(`${URL}api/books/all/count`)
+    fetch(`${URL}api/books/all/count`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      }
+    })
       .then(response => response.json())
       .then(response => setBooksCount(response.booksCount))
       .catch(error => console.log(error));
@@ -100,7 +112,13 @@ when(
 );
 
 autorun(() => {
-  fetch(`${URL}api/books/page/${currentPage}`)
+  fetch(`${URL}api/books/page/${currentPage}`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    }
+  })
     .then(response => response.json())
     .then(response => setBooks(response))
     .catch(error => console.log(error));

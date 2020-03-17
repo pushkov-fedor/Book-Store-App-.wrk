@@ -16,7 +16,7 @@ class PaymentController
 
     public function __construct($view, $data)
     {
-        $this->paymentRepository = new MyBooksRepository();
+        $this->paymentRepository = new BooksRepository();
         $this->view = $view;
         $this->data = $data;
     }

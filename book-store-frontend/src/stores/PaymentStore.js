@@ -20,6 +20,10 @@ const setCustomerEmail = action(email => customerEmail.set(email));
 const sendEmail = books => {
   fetch(`${URL}api/payment/after`, {
     method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    },
     body: JSON.stringify({ customerEmail: customerEmail.get(), books: books })
   })
     .then(response => console.log(response))

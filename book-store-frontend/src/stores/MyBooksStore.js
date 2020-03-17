@@ -20,7 +20,13 @@ const setBooks = action(updatedBooks => {
 when(
   () => customerEmail.get() !== "",
   () => {
-    fetch(`${URL}api/myBooks/user/${customerEmail}`)
+    fetch(`${URL}api/myBooks/user/${customerEmail}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      }
+    })
       .then(response => response.json())
       .then(response => setBooks(response))
       .catch(error => console.log(error));

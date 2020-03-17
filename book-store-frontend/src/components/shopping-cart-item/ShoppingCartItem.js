@@ -2,7 +2,6 @@ import React from "react";
 import "./ShoppingCartItem.css";
 import { URL } from "../../constants/Constants";
 import { inject, observer } from "mobx-react";
-import { toJS } from "mobx";
 
 const ShoppingCartItem = inject("rootStore")(
   observer(props => {

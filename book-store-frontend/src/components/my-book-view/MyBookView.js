@@ -12,7 +12,8 @@ function MyBookView(props) {
         "Content-Type": "application/json"
       }
     })
-      .then(response => console.log(response))
+      .then(response => response.blob())
+      .then(blob => saveAs(blob, `${props.title}.${extension}`))
       .catch(error => console.log(error));
   };
 

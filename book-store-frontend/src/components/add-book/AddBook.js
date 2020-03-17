@@ -1,8 +1,6 @@
 import React from "react";
 import { inject, observer } from "mobx-react";
 import "./AddBook.css";
-import { action, toJS } from "mobx";
-import { URL } from "../../constants/Constants";
 
 const EditBook = inject("rootStore")(
   observer(props => {
@@ -60,6 +58,7 @@ const EditBook = inject("rootStore")(
             </div>
             <div className="col-sm-6 col-12 d-flex flex-column align-items-center">
               <img
+                alt="book cover"
                 className="edit-book-cover"
                 // src={uploadedCoverAsDataUrlSrc == "" ? `${URL}static/${addBook.get().cover_path}` : uploadedCoverAsDataUrlSrc}
               />

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./BookView.css";
 import { inject, observer } from "mobx-react";
 import { URL } from "../../constants/Constants";

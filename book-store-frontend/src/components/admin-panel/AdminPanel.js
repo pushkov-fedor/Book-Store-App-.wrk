@@ -17,6 +17,7 @@ const AdminPanel = inject("rootStore")(
           <th scope="row">1</th>
           <td className="d-flex justify-content-center">
             <img
+              alt="book cover"
               src={`http://ec2-3-133-82-119.us-east-2.compute.amazonaws.com/static/${
                 book.cover_path
               }?${new Date().getTime()}`}

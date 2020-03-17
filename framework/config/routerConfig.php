@@ -15,6 +15,8 @@ $router->get("api/myBooks/get/{bookName}", "BooksController::getFile");
 
 $router->post("api/payment/after", "PaymentController::after");
 
+$router->post("api/payment/pay", "PaymentController::pay");
+
 
 $router->get("api/admin/books", "AdminController::getAll");
 

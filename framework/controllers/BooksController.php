@@ -39,14 +39,14 @@ class BooksController
 
     public function getPurchased($email)
     {
-        $books = $this->myBooksRepository->getPurchased($email);
+        $books = $this->booksRepository->getPurchased($email);
         $this->view->putData($books);
         $this->view->send();
     }
 
     public function getFile($fileId)
     {
-        $file = $this->myBooksRepository->getFile($fileId);
+        $file = $this->booksRepository->getFile($fileId);
         if (file_exists($file)) {
             $this->view->putData($file);
             $this->view->send();

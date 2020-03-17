@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./GenreFilter.css";
 import { inject, observer } from "mobx-react";
-import { toJS } from "mobx";
 
 const GenreFilter = inject("rootStore")(
   observer(props => {

@@ -9,7 +9,7 @@ class ViewMultipartFormData implements View
     private $data;
     private $type;
 
-    public function __construct($type="application/json")
+    public function __construct($type="multipart/form-data")
     {
         $this->type = $type;
     }

@@ -1,4 +1,4 @@
-import { action, autorun, observable, toJS } from "mobx";
+import { action, autorun, observable } from "mobx";
 import { URL } from "../constants/Constants";
 
 const nameOnCard = observable.box("John Doe");

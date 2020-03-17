@@ -1,4 +1,4 @@
-import { action, autorun, computed, observable, toJS, when } from "mobx";
+import { action, observable, toJS } from "mobx";
 import { URL } from "../constants/Constants";
 
 const books = observable([]);
@@ -37,6 +37,8 @@ const uploadFile = action(event => {
     case "cover":
       setCover(event.target.files[0]);
       break;
+    default:
+      return;
   }
   const reader = new FileReader();
   reader.onloadend = () => {
@@ -65,7 +67,7 @@ const dismissPopup = action(event => {
   if (
     event === undefined ||
     event.target.id === "edit-book-bg" ||
-    event.target.id == "add-book-bg"
+    event.target.id === "add-book-bg"
   ) {
     setCurrentOperationNone();
     setBook(null);

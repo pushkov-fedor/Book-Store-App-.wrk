@@ -12,6 +12,8 @@ class Request
     private string $controllerMethod;
     private array $args;
 
+    private $data;
+
     public function __construct()
     {
         $this->method = $_SERVER['REQUEST_METHOD'];
@@ -22,17 +24,29 @@ class Request
             $tmp = explode(";", $value);
             array_push($this->accepted, $tmp[0]);
         }
+
+        $this->pullData($this->getMethod());
     }
 
     /**
+     * @param $method
      * @return mixed
      */
-    public function getData($type)
+    private function pullData($method)
     {
-        if ($type == "multipart/form-data") {
-            return array("files" => $_FILES, "json" => json_decode($_POST["json"]));
+        if($method === "POST"){
+            foreach ($this->getAccepted() as $key => $value){
+                switch ($value){
+                    case "multipart/form-data":
+                        $this->data = array("files" => $_FILES, "json" => json_decode($_POST["json"]));
+                        return;
+                    case 'application/json':
+                        $this->data = json_decode(file_get_contents('php://input'), true);
+                        return;
+                }
+            }
         } else {
-            return json_decode(file_get_contents('php://input'), true);
+            $this->data = null;
         }
     }
 
@@ -114,5 +128,21 @@ class Request
     public function setAccepted(array $accepted): void
     {
         $this->accepted = $accepted;
+    }
+
+    /**
+     * @return array
+     */
+    public function getData(): array
+    {
+        return $this->data;
+    }
+
+    /**
+     * @param array $data
+     */
+    public function setData(array $data): void
+    {
+        $this->data = $data;
     }
 }

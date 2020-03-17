@@ -4,7 +4,8 @@ import PaymentCard from "../payment-card/PaymentCard";
 import LeaveEmailBeforePayingPopup from "../leave-email-before-paying-popup/LeaveEmailBeforePayingPopup";
 import "./ShoppingCart.css";
 import { inject, observer } from "mobx-react";
-import { toJS } from "mobx";
+import { URL } from "../../constants/Constants";
+import { CardInfo } from "../../enitites/CardInfo";
 
 const ShoppingCart = inject("rootStore")(
   observer(props => {
@@ -46,7 +47,24 @@ const ShoppingCart = inject("rootStore")(
       expirationYear,
       cvv
     ) {
-      setShowPopup(true);
+      const cardInfo = new CardInfo(
+        nameOnCard,
+        cardNumber,
+        expirationMonth,
+        expirationYear,
+        cvv
+      );
+      fetch(`${URL}api/payment/pay`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(cardInfo)
+      })
+        .then(response => setShowPopup(true))
+        .catch(error => console.log(error));
+      // setShowPopup(true);
     }
 
     return (

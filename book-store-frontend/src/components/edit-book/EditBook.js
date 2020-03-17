@@ -1,7 +1,7 @@
 import React from "react";
 import { inject, observer } from "mobx-react";
 import "./EditBook.css";
-import { action, toJS } from "mobx";
+import { toJS } from "mobx";
 import { URL } from "../../constants/Constants";
 
 const EditBook = inject("rootStore")(
@@ -13,13 +13,13 @@ const EditBook = inject("rootStore")(
     const sendFile = props.rootStore.adminStore.sendFile;
     const dismissPopup = props.rootStore.adminStore.dismissPopup;
 
-    let id = book.get().id;
-    let title = book.get().title;
-    let author = book.get().author;
-    let price = book.get().price;
-    let cover_path = book.get().cover_path;
-    let book_pdf_path = book.get().book_pdf_path;
-    let status = book.get().status;
+    // let id = book.get().id;
+    // let title = book.get().title;
+    // let author = book.get().author;
+    // let price = book.get().price;
+    // let cover_path = book.get().cover_path;
+    // let book_pdf_path = book.get().book_pdf_path;
+    // let status = book.get().status;
 
     const onChange = event => {
       console.log(event.target.id);
@@ -73,6 +73,7 @@ const EditBook = inject("rootStore")(
             </div>
             <div className="col-sm-6 col-12 d-flex flex-column align-items-center">
               <img
+                alt="book-cover"
                 className="edit-book-cover"
                 src={
                   uploadedCoverAsDataUrlSrc === ""

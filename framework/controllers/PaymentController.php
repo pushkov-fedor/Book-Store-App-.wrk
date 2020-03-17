@@ -5,28 +5,30 @@ namespace controllers;
 
 
 use phpmailer\Mailer;
-use repositories\MyBooksRepository;
+use repositories\BooksRepository;
+use router\Request;
 use views\View;
 
 class PaymentController
 {
-    private MyBooksRepository $paymentRepository;
+    private BooksRepository $paymentRepository;
     private View $view;
-    private $data;
+    private Request $request;
 
-    public function __construct($view, $data)
+    public function __construct($view, $request)
     {
         $this->paymentRepository = new BooksRepository();
         $this->view = $view;
-        $this->data = $data;
+        $this->request = $request;
     }
 
     public function after()
     {
-        $this->view->putData($this->data);
+        $data = $this->request->getData();
+        $this->view->putData($data);
         $this->view->send();
-        $customerEmail = $this->data['customerEmail'];
-        $customerBooks = $this->data['books'];
+        $customerEmail = $data['customerEmail'];
+        $customerBooks = $data['books'];
         $customerBooksUrl = "http://ec2-3-133-82-119.us-east-2.compute.amazonaws.com/my-books?email=$customerEmail";
         Mailer::send(
             $customerEmail,
@@ -34,5 +36,12 @@ class PaymentController
             "Follow the link to get your books\n$customerBooksUrl"
         );
         $this->paymentRepository->save($customerEmail, $customerBooks);
+    }
+
+    public function pay()
+    {
+        $data = $this->request->getData();
+        $this->view->putData($data);
+        $this->view->send();
     }
 }

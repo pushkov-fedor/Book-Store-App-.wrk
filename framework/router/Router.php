@@ -43,6 +43,7 @@ class Router
                 break;
             case "POST":
                 $this->resolvePath($path, $this->post_resolvers);
+                break;
             case "OPTIONS":
                 header("Access-Control-Allow-Origin: *");
                 header("Access-Control-Allow-Headers: Accept, Content-Type");
@@ -52,11 +53,11 @@ class Router
         $method = $this->request->getControllerMethod();
         $view = "views\\".$this->getView($this->request->getAccepted());
 
-        $this->execute($class, $method, $view, $this->request->getArgs());
+        $this->execute($class, $method, $view, $this->request->getArgs(), $this->request);
     }
 
-    private function execute(string $class, string $method, string $view, array $args){
-        (new $class(new $view()))->$method(...$args);
+    private function execute(string $class, string $method, string $view, array $args, $request){
+        (new $class(new $view(), $request))->$method(...$args);
     }
 
     private function resolvePath($requestPath, $resolvers)
@@ -133,18 +134,6 @@ class Router
             }
         }
         return $views["error"];
-//        if (strpos($_SERVER['CONTENT_TYPE'], "multipart/form-data") !== false) {
-//            return new ViewMultipartFormData("multipart/form-data");
-//        }
-//
-//        switch ($_SERVER['CONTENT_TYPE']) {
-//            case "application/json":
-//            case "":
-//            default:
-//                return new ViewApplicationJson($_SERVER['CONTENT_TYPE']);
-//                break;
-//        }
-
     }
 
     private function createClassByName($className, $arg1, $arg2)

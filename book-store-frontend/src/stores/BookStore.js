@@ -69,12 +69,8 @@ when(
   () => savedBooks.length === 0,
   () => {
     const books = JSON.parse(localStorage.getItem("books"));
-    const booksSnapshot = books.map(book =>
-      Object.assign({}, book, (book.isStillInCart = true))
-    );
     if (books !== null) {
       setSavedBooks(books);
-      setSavedBooksSnapshot(booksSnapshot);
     }
   }
 );

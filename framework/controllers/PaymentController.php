@@ -11,13 +11,13 @@ use views\View;
 
 class PaymentController
 {
-    private BooksRepository $paymentRepository;
+    private BooksRepository $booksRepository;
     private View $view;
     private Request $request;
 
     public function __construct($view, $request)
     {
-        $this->paymentRepository = new BooksRepository();
+        $this->booksRepository = new BooksRepository();
         $this->view = $view;
         $this->request = $request;
     }
@@ -35,13 +35,20 @@ class PaymentController
             "Thank you for using our service! You books are bellow",
             "Follow the link to get your books\n$customerBooksUrl"
         );
-        $this->paymentRepository->save($customerEmail, $customerBooks);
+        $this->booksRepository->save($customerEmail, $customerBooks);
     }
 
     public function pay()
     {
         $data = $this->request->getData();
-        $this->view->putData($data);
-        $this->view->send();
+
+        if($this->checkPaymentInfo($data)) {
+            $this->view->putData($data);
+            $this->view->send();
+        }
+    }
+
+    private function checkPaymentInfo($info){
+        return true;
     }
 }

@@ -10,10 +10,6 @@ const LeaveEmailBeforePayingPopup = inject("rootStore")(
     const savedBooks = props.rootStore.bookStore.savedBooks;
     const sendEmail = props.rootStore.paymentStore.sendEmail;
 
-    function handleClickOnBg(event) {
-      if (event.target.id === "popup-bg") props.setShowPopup(false);
-    }
-
     function handleChange(event) {
       setCustomerEmail(event.target.value);
     }
@@ -22,7 +18,6 @@ const LeaveEmailBeforePayingPopup = inject("rootStore")(
       <div
         className="position-fixed d-flex justify-content-center align-items-center leave-email-before-paying-popup-container"
         id="popup-bg"
-        onClick={handleClickOnBg}
       >
         <div className="m-5 p-5 bg-white leave-email-before-paying-popup-subcontainer m-sm-5">
           <h3 className="leave-email-before-paying-popup-last-moment-header">

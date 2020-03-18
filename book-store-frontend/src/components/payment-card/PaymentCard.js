@@ -15,7 +15,10 @@ const PaymentCard = inject("rootStore")(
     const setExpirationYear = props.rootStore.paymentStore.setExpirationYear;
     const cvv = props.rootStore.paymentStore.cvv;
     const setCVV = props.rootStore.paymentStore.setCVV;
-    const isPaymentInfoValid = props.rootStore.paymentStore.isPaymentInfoValid;
+
+    const submitPayment = props.rootStore.paymentStore.submitPayment;
+
+    const showSpinner = props.rootStore.paymentStore.showSpinner.get();
 
     function handleNameOnCardChange(event) {
       setNameOnCard(event.target.value);
@@ -35,13 +38,7 @@ const PaymentCard = inject("rootStore")(
 
     function handleSubmit(event) {
       event.preventDefault();
-      props.submitPayment(
-        nameOnCard.get(),
-        cardNumber.get(),
-        expirationMonth.get(),
-        expirationYear.get(),
-        cvv.get()
-      );
+      submitPayment();
     }
 
     const years = [];
@@ -159,8 +156,15 @@ const PaymentCard = inject("rootStore")(
           <button
             type="submit"
             className="btn btn-success w-100 mb-3 shadow"
-            disabled={!isPaymentInfoValid}
+            disabled={showSpinner}
           >
+            <span
+              className={
+                showSpinner ? "spinner-border spinner-border-sm mx-2" : "d-none"
+              }
+              role="status"
+              aria-hidden="true"
+            />
             Pay
           </button>
         </form>

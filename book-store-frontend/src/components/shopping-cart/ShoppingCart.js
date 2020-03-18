@@ -15,10 +15,12 @@ const ShoppingCart = inject("rootStore")(
     const addBookToLocalStorage =
       props.rootStore.bookStore.addBookToLocalStorage;
 
+    const showPopup = props.rootStore.paymentStore.showPopup.get();
+    const showAlert = props.rootStore.paymentStore.showAlert.get();
+
     const [booksInCart, setBooksInCart] = useState(
       books.map(book => Object.assign({}, book, { isStillInCart: true }))
     );
-    const [showPopup, setShowPopup] = useState(false);
 
     const savedBooksElement = booksInCart.map(book => (
       <ShoppingCartItem
@@ -39,33 +41,6 @@ const ShoppingCart = inject("rootStore")(
       .filter(book => book.isStillInCart)
       .map(book => book.price)
       .reduce((accumulator, price) => (accumulator += Number(price)), 0);
-
-    function submitPayment(
-      nameOnCard,
-      cardNumber,
-      expirationMonth,
-      expirationYear,
-      cvv
-    ) {
-      const cardInfo = new CardInfo(
-        nameOnCard,
-        cardNumber,
-        expirationMonth,
-        expirationYear,
-        cvv
-      );
-      fetch(`${URL}api/payment/pay`, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(cardInfo)
-      })
-        .then(response => setShowPopup(true))
-        .catch(error => console.log(error));
-      // setShowPopup(true);
-    }
 
     return (
       <div className="row my-5 position-relative">
@@ -95,7 +70,26 @@ const ShoppingCart = inject("rootStore")(
           } justify-content-center mx-0 px-lg-0`}
         >
           <div className="col-sm-9 col-md-7 col-lg-5 col-xl-12">
-            <PaymentCard submitPayment={submitPayment} />
+            <div
+              className={
+                showAlert
+                  ? "alert alert-danger alert-dismissible fade show"
+                  : "d-none"
+              }
+              role="alert"
+            >
+              <strong>Ooops!</strong> Your payment can't be processed. Something
+              wrong with your payment card info.
+              <button
+                type="button"
+                className="close"
+                data-dismiss="alert"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <PaymentCard />
           </div>
         </div>
         <div className="d-flex flex-column justify-content-center align-items-center w-100">
@@ -107,11 +101,7 @@ const ShoppingCart = inject("rootStore")(
             alt="Shopping cart is empty"
           />
         </div>
-        {showPopup ? (
-          <LeaveEmailBeforePayingPopup setShowPopup={setShowPopup} />
-        ) : (
-          ""
-        )}
+        {showPopup ? <LeaveEmailBeforePayingPopup /> : ""}
       </div>
     );
   })

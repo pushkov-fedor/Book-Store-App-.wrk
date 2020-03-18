@@ -4,6 +4,9 @@
 namespace repositories;
 
 
+use entity\User;
+use PDO;
+
 class UserRepository
 {
     private PDO $db;
@@ -18,7 +21,28 @@ class UserRepository
         }
     }
 
-    public function get($id = 0){
-        return -1;
+    public function get($login) : ?User{
+        $sql = "SELECT * FROM users WHERE username=$login";
+        $user = $this->db->query($sql)->fetch();
+
+        foreach ($user as $key => $value) {
+            if (!is_int($key)) {
+                unset($user[$key]);
+            }
+        }
+
+        if($user === false){
+            return null;
+        } else {
+            return new User(...$user);
+        }
+    }
+
+    public function save(User $user){
+        $user->setPassword(md5($user->getPassword()));
+        $sql = "INSERT INTO users (username, email, password) VALUES (?,?,?)";
+        $tmp = $user->jsonSerialize();
+        $this->db->prepare($sql)->execute([...array_values($tmp)]);
+        return $user;
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 spl_autoload_register(
     function ($class) {
         $file = str_replace('\\', DIRECTORY_SEPARATOR, $class);

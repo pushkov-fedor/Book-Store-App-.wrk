@@ -27,3 +27,6 @@ $router->post("api/admin/books/update", "AdminController::updateBook");
 $router->post("api/admin/books/add", "AdminController::addBook");
 
 $router->post("api/admin/books/delete/{id}", "AdminController::deleteBook");
+
+
+$router->post("api/user/register", "AuthController::register");

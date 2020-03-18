@@ -33,5 +33,6 @@ class ViewApplicationJson implements View
     public function error($code)
     {
         http_response_code($code);
+        echo $this->data;
     }
 }

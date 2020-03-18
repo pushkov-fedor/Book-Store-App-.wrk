@@ -7,6 +7,7 @@ class Request
     private string $method;
     private string $path;
     private array $accepted;
+    private array $contentType;
 
     private string $controllerClass;
     private string $controllerMethod;
@@ -24,7 +25,12 @@ class Request
             $tmp = explode(";", $value);
             array_push($this->accepted, $tmp[0]);
         }
-
+        $this->contentType = array();
+        $connentTypeTmp = explode(",", $_SERVER["CONTENT_TYPE"]);
+        foreach ($connentTypeTmp as $key => $value){
+            $tmp = explode(";", $value);
+            array_push($this->contentType, $tmp[0]);
+        }
         $this->pullData($this->getMethod());
     }
 
@@ -35,7 +41,7 @@ class Request
     private function pullData($method)
     {
         if($method === "POST"){
-            foreach ($this->getAccepted() as $key => $value){
+            foreach ($this->getContentType() as $key => $value){
                 switch ($value){
                     case "multipart/form-data":
                         $this->data = array("files" => $_FILES, "json" => json_decode($_POST["json"]));
@@ -144,5 +150,21 @@ class Request
     public function setData(array $data): void
     {
         $this->data = $data;
+    }
+
+    /**
+     * @return array
+     */
+    public function getContentType(): array
+    {
+        return $this->contentType;
+    }
+
+    /**
+     * @param array $contentType
+     */
+    public function setContentType(array $contentType): void
+    {
+        $this->contentType = $contentType;
     }
 }

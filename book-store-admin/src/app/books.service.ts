@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Book} from "./entity/Book";
 import {BookImpl} from "./entity/BookImpl";
 import {BehaviorSubject, Observable, timer} from "rxjs";
+import {URL} from "./constants/Constants";
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class BooksService {
   }
 
   private getBooks(page: number){
-    return this.http.get<Book[]>(`http://ec2-3-133-82-119.us-east-2.compute.amazonaws.com/api/admin/books/page/${page}`);
+    return this.http.get<Book[]>(`${URL}api/admin/books/page/${page}`);
   }
 
   subscribeToBooksStream(startPage: number){
@@ -86,7 +87,7 @@ export class BooksService {
     data.append('cover', this.book.uploadedCover);
     data.append('pdf', this.book.uploadedBookPdf);
     data.append('json', JSON.stringify((<Book>this.book)));
-    this.http.post(`http://ec2-3-133-82-119.us-east-2.compute.amazonaws.com/api/admin/books/${method}`, data)
+    this.http.post(`${URL}api/admin/books/${method}`, data)
       .subscribe(null);
     this.book = undefined;
     this.setCurrentOperation("NONE");
@@ -95,7 +96,7 @@ export class BooksService {
   }
 
   deleteBook(id: string){
-    this.http.post(`http://ec2-3-133-82-119.us-east-2.compute.amazonaws.com/api/admin/books/delete/${id}`, null)
+    this.http.post(`${URL}api/admin/books/delete/${id}`, null)
       .subscribe();
     timer(1000)
       .subscribe((value => this.sendBooksToSubscribers()));

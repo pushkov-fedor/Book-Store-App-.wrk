@@ -55,10 +55,10 @@ class BooksRepository
         $this->db->prepare($sql)->execute([$book->getAuthor(), $book->getTitle(), $book->getPrice(), $book->getId()]);
     }
 
-    public function addBook($book)
+    public function addBook(Book $book)
     {
         $sql = "INSERT INTO books (author, title, price, cover_path, book_pdf_path, genre, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        $this->db->prepare($sql)->execute($book);
+        $this->db->prepare($sql)->execute([$book->getAuthor(), $book->getTitle(), $book->getPrice(), $book->getCoverPath(), $book->getBookPdfPath(), $book->getGenre(), $book->getStatus()]);
     }
 
     public function deleteBook($id)

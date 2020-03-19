@@ -8,6 +8,7 @@ class Request
     private string $path;
     private array $accepted;
     private array $contentType;
+    private string $origin;
 
     private string $controllerClass;
     private string $controllerMethod;
@@ -19,6 +20,7 @@ class Request
     {
         $this->method = $_SERVER['REQUEST_METHOD'];
         $this->path = trim($_SERVER['REQUEST_URI'], '/');
+        $this->origin = $_SERVER['HTTP_ORIGIN'];
         $this->accepted = array();
         $acceptedTmp = explode(",", $_SERVER["HTTP_ACCEPT"]);
         foreach ($acceptedTmp as $key => $value){
@@ -166,5 +168,21 @@ class Request
     public function setContentType(array $contentType): void
     {
         $this->contentType = $contentType;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrigin(): string
+    {
+        return $this->origin;
+    }
+
+    /**
+     * @param string $origin
+     */
+    public function setOrigin(string $origin): void
+    {
+        $this->origin = $origin;
     }
 }

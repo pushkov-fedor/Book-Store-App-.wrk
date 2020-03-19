@@ -45,7 +45,9 @@ class Router
                 $this->resolvePath($path, $this->post_resolvers);
                 break;
             case "OPTIONS":
-                header("Access-Control-Allow-Origin: *");
+                $origin = $this->request->getOrigin();
+                header("Access-Control-Allow-Origin: $origin");
+                header("Access-Control-Allow-Credentials: true");
                 header("Access-Control-Allow-Headers: Accept, Content-Type");
                 return;
         }
@@ -56,8 +58,8 @@ class Router
         $this->execute($class, $method, $view, $this->request->getArgs(), $this->request);
     }
 
-    private function execute(string $class, string $method, string $view, array $args, $request){
-        (new $class(new $view(), $request))->$method(...$args);
+    private function execute(string $class, string $method, string $view, array $args, Request $request){
+        (new $class(new $view($request->getOrigin()), $request))->$method(...$args);
     }
 
     private function resolvePath($requestPath, $resolvers)

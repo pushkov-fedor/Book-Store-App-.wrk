@@ -7,16 +7,20 @@ namespace views;
 class ViewMultipartFormData implements View
 {
     private $data;
-    private $type;
+    private string $type;
+    private string $origin;
 
-    public function __construct($type="multipart/form-data")
+    public function __construct($origin, $type="multipart/form-data")
     {
         $this->type = $type;
+        $this->origin = $origin;
     }
 
     public function send()
     {
-        header('Access-Control-Allow-Origin: *');
+        header("Access-Control-Allow-Origin: $this->origin");
+        header("Access-Control-Allow-Credentials: true");
+//        header("Access-Control-Allow-Headers: Accept, Content-Type");
         header('Content-Description: File Transfer');
         header('Content-Type: application/octet-stream');
         header('Content-Disposition: attachment; filename="' . basename($this->data) . '"');

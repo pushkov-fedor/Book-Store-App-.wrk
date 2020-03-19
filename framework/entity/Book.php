@@ -161,4 +161,20 @@ class Book implements \JsonSerializable
             'status' => $this->status
         );
     }
+
+    /**
+     * @return string
+     */
+    public function getGenre(): string
+    {
+        return $this->genre;
+    }
+
+    /**
+     * @param string $genre
+     */
+    public function setGenre(string $genre): void
+    {
+        $this->genre = $genre;
+    }
 }

@@ -6,19 +6,20 @@ namespace controllers;
 
 use entity\Book;
 use repositories\BooksRepository;
+use router\Request;
 use views\View;
 
 class AdminController
 {
     private BooksRepository $booksRepository;
     private View $view;
-    private $data;
+    private Request $request;
 
     public function __construct($view, $data)
     {
         $this->view = $view;
         $this->booksRepository = new BooksRepository();
-        $this->data = $data;
+        $this->request = $data;
     }
 
     public function getAll($page = 0)
@@ -30,17 +31,17 @@ class AdminController
 
     public function updateBook()
     {
-        $cover = $this->data["files"]["cover"];
-        $pdf = $this->data["files"]["pdf"];
+        $cover = $this->request->getData()["files"]["cover"];
+        $pdf = $this->request->getData()["files"]["pdf"];
         if ($cover !== null) {
-            $uploadedCover = "/book-store-app-wrk/Book-Store-App-.wrk/static/" . $this->data["json"]->cover_path;
-            if (!move_uploaded_file($this->data["files"]["cover"]['tmp_name'], $uploadedCover)) {
+            $uploadedCover = "/book-store-app-wrk/Book-Store-App-.wrk/static/" . $this->request->getData()["json"]->cover_path;
+            if (!move_uploaded_file($this->request->getData()["files"]["cover"]['tmp_name'], $uploadedCover)) {
                 header('Access-Control-Allow-Origin: *');
                 http_response_code(500);
                 exit;
             }
         }
-        $json = $this->data["json"];
+        $json = $this->request->getData()["json"];
         $book = new Book($json->id, $json->author, $json->title, $json->price);
         $this->booksRepository->updateBook($book);
         $this->view->send();
@@ -48,29 +49,29 @@ class AdminController
 
     public function addBook()
     {
-        $cover = $this->data["files"]["cover"];
-        $pdf = $this->data["files"]["pdf"];
+        $cover = $this->request->getData()["files"]["cover"];
+        $pdf = $this->request->getData()["files"]["pdf"];
 
         $uniqueName = uniqid();
-        $this->data["json"]->cover_path = "covers/$uniqueName.png";
-        $this->data["json"]->book_pdf_path = "books/$uniqueName.pdf";
+        $this->request->getData()["json"]->cover_path = "covers/$uniqueName.png";
+        $this->request->getData()["json"]->book_pdf_path = "books/$uniqueName.pdf";
         if ($cover !== null) {
-            $uploadedCover = "/book-store-app-wrk/Book-Store-App-.wrk/static/" . $this->data["json"]->cover_path;
-            if (!move_uploaded_file($this->data["files"]["cover"]['tmp_name'], $uploadedCover)) {
+            $uploadedCover = "/book-store-app-wrk/Book-Store-App-.wrk/static/" . $this->request->getData()["json"]->cover_path;
+            if (!move_uploaded_file($this->request->getData()["files"]["cover"]['tmp_name'], $uploadedCover)) {
                 header('Access-Control-Allow-Origin: *');
                 http_response_code(500);
                 exit;
             }
         }
         if ($pdf !== null) {
-            $uploadedBookPdf = "/book-store-app-wrk/Book-Store-App-.wrk/static/" . $this->data["json"]->book_pdf_path;
-            if (!move_uploaded_file($this->data["files"]["pdf"]['tmp_name'], $uploadedBookPdf)) {
+            $uploadedBookPdf = "/book-store-app-wrk/Book-Store-App-.wrk/static/" . $this->request->getData()["json"]->book_pdf_path;
+            if (!move_uploaded_file($this->request->getData()["files"]["pdf"]['tmp_name'], $uploadedBookPdf)) {
                 header('Access-Control-Allow-Origin: *');
                 http_response_code(500);
                 exit;
             }
         }
-        $json = $this->data["json"];
+        $json = $this->request->getData()["json"];
         $book = new Book($json->id, $json->author, $json->title, $json->price, $json->cover_path, $json->book_pdf_path, "Classic", $json->status);
         $this->booksRepository->addBook($book);
         $this->view->send();

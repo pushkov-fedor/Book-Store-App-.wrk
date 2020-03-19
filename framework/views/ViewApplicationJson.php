@@ -8,15 +8,19 @@ class ViewApplicationJson implements View
 {
     private $data;
     private $type;
+    private $origin;
 
-    public function __construct($type="application/json")
+    public function __construct($origin, $type="application/json")
     {
         $this->type = $type;
+        $this->origin = $origin;
     }
 
     public function send()
     {
-        header('Access-Control-Allow-Origin: *');
+        header("Access-Control-Allow-Origin: $this->origin");
+        header("Access-Control-Allow-Credentials: true");
+//        header("Access-Control-Allow-Headers: Accept, Content-Type");
         echo $this->data;
     }
 

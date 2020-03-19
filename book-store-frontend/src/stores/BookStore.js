@@ -80,6 +80,7 @@ when(
   () => {
     fetch(`${URL}api/books/genres`, {
       method: "GET",
+      credentials: "include",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"
@@ -96,6 +97,7 @@ when(
   () => {
     fetch(`${URL}api/books/all/count`, {
       method: "GET",
+      credentials: "include",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"
@@ -110,6 +112,7 @@ when(
 autorun(() => {
   fetch(`${URL}api/books/page/${currentPage}`, {
     method: "GET",
+    credentials: "include",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json"

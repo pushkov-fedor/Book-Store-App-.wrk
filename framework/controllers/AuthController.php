@@ -23,25 +23,41 @@ class AuthController
         $this->request = $request;
     }
 
-    public function register(){
-        $newUser = new User(...array_values($this->request->getData()));
+    public function auth(){
+        $username = $this->request->getData()["username"];
+        $password = $this->request->getData()["password"];
+        $user = new User($username, $password);
         $errors = array();
 
-        if($newUser->getUsername() === ""){
-            array_push($errors, "Username is empty");
+        $user->validate($errors);
+        if(count($errors) === 0){
+            $userFromDB = $this->userRepository->get($user);
+            if ($user === null){
+                array_push($errors, "No user with this username");
+            } elseif (md5($user->getPassword()) !== $userFromDB->getPassword()) {
+                array_push($errors, "Wrong password");
+            }
         }
-        if($newUser->getEmail() === ""){
-            array_push($errors, "Email is empty");
-        } elseif(filter_var($newUser->getEmail(), FILTER_VALIDATE_EMAIL) === false) {
-            array_push($errors, "Email is invalid");
 
+        if(count($errors) === 0){
+            $_SESSION["isAuthorized"] = true;
+            $this->view->send();
+        } else {
+            $this->view->putData($errors);
+            $this->view->error(500);
         }
-        if($newUser->getPassword() === ""){
-            array_push($errors, "Password is empty");
-        }
+    }
+
+    public function register(){
+        $username = $this->request->getData()["username"];
+        $password = $this->request->getData()["password"];
+        $newUser = new User($username, $password);
+        $errors = array();
+
+        $newUser->validate($errors);
 
         if(count($errors) === 0) {
-            $user = $this->userRepository->get($newUser->getUsername());
+            $user = $this->userRepository->get($newUser);
             if ($user !== null) {
                 if ($user->getUsername() === $newUser->getUsername()) {
                     array_push($errors, "This login is already taken");
@@ -60,7 +76,8 @@ class AuthController
             $this->view->putData($errors);
             $this->view->error(500);
         }
-
     }
+
+
 
 }

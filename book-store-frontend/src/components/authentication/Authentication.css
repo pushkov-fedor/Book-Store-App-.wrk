@@ -9,3 +9,7 @@
 .auth-container {
     border-radius: 20px;
 }
+
+.auth-button {
+    font-size: 16px;
+}

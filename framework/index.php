@@ -1,6 +1,9 @@
 <?php
 
 session_start();
+if (!isset($_SESSION["isAuthorized"])){
+    $_SESSION["isAuthorized"] = false;
+}
 
 spl_autoload_register(
     function ($class) {

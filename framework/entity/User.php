@@ -10,7 +10,7 @@ class User implements \JsonSerializable
     private string $email;
     private string $password;
 
-    public function __construct(string $username, string $email, string $password)
+    public function __construct(string $username = "username", string $password = "password", string $email = "email@domain.com")
     {
         trim($username, " ");
         trim($email, " ");
@@ -18,6 +18,21 @@ class User implements \JsonSerializable
         $this->username = $username;
         $this->email = $email;
         $this->password = $password;
+    }
+
+    public function validate($errors){
+        if($this->getUsername() === ""){
+            array_push($errors, "Username is empty");
+        }
+        if($this->getEmail() === ""){
+            array_push($errors, "Email is empty");
+        } elseif(filter_var($this->getEmail(), FILTER_VALIDATE_EMAIL) === false) {
+            array_push($errors, "Email is invalid");
+
+        }
+        if($this->getPassword() === ""){
+            array_push($errors, "Password is empty");
+        }
     }
 
     /**

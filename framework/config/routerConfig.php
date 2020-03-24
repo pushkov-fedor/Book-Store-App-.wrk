@@ -30,3 +30,4 @@ $router->post("api/admin/books/delete/{id}", "AdminController::deleteBook");
 
 
 $router->post("api/user/register", "AuthController::register");
+$router->post("api/user/auth", "AuthController::auth");

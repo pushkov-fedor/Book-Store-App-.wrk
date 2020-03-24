@@ -16,7 +16,6 @@ const App = inject("rootStore")(
   observer(props => {
     const showAuthPopup = props.rootStore.authStore.showAuthPopup;
     const auth = showAuthPopup.get() ? <Authentication /> : "";
-    console.log(document.cookie);
     return (
       <Router>
         <Header />

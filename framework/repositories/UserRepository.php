@@ -21,20 +21,18 @@ class UserRepository
         }
     }
 
-    public function get($login) : ?User{
-        $sql = "SELECT * FROM users WHERE username=$login";
-        $user = $this->db->query($sql)->fetch();
+    public function get(User $user) : ?User{
+        $username = $user->getUsername();
+        $sql = "SELECT * FROM users WHERE username=$username";
+        $userFromDb = $this->db->query($sql)->fetch();
 
-        foreach ($user as $key => $value) {
-            if (!is_int($key)) {
-                unset($user[$key]);
-            }
-        }
-
-        if($user === false){
+        if($userFromDb === false){
             return null;
         } else {
-            return new User(...$user);
+            $usernameDb = $userFromDb["username"];
+            $passwordDb = $userFromDb["password"];
+            $emailDb = $userFromDb["email"];
+            return new User($usernameDb, $passwordDb, $emailDb);
         }
     }
 

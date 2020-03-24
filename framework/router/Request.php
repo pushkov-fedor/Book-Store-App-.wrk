@@ -20,7 +20,7 @@ class Request
     {
         $this->method = $_SERVER['REQUEST_METHOD'];
         $this->path = trim($_SERVER['REQUEST_URI'], '/');
-        $this->origin = $_SERVER['HTTP_ORIGIN'];
+        $this->origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : "";
         $this->accepted = array();
         $acceptedTmp = explode(",", $_SERVER["HTTP_ACCEPT"]);
         foreach ($acceptedTmp as $key => $value){
